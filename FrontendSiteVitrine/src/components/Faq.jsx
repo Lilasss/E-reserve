@@ -33,7 +33,7 @@ const Faq = () => {
                 </div>
                 <div className="text-center mt-8">
                     <Link to="/contact-form" className="inline-block px-8 py-3 bg-blue-600 text-white font-bold rounded shadow-lg hover:bg-blue-700 transition duration-300">
-                        Finalisez votre démarches
+                        Faire les démarche
                     </Link>
 
                 </div>
