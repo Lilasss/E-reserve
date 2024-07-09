@@ -19,7 +19,8 @@ const faqData = [
 ];
 
 const Faq = () => {
-  const [expanded, setExpanded] = useState(null);
+
+    const [expanded, setExpanded] = useState(null);
 
   return (
     <section id="faq" className="bg-white py-12">
