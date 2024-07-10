@@ -2,7 +2,7 @@ import React from 'react';
 
 const services = [
     { title: 'Réservation de Chambre', description: 'Réservez des chambres dans nos hôtels partenaires facilement.' },
-    { title: 'Réservation de Transport', description: 'Trouvez et réservez des options de transport adaptées.' },
+    { title: 'Réservation de Transport', description: 'Trouvez et réservez des options de transport adaptées' },
     { title: 'Réservation de Tickets', description: 'Achetez des billets pour des événements et des attractions.' }
 ];
 
