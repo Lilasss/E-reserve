@@ -9,7 +9,6 @@ const Header = () => {
             const targetId = event.currentTarget.getAttribute("href").slice(1);
             const targetElement = document.getElementById(targetId);
 
-
             if (targetElement) {
                 window.scrollTo({
                     top: targetElement.offsetTop - 60,
@@ -17,7 +16,6 @@ const Header = () => {
                 });
             }
         };
-
 
         const links = document.querySelectorAll("nav a");
 
@@ -59,7 +57,6 @@ const Header = () => {
                         <span>En savoir plus</span>
                         <FaArrowDown />
                     </a>
-
                 </div>
             </div>
         </>
