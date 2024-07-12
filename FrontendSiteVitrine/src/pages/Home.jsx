@@ -15,7 +15,7 @@ const Home = () => {
             <Services />
             <Benefits />
             <ScrollToTop />
-            <BlogPage />
+            {/*<BlogPage /> */}
             <Faq />
             <Footer />
 
