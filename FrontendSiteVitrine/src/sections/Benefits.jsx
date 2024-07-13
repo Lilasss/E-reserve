@@ -1,7 +1,7 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTools, faLaptopCode, faBolt, faLock } from '@fortawesome/free-solid-svg-icons';
-import { Link } from 'react-router-dom'; // Assurez-vous que react-router-dom est installé et configuré
+import { Link } from 'react-router-dom';
 
 const benefits = [
     {
@@ -54,12 +54,15 @@ const Benefits = () => {
                         ))}
                     </div>
                     <br /><br />
-                    <div className="mt-10 text-gray-800">
-                        <p className="text-2xl font-bold mb-4">Des solutions modernes et efficaces qui répondent à vos attentes</p>
-                        <Link to="/contact-Form" className="inline-block bg-blue-600 text-white py-2 px-4 rounded-lg shadow-lg hover:bg-blue-700 transition duration-300">
-                            Introduire une demande
+                    <div className="bg-white flex justify-between p-9 items-center border-l-4 border-yellow-500 p-4 mx-auto max-w-4xl mt-10">
+                        <div className="text-blue-800 font-semibold text-xl text-left max-w-md">
+                            Des solutions modernes et efficaces qui répondent à vos attentes
+                        </div>
+                        <Link to="/contact-form">
+                            <button className="bg-yellow-400 text-blue-800 font-semibold py-2 px-6 rounded-full hover:bg-blue-800 hover:text-white transition duration-300">
+                                INTRODUIRE UNE DEMANDE
+                            </button>
                         </Link>
-
                     </div>
                 </div>
             </section>
