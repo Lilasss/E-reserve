@@ -1,5 +1,4 @@
 import React, { useState, useRef } from "react";
-import { Link } from "react-router-dom";
 
 const faqData = [
   {
@@ -38,19 +37,13 @@ const Faq = () => {
               {expanded === index && (
                 <div className="p-4 border border-t-0 border-gray-300">
                   <p className="text-gray-600">{faq.answer}</p>
+                  
                 </div>
               )}
             </div>
           ))}
         </div>
-        <div className="text-center mt-8">
-          <Link
-            to="/contact-form"
-            className="inline-block px-8 py-3 bg-blue-600 text-white font-bold rounded shadow-lg hover:bg-blue-700 transition duration-300"
-          >
-            Introduire une demande
-          </Link>
-        </div>
+
       </div>
     </section>
   );
