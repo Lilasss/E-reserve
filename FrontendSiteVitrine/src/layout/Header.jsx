@@ -51,6 +51,7 @@ const Header = () => {
             <div className="relative h-96 bg-cover bg-center" style={{ backgroundImage: `url(${backgroundImage})` }}>
                 <div className="absolute inset-0 bg-black opacity-50"></div>
                 <div className="relative z-10 flex flex-col items-center justify-center h-full text-center">
+                    <br /><br />
                     <h2 className="text-4xl text-white font-bold">Bienvenue à E-Reserve</h2>
                     <p className="text-white mt-4">La plateforme de gestion de réservations pour tous vos besoins.</p>
                     <a href="#introduction" className="mt-6 text-white bg-yellow-500 py-2 px-4 rounded-full flex items-center space-x-2 hover:bg-yellow-600 transition">

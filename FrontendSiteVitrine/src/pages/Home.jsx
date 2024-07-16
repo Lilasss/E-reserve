@@ -5,8 +5,6 @@ import Benefits from '../sections/Benefits';
 import Faq from '../sections/Faq';
 import ScrollToTop from '../sections/ScrollToTop';
 import Services from '../sections/Services';
-import BlogPage from '../sections/Blog';
-
 
 const Home = () => {
     return (
