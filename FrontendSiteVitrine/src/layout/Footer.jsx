@@ -3,7 +3,7 @@ import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin, FaMapMarkerAlt, FaPhone
 
 const Footer = () => {
     return (
-        <footer className="bg-gradient-to-r from-[#0A5DA6] to-[#0A5DA6] text-white py-12">
+        <footer id="footer" className="bg-gradient-to-r from-[#0A5DA6] to-[#0A5DA6] text-white py-12">
             <div className="container mx-auto text-center">
                 <h2 className="text-2xl font-bold mb-6">Contactez-nous</h2>
                 <div className="flex flex-col md:flex-row justify-center items-center md:justify-between mb-8 text-center md:text-left space-y-8 md:space-y-0 md:space-x-8">
