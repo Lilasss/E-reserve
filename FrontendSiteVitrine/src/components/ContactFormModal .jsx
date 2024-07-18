@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
 import emailjs from 'emailjs-com';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import '../components/ContactFormModal.css';
 
@@ -17,7 +17,6 @@ const ContactFormModal = ({ onClose }) => {
     const modalRef = useRef(null);
 
     useEffect(() => {
-
         document.body.classList.add('modal-open');
         modalRef.current.style.opacity = 0;
         setTimeout(() => {
@@ -56,14 +55,18 @@ const ContactFormModal = ({ onClose }) => {
 
         emailjs.send('service_gw3lhva', 'template_mwdvh48', templateParams, 'c_W-pgJXIt2ZYFSwf')
             .then((response) => {
-                console.log('Email successfully sent!', response.status, response.text);
-                toast.success('Email envoyé avec succès !');
-                onClose(); // Fermer la modal avant d'afficher la notification de succès
+                console.log('Email envoyé !', response.status, response.text);
+                toast.success('Email envoyé !');
+                onClose();
             })
             .catch((error) => {
                 console.error('Error sending email:', error);
                 toast.error('Erreur lors de l\'envoi de l\'email.');
             });
+    };
+
+    const handleCancel = () => {
+        onClose();
     };
 
     return (
@@ -86,7 +89,7 @@ const ContactFormModal = ({ onClose }) => {
                                         type="text"
                                         id="name"
                                         name="name"
-                                        placeholder="votre nom"
+                                        placeholder="Votre nom"
                                         value={formData.name}
                                         onChange={handleChange}
                                     />
@@ -140,12 +143,19 @@ const ContactFormModal = ({ onClose }) => {
                                         onChange={handleChange}
                                     />
                                 </div>
-                                <div className="text-center">
+                                <div className="flex justify-end space-x-4">
                                     <button
                                         type="submit"
-                                        className="px-6 py-2 bg-blue-600 text-white font-bold rounded-full shadow-lg hover:bg-blue-700 transition duration-300"
+                                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition duration-300"
                                     >
                                         Envoyer
+                                    </button>
+                                    <button
+                                        type="button"
+                                        onClick={handleCancel}
+                                        className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition duration-300"
+                                    >
+                                        Annuler
                                     </button>
                                 </div>
                             </form>
@@ -153,7 +163,6 @@ const ContactFormModal = ({ onClose }) => {
                     </section>
                 </div>
             </div>
-            <ToastContainer />
         </>
     );
 };
