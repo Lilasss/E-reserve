@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { FaArrowDown } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 import backgroundImage from '../assets/1reserve.jpeg';
 
 const Header = () => {
@@ -32,17 +33,18 @@ const Header = () => {
 
     return (
         <>
-            <header className="bg-gradient-to-r from-[#0A5DA6] to-[#0A5DA6] p-5 text-white fixed top-0 w-full z-50 shadow-lg">
+            <header id='header' className="bg-gradient-to-r from-[#0A5DA6] to-[#0A5DA6] p-5 text-white fixed top-0 w-full z-50 shadow-lg">
                 <div className="container mx-auto flex justify-between items-center">
                     <h1 className="text-2xl font-bold flex items-center">
                         <span className="mr-2"></span> E-Reserve
                     </h1>
                     <nav>
                         <ul className="flex space-x-4">
-                            <li><a href="#introduction" className="hover:text-yellow-300 transition">Accueil</a></li>
+                            <li><a href="#header" className="hover:text-yellow-300 transition">Accueil</a></li>
                             <li><a href="#services" className="hover:text-yellow-300 transition">Services</a></li>
                             <li><a href="#benefits" className="hover:text-yellow-300 transition">Avantages</a></li>
                             <li><a href="#footer" className="hover:text-yellow-300 transition">Contact</a></li>
+                            <li><Link to="/login" className="hover:text-yellow-300 transition">Se connecter</Link></li>
                         </ul>
                     </nav>
                 </div>
