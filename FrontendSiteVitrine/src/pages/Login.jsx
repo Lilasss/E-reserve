@@ -13,21 +13,22 @@ const Login = () => {
 
     return (
         <div className="flex justify-center items-center min-h-screen bg-gray-100">
-            <div className="hidden md:flex justify-center items-center" style={{ width: '400px', height: '600px' }}>
+            <div className="hidden md:flex justify-center items-center" style={{ width: '500px', height: '500px', marginRight: '100px', marginTop: '90PX' }}>
                 <img
                     src={illustration}
                     alt="Illustration"
                     className="object-cover w-full h-full rounded-l-lg"
                 />
             </div>
-            <div className="flex justify-center items-center w-full md:w-auto bg-white border border-gray-300 rounded-lg shadow-lg p-8 animate__animated animate__fadeIn" style={{ width: '400px', height: '600px' }}>
+            <div className="flex justify-center items-center w-full md:w-auto bg-white border border-gray-300 rounded-lg shadow-lg p-8 animate__animated animate__fadeIn" style={{ width: '400px', height: '500px' }}>
                 <div className="w-full">
                     <div className="text-center mb-6">
-                        <img
-                            src="https://via.placeholder.com/150"
+                        {/* <img
+                            src=""
                             alt="Logo"
                             className="mx-auto h-16 w-16"
-                        />
+                        /> */}
+                        <h1>E-reserve</h1>
                         <h2 className="text-3xl font-bold text-gray-900 mt-4">Connectez-Vous</h2>
                     </div>
                     <form onSubmit={handleSubmit}>
@@ -77,5 +78,6 @@ const Login = () => {
         </div>
     );
 };
+
 
 export default Login;
