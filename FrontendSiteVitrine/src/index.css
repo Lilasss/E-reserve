@@ -1,9 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
-
+ 
 body {
-    font-family: 'Inter', sans-serif;
+    @apply font-sans;
     margin: 0;
     padding: 0;
+    
     background-color: #f9fafb;
 }
 
@@ -34,7 +35,6 @@ textarea {
     transition: border-color 0.3s ease;
 }
 
-/* Bouton de retour en haut de page */
 .fixed-button {
     position: fixed;
     bottom: 20px;
