@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { FaArrowDown } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
 import backgroundImage from '../assets/1reserve.jpeg';
+import logoImage from '../assets/1logo.png'; 
 
 const Header = () => {
     const navigate = useNavigate();
@@ -41,8 +42,8 @@ const Header = () => {
         <>
             <header id='header' className="bg-gradient-to-r from-[#0A5DA6] to-[#0A5DA6] p-5 text-white fixed top-0 w-full z-50 shadow-lg">
                 <div className="container mx-auto flex justify-between items-center">
-                    <h1 className="text-2xl font-bold flex items-center">
-                        <span className="mr-2"></span> E-Reserve
+                    <h1 className="flex items-center">
+                        <img src={logoImage} alt="E-Reserve" className="h-12 w-auto" /> 
                     </h1>
                     <nav>
                         <ul className="flex space-x-4">
