@@ -53,7 +53,7 @@ const ContactFormModal = ({ onClose }) => {
             message: formData.message
         };
 
-        emailjs.send('service_gw3lhva', 'template_mwdvh48', templateParams, 'c_W-pgJXIt2ZYFSwf')
+        emailjs.send('service_wisl5hl', 'template_pa46nin', templateParams, 'A2dsNKc1M9am1QxaD')
             .then((response) => {
                 console.log('Email envoyé !', response.status, response.text);
                 toast.success('Email envoyé !');
