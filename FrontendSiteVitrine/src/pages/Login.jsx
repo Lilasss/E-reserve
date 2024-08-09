@@ -39,6 +39,7 @@ const Login = () => {
     };
 
     return (
+        
         <div className="flex justify-center items-center min-h-screen bg-gray-100">
             <div className="hidden md:flex justify-center items-center" style={{ width: '500px', height: '500px', marginRight: '100px', marginTop: '90PX' }}>
                 <img
