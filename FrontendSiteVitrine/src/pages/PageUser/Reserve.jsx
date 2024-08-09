@@ -31,6 +31,11 @@ const Reserve = () => {
       },
       width: '100%',
       maxWidth: '400px',
+      borderRight: 'none',
+      paddingRight: '0px',
+    }),
+    indicatorSeparator: () => ({
+      display: 'none',
     }),
     menu: (base) => ({
       ...base,
@@ -68,7 +73,7 @@ const Reserve = () => {
             onSubmit={handleSubmit}
             className="bg-white p-6 rounded-lg shadow-lg flex flex-wrap gap-6 items-center"
           >
-            <div className="flex flex-col flex-1">
+            <div className="flex flex-col flex-1 min-w-[200px]">
               <label className="block text-gray-500 mb-2">Départ</label>
               <Select
                 styles={customStyles}
@@ -80,7 +85,7 @@ const Reserve = () => {
               />
             </div>
 
-            <div className="flex flex-col flex-1">
+            <div className="flex flex-col flex-1 min-w-[200px]">
               <label className="block text-gray-500 mb-2">Arrivée</label>
               <Select
                 styles={customStyles}
@@ -92,37 +97,38 @@ const Reserve = () => {
               />
             </div>
 
-            <div className="flex flex-col flex-1">
+            <div className="flex flex-col flex-1 min-w-[200px]">
               <label className="block text-gray-500 mb-2">Date du voyage</label>
               <input
                 type="date"
-                className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                className="w-full px-4 py-3 border rounded-lg focus:outline-none"
                 value={date}
                 onChange={(e) => setDate(e.target.value)}
+                style={{ borderColor: '#e2e8f0', boxShadow: 'none' }}
               />
             </div>
 
-            <div className="flex flex-col flex-1">
-              <label className="block text-gray-500 mb-2">Voyageur(s)</label>
+            <div className="flex flex-col flex-1 min-w-[200px]">
+              <label className="block text-gray-500 mb-2">Voyageurs</label>
               <div className="flex items-center">
                 <button
                   type="button"
-                  className="bg-gray-200 px-4 py-2 rounded-l-lg focus:outline-none hover:bg-gray-300 transition duration-200"
+                  className="bg-gray-200 px-4 py-2 border border-gray-300 focus:outline-none hover:bg-gray-300 transition duration-150 ease-in-out"
                   onClick={() => setPassengers(passengers > 1 ? passengers - 1 : 1)}
                 >-</button>
-                <span className="px-4">{passengers}</span>
+                <span className="px-7">{passengers}</span>
                 <button
                   type="button"
-                  className="bg-gray-200 px-4 py-2 rounded-r-lg focus:outline-none hover:bg-gray-300 transition duration-200"
+                  className="bg-gray-200 px-4 py-2 border border-gray-300 focus:outline-none hover:bg-gray-300 transition duration-150 ease-in-out"
                   onClick={() => setPassengers(passengers + 1)}
                 >+</button>
               </div>
             </div>
 
-            <div className="flex items-center flex-shrink-0 w-full md:w-auto mt-5">
+            <div className="flex items-center flex-shrink-0 w-full md:w-auto mt-6">
               <button
                 type="submit"
-                className="flex items-center justify-center bg-blue-500 text-white p-3 rounded-lg focus:outline-none hover:bg-blue-600 transition duration-300"
+                className="flex items-center justify-center bg-green-500 text-white p-3 rounded-md focus:outline-none hover:bg-green-600 transition duration-300"
                 style={{ height: '48px' }}
               >
                 <FaSearch className="w-6 h-6" />
