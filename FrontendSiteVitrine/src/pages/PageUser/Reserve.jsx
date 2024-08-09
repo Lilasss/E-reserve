@@ -2,12 +2,25 @@ import React, { useState } from 'react';
 import Select from 'react-select';
 import { FaMapMarkerAlt, FaSearch } from 'react-icons/fa';
 import Navbar from './Navbar';
+import Place from './Place';
 
 const Reserve = () => {
   const [departure, setDeparture] = useState(null);
   const [arrival, setArrival] = useState(null);
   const [date, setDate] = useState('');
   const [passengers, setPassengers] = useState(1);
+  const [horaires, setHoraires] = useState({
+    matin: false,
+    apresMidi: false,
+    soir: false,
+  });
+
+  const handleCheckboxChange = (e) => {
+    setHoraires({
+      ...horaires,
+      [e.target.name]: e.target.checked,
+    });
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -63,17 +76,17 @@ const Reserve = () => {
     <>
       <Navbar />
       <div className="pt-28 pb-8 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-5xl mx-auto">
+        <div className="max-w-7xl mx-auto"> 
           <h2 className="text-xl mb-6 text-blue-800 flex items-center">
-            <span className="border-2 border-blue-800 rounded-full px-3 py-1 mr-3 text-sm">1</span>
+            <span className="border-2 border-blue-800 bg-blue-200 rounded-full px-3 py-1 mr-3 text-sm">1</span>
             Modifier l'itinéraire
           </h2>
 
           <form
             onSubmit={handleSubmit}
-            className="bg-white p-6 rounded-lg shadow-lg flex flex-wrap gap-6 items-center"
+            className="bg-white p-8 rounded-lg shadow-lg flex flex-wrap gap-8 items-center"
           >
-            <div className="flex flex-col flex-1 min-w-[200px]">
+            <div className="flex flex-col flex-1 min-w-[200px]"> 
               <label className="block text-gray-500 mb-2">Départ</label>
               <Select
                 styles={customStyles}
@@ -109,7 +122,7 @@ const Reserve = () => {
             </div>
 
             <div className="flex flex-col flex-1 min-w-[200px]">
-              <label className="block text-gray-500 mb-2">Voyageurs</label>
+              <label className="block text-gray-500 mb-2">Voyageur(s)</label>
               <div className="flex items-center">
                 <button
                   type="button"
@@ -125,11 +138,47 @@ const Reserve = () => {
               </div>
             </div>
 
+            <div className="flex flex-col flex-1 min-w-[200px]">
+              <label className="block text-gray-500 mb-2">Horaires</label>
+              <div className="flex flex-col">
+                <label className="inline-flex items-center mt-2">
+                  <input
+                    type="checkbox"
+                    name="matin"
+                    checked={horaires.matin}
+                    onChange={handleCheckboxChange}
+                    className="form-checkbox text-blue-600"
+                  />
+                  <span className="ml-2 text-gray-700">Matin</span>
+                </label>
+                <label className="inline-flex items-center mt-2">
+                  <input
+                    type="checkbox"
+                    name="apresMidi"
+                    checked={horaires.apresMidi}
+                    onChange={handleCheckboxChange}
+                    className="form-checkbox text-blue-600"
+                  />
+                  <span className="ml-2 text-gray-700">Après-Midi</span>
+                </label>
+                <label className="inline-flex items-center mt-2">
+                  <input
+                    type="checkbox"
+                    name="soir"
+                    checked={horaires.soir}
+                    onChange={handleCheckboxChange}
+                    className="form-checkbox text-blue-600"
+                  />
+                  <span className="ml-2 text-gray-700">Soir</span>
+                </label>
+              </div>
+            </div>
+
             <div className="flex items-center flex-shrink-0 w-full md:w-auto mt-6">
               <button
                 type="submit"
                 className="flex items-center justify-center bg-green-500 text-white p-3 rounded-md focus:outline-none hover:bg-green-600 transition duration-300"
-                style={{ height: '48px' }}
+                style={{ height: '48px', width: '48px' }}
               >
                 <FaSearch className="w-6 h-6" />
               </button>
@@ -137,6 +186,7 @@ const Reserve = () => {
           </form>
         </div>
       </div>
+      <Place/>
     </>
   );
 };
