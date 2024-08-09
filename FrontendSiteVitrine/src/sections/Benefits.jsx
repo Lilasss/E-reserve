@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTools, faLaptopCode, faBolt, faLock } from '@fortawesome/free-solid-svg-icons';
 import ContactFormModal from '../components/ContactFormModal ';
-import '../components/ContactFormModal.css'; // Assurez-vous d'importer le fichier CSS avec les styles
-
+import '../components/ContactFormModal.css';
 const benefits = [
     {
         title: 'Gestion Centralisée',
@@ -49,7 +48,7 @@ const Benefits = () => {
             <div className={modalOpen ? 'blur-background' : ''}>
                 <section id="benefits" className="bg-gray-100 py-16">
                     <div className="container mx-auto text-center">
-                        <h2 className="text-4xl font-bold mb-10 text-gray-800">Pourquoi Choisir E-reserve ?</h2>
+                        <h2 className="text-4xl font-bold mb-10 text-gray-700">Pourquoi Choisir E-reserve ?</h2>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                             {benefits.map((benefit, index) => (
                                 <div

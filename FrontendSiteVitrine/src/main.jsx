@@ -28,6 +28,7 @@ const router = createBrowserRouter([
     path: "inscription",
     element: <Inscription />
   }
+  
 ])
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>

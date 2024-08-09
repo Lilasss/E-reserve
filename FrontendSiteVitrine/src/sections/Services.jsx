@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClipboardList, faHandsHelping, faGlobe } from '@fortawesome/free-solid-svg-icons';
 
 const services = [
-    { title: 'Gestion de Réservations', description: 'Gérez toutes vos réservations en un seul endroit, quels que soient les types de services.', icon: faClipboardList },
+    { title: 'Gestion de Réservations', description: 'Présentation des disponibilités, sélection des dates et des options de tarification, saisie des informations de contact et de paiement', icon: faClipboardList },
     { title: 'Services Personnalisés', description: 'Profitez de services personnalisés pour répondre à tous vos besoins, qu’ils soient simples ou complexes.', icon: faHandsHelping },
     { title: 'Solutions Globales', description: 'Accédez à une gamme complète de solutions pour divers secteurs et industries.', icon: faGlobe }
 ];
@@ -12,7 +12,7 @@ const Services = () => {
     return (
         <section id="services" className="bg-gray-100 py-12">
             <div className="container mx-auto text-center">
-                <h2 className="text-4xl font-bold mb-10 text-gray-800">Nos Services</h2>
+                <h2 className="text-4xl font-bold mb-10 text-gray-700">Nos Services</h2>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                     {services.map((service, index) => (
                         <div
