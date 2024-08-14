@@ -74,12 +74,11 @@ const Reserve = () => {
 
   return (
     <>
-      <Navbar />
       <div className="pt-28 pb-8 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto"> 
           <h2 className="text-xl mb-6 text-blue-800 flex items-center">
-            <span className="border-2 border-blue-800 bg-blue-200 rounded-full px-3 py-1 mr-3 text-sm">1</span>
-            Modifier l'itinéraire
+            {/* <span className="border-2 border-blue-800 bg-blue-200 rounded-full px-3 py-1 mr-3 text-sm">1</span> */}
+            Rechercher
           </h2>
 
           <form

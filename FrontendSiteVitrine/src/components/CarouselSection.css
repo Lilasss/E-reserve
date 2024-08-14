@@ -1,0 +1,16 @@
+.carousel-item {
+    transition: transform 0.3s ease-in-out, background-color 0.3s ease-in-out;
+}
+
+.slick-center .carousel-item {
+    transform: scale(1.2); /* Agrandit l'élément au centre */
+    background-color: #f0f0f0; /* Change légèrement la couleur de fond */
+}
+
+.slick-slide {
+    transition: transform 0.3s ease-in-out;
+}
+
+.scale-110 {
+    transform: scale(1.2); /* Applique un effet de zoom */
+}
