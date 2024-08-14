@@ -1,9 +1,10 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCar, faBed, faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom';
 
 const items = [
-    { title: 'EVENEMENT', icon: faCalendarAlt },
+    { title: 'ÉVÉNEMENT', icon: faCalendarAlt },
     { title: 'CHAMBRE', icon: faBed },
     { title: 'TRANSPORT', icon: faCar },
 ];
@@ -15,7 +16,8 @@ const StaticDisplay = () => {
             <div className="w-full max-w-4xl">
                 <div className="flex justify-center items-center space-x-8">
                     {items.map((item, index) => (
-                        <div
+                        <Link 
+                            to="/reservation"
                             key={index}
                             className="flex-shrink-0 w-1/3 flex flex-col items-center justify-center p-6 transition-transform duration-300 transform hover:scale-105"
                         >
@@ -30,7 +32,7 @@ const StaticDisplay = () => {
                             <p className="mt-4 text-xl font-medium text-gray-600 transition-transform duration-300 transform hover:scale-105">
                                 {item.title}
                             </p>
-                        </div>
+                        </Link>
                     ))}
                 </div>
             </div>

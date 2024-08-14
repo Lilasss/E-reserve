@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import 'animate.css';
 import illustration from '../assets/Connecter.png';
-import logoImage from '../assets/2logo.png'; 
+import logoImage from '../assets/2logo.png';
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -10,17 +11,22 @@ const Login = () => {
     const [lastName, setLastName] = useState('');
     const [phone, setPhone] = useState('');
     const [isLogin, setIsLogin] = useState(true);
-    const [isEmailSent, setIsEmailSent] = useState(false); // État pour suivre l'envoi de l'email
+    const [isEmailSent, setIsEmailSent] = useState(false);
+
+    const navigate = useNavigate(); // Initialize useNavigate
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (isLogin) {
-            console.log(`Email: ${email}, Password: ${password}`);
-            // Ajoutez ici la logique pour la connexion
+            if (email === 'razafindramboahantasoa@gmail.com' && password === '2202') {
+                navigate('/superadmin/dashboard');
+            } else {
+                alert('Identifiants incorrects');
+            }
         } else {
+            // Logique pour l'inscription et l'envoi de l'email de vérification
             console.log(`Email: ${email}, Password: ${password}, FirstName: ${firstName}, LastName: ${lastName}, Phone: ${phone}`);
-            // Ajoutez ici la logique pour l'inscription
-            // Envoyer l'email de vérification
+
             const response = await fetch('/api/send-verification-email', {
                 method: 'POST',
                 headers: {
@@ -32,14 +38,12 @@ const Login = () => {
             if (response.ok) {
                 setIsEmailSent(true);
             } else {
-                // Gérer les erreurs ici
                 console.error('Échec de l\'envoi de l\'email de vérification.');
             }
         }
     };
 
     return (
-        
         <div className="flex justify-center items-center min-h-screen bg-gray-100">
             <div className="hidden md:flex justify-center items-center" style={{ width: '500px', height: '500px', marginRight: '100px', marginTop: '90PX' }}>
                 <img
@@ -51,7 +55,7 @@ const Login = () => {
             <div className="flex justify-center items-center w-full md:w-auto bg-white border border-gray-300 rounded-lg shadow-lg p-8 animate__animated animate__fadeIn" style={{ width: '400px', height: 'auto' }}>
                 <div className="w-full">
                     <div className="text-center mb-6">
-                        <img src={logoImage} alt="E-Reserve" className="w-32 h-auto mx-auto" /> 
+                        <img src={logoImage} alt="E-Reserve" className="w-32 h-auto mx-auto" />
                         <h2 className="text-3xl font-bold text-blue-800 mt-4">
                             {isLogin ? 'Connectez-Vous' : 'Inscrivez-Vous'}
                         </h2>

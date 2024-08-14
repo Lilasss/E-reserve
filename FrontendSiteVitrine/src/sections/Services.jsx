@@ -22,11 +22,12 @@ const Services = () => {
                                 key={index}
                                 className="bg-white p-8 shadow-lg rounded-lg transform transition duration-300 hover:scale-105"
                             >
-                                <div className="text-4xl mb-4 text-blue-600">
+                                <div className="text-4xl mb-4 text-blue-700">
                                     <FontAwesomeIcon icon={service.icon} />
                                 </div>
-                                <h3 className="text-2xl font-bold mb-4 text-blue-600">{service.title}</h3>
+                                <h3 className="text-2xl font-bold mb-4 text-blue-700">{service.title}</h3>
                                 <p className="text-gray-600">{service.description}</p>
+
                             </div>
 
                         ))}
