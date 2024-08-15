@@ -10,8 +10,8 @@ const DonutChart = ({ remainingDays }) => {
         labels: ['Délai restant', 'Temps écoulé'],
         datasets: [
             {
-                data: [remainingDays, 30 - remainingDays], // Exemple de données
-                backgroundColor: ['#4CAF50', '#FFC107'], // Couleurs modernisées
+                data: [remainingDays, 30 - remainingDays],
+                backgroundColor: ['#4CAF50', '#FFC107'], 
                 borderWidth: 1,
             },
         ],
@@ -21,7 +21,7 @@ const DonutChart = ({ remainingDays }) => {
         maintainAspectRatio: false,
         plugins: {
             legend: {
-                display: false, // Masquer la légende si vous ne l'utilisez pas
+                display: false,
             },
             tooltip: {
                 callbacks: {
@@ -33,7 +33,7 @@ const DonutChart = ({ remainingDays }) => {
                 },
             },
         },
-        cutout: '60%', // Modifier le trou du donut pour une meilleure apparence
+        cutout: '60%',
     };
 
     return (

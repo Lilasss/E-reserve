@@ -14,7 +14,7 @@ const Dashboard = () => {
             </div>
             <div className="flex items-center justify-between">
               <span className="text-gray-700">Admin Événement</span>
-              <span className="text-indigo-600 font-bold text-lg">0</span> {/* Remplacez "3" par la valeur réelle */}
+              <span className="text-indigo-600 font-bold text-lg">0</span>
             </div>
           </div>
         </div>
@@ -24,11 +24,11 @@ const Dashboard = () => {
           <div className="space-y-3">
             <div className="flex items-center justify-between">
               <span className="text-gray-700">Transport</span>
-              <span className="text-indigo-600 font-bold text-lg">0</span> {/* Remplacez "20" par la valeur réelle */}
+              <span className="text-indigo-600 font-bold text-lg">0</span>
             </div>
             <div className="flex items-center justify-between">
               <span className="text-gray-700">Événement</span>
-              <span className="text-indigo-600 font-bold text-lg">0</span> {/* Remplacez "15" par la valeur réelle */}
+              <span className="text-indigo-600 font-bold text-lg">0</span> 
             </div>
           </div>
         </div>

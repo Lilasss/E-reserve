@@ -10,21 +10,20 @@
 }
 
 .react-select__control--is-focused {
-    border-color: #D1D5DB; /* Indigo-500 */
-    box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.4); /* Indigo-500 at 40% */
+    border-color: #D1D5DB; 
+    box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.4); 
 }
 
 .react-select__menu {
-    border-radius: 0.5rem; /* Rounded-lg */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    border-radius: 0.5rem; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     z-index: 100;
 }
 
 .react-select__option--is-focused {
-    background-color: #f3f4f6; /* Gray-100 */
+    background-color: #f3f4f6; 
 }
 
 .react-select__option--is-selected {
-    /* background-color: #6366f1; Indigo-500 */
     color: white;
 }

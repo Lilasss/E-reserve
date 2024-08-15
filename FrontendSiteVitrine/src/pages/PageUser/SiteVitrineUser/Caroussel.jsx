@@ -5,7 +5,6 @@ import 'slick-carousel/slick/slick-theme.css';
 
 import image1 from '../assets/flyer.jpeg';
 
-// Fonction pour précharger les images
 const preloadImages = (imageUrls) => {
   imageUrls.forEach((url) => {
     const img = new Image();
@@ -21,7 +20,6 @@ const Carousel = () => {
     { url: image1, link: '/page1' },
   ];
 
-  // Précharger les images
   React.useEffect(() => {
     preloadImages(images.map(image => image.url));
   }, [images]);

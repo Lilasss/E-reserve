@@ -4,8 +4,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { Link } from 'react-router-dom';
 
 const Evenement = () => {
-    const [startDate, setStartDate] = useState(null); // Initialisez à null
-
+    const [startDate, setStartDate] = useState(null); 
     return (
         <div className="p-6">
             <h1 className="text-2xl font-semibold mb-4">Mes évènements</h1>
