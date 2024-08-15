@@ -11,6 +11,10 @@ import Sidebar from './pages/PageAdmin/views/Sidebar.jsx'
 import AdminPage from './pages/PageSuperAdmin/Adminpage.jsx'
 import Dashboard from './pages/PageSuperAdmin/Dashboard.jsx'
 import AdminManagement from './pages/PageSuperAdmin/AdminManagement.jsx'
+import Adminpages from './pages/PageAdmin/services/Adminpages.jsx'
+import AdDashboard from './pages/PageAdmin/services/AdDashboard.jsx'
+import Evenement from './pages/PageAdmin/services/Evenement.jsx'
+import CreateEvent from './pages/PageAdmin/services/CreateEvent.jsx'
 
 
 const router = createBrowserRouter([
@@ -60,6 +64,26 @@ const router = createBrowserRouter([
     ],
   },
 
+  {
+    path: "admin",
+    element: <Adminpages />,
+    children: [
+      {
+        path: "admindashboard",
+        element: <AdDashboard />,
+      },
+
+      {
+        path: "evenement",
+        element: <Evenement />,
+      },
+
+      {
+        path: "createevent",
+        element: <CreateEvent />, // Ajoutez cette ligne
+      },
+    ],
+  },
 
 ])
 ReactDOM.createRoot(document.getElementById('root')).render(

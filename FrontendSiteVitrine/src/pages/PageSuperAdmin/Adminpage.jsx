@@ -2,7 +2,6 @@ import React from 'react';
 import Sidebar from '../PageAdmin/views/Sidebar';
 import AdminNavbar from './AdminNavbar';
 import { Outlet } from 'react-router-dom';
-import Dashboard from './Dashboard';
 
 const AdminPage = () => {
     return (
