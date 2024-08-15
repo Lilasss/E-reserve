@@ -24,11 +24,9 @@ const Reserve = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Ajouter la logique de soumission du formulaire ici
   };
 
   const locations = [
-    // Ajouter les options de lieu ici
   ];
 
   const customStyles = {

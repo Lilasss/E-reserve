@@ -6,7 +6,6 @@ import { Link } from "react-router-dom";
 function SidebarAdmin() {
     return (
         <div className="flex flex-col h-screen p-5 bg-gray-800 w-64 fixed top-0 left-0 z-40 transition-transform duration-300 ease-in-out">
-            {/* Logo Section */}
             <div className="flex items-center justify-center mb-10">
                 <img src={logo} alt="Logo" className="h-12 w-auto" />
             </div>

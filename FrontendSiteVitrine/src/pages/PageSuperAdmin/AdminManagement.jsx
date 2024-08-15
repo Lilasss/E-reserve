@@ -71,7 +71,6 @@ function AdminManagement() {
             email: 'sopakal.@gmail.com',
             contractEndDate: '2024-08-20',
         },
-        // Ajoutez d'autres admins ici
     ];
 
     return (
@@ -83,7 +82,7 @@ function AdminManagement() {
                         ${activeTab === 'admin' ? 'border-b-4 border-teal-600 text-gray-800 bg-white shadow-md' : 'text-gray-600'}`}
                         onClick={() => setActiveTab('admin')}
                     >
-                        Registre Administrateur
+                        Registre Admin
                     </button>
 
                     <button

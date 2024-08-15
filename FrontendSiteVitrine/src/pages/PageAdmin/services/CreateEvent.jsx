@@ -19,7 +19,6 @@ const CreateEvent = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Handle form submission logic here
         console.log({ title, category, eventDate, location });
     };
 

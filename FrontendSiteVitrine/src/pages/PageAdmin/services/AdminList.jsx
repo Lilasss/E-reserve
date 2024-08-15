@@ -4,7 +4,7 @@ import DonutChart from './DonutChart';
 const AdminList = ({ admins }) => {
     return (
         <div className="w-full bg-gray-50 p-6 rounded-xl shadow-lg border border-gray-300">
-            <h2 className="text-xl text-center text-gray-900 mb-6">Liste des Administrateurs</h2>
+            <h2 className="text-base text-center text-gray-900 mb-6">Liste des Administrateurs</h2>
 
             <div className="overflow-x-auto">
                 <table className="w-full bg-white border-collapse rounded-lg overflow-hidden shadow-md">
