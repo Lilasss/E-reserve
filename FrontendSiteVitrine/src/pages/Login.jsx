@@ -18,8 +18,10 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (isLogin) {
-            if (email === 'razafindramboahantasoa@gmail.com' && password === '2202') {
-                navigate('/superadmin/dashboard');
+            if (email === 'nomena@gmail.com' && password === '2202') {
+                navigate('/admin/admindashboard');
+            } else if (email === 'razafindramboahantasoa@gmail.com' && password === '2202') {
+                navigate('/superadmin/adminmanagement'); // Redirect to SuperAdmin dashboard
             } else {
                 alert('Identifiants incorrects');
             }
