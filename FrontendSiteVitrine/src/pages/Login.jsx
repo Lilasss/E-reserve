@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useNavigate } from 'react-router-dom';
 import 'animate.css';
 import illustration from '../assets/Connecter.png';
 import logoImage from '../assets/2logo.png';
@@ -13,20 +13,19 @@ const Login = () => {
     const [isLogin, setIsLogin] = useState(true);
     const [isEmailSent, setIsEmailSent] = useState(false);
 
-    const navigate = useNavigate(); // Initialize useNavigate
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (isLogin) {
             if (email === 'nomena@gmail.com' && password === '2202') {
-                navigate('/admin/admindashboard');
+                navigate('/admin/evenement');
             } else if (email === 'razafindramboahantasoa@gmail.com' && password === '2202') {
-                navigate('/superadmin/adminmanagement'); // Redirect to SuperAdmin dashboard
+                navigate('/superadmin/adminmanagement');
             } else {
                 alert('Identifiants incorrects');
             }
         } else {
-            // Logique pour l'inscription et l'envoi de l'email de vérification
             console.log(`Email: ${email}, Password: ${password}, FirstName: ${firstName}, LastName: ${lastName}, Phone: ${phone}`);
 
             const response = await fetch('/api/send-verification-email', {

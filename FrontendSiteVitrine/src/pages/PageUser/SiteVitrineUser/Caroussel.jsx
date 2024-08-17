@@ -58,86 +58,88 @@ const Carousel = () => {
 
   return (
     <>
-      <div className="flex items-center justify-center my-10" style={{ marginTop: '100px' }}>
-        <div className="relative w-full max-w-lg">
-          <input
-            type="text"
-            placeholder="Rechercher un événement..."
-            className="w-full h-10 pl-10 pr-4 text-gray-700 bg-gray-100 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-indigo-300"
-          />
-          <div className="absolute inset-y-0 left-0 flex items-center pl-3">
-            <svg className="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24">
-              <path d="M21 21l-4.35-4.35M17.65 17.65a7.5 7.5 0 1 0-10.6-10.6 7.5 7.5 0 0 0 10.6 10.6z"></path>
-            </svg>
+      <div className="my-10" style={{ marginTop: '100px' }}>
+        <div className="flex flex-col items-center mb-4">
+          <div className="relative w-full max-w-lg">
+            <input
+              type="text"
+              placeholder="Rechercher un événement..."
+              className="w-full h-12 pl-12 pr-4 text-gray-700 bg-white border border-gray-300 rounded-lg shadow-md focus:outline-none focus:ring-1 focus:ring-gray-400 transition-shadow duration-300"
+            />
+            <div className="absolute inset-y-0 left-0 flex items-center pl-3">
+              <svg className="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24">
+                <path d="M21 21l-4.35-4.35M17.65 17.65a7.5 7.5 0 1 0-10.6-10.6 7.5 7.5 0 0 0 10.6 10.6z"></path>
+              </svg>
+            </div>
           </div>
         </div>
-      </div>
+        <div style={{ position: 'relative', paddingTop: '0px' }}>
+          <Slider {...settings}>
+            {images.map((image, index) => (
+              <div key={index} style={{ padding: '0px' }}>
+                <a href={image.link}>
+                  <div style={{
+                    width: '100%',
+                    height: '390px',
+                    overflow: 'hidden',
+                    borderRadius: '20px',
+                    position: 'relative',
+                    boxSizing: 'border-box',
+                    backgroundColor: '#f5f5f5',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
+                  }}>
+                    <img
+                      src={image.url}
+                      alt={`Slide ${index + 1}`}
+                      style={{
+                        maxWidth: '100%',
+                        maxHeight: '100%',
+                        objectFit: 'contain',
+                      }}
+                    />
+                  </div>
+                </a>
+              </div>
+            ))}
+          </Slider>
+          <style>{`
+            .slick-prev,
+            .slick-next {
+              width: 40px;
+              height: 40px;
+              border-radius: 50%;
+              color: white;
+              z-index: 1;
+              background: rgba(0, 0, 0, 0.5);
+            }
 
-      <div style={{ position: 'relative', paddingTop: '0px' }}>
-        <Slider {...settings}>
-          {images.map((image, index) => (
-            <div key={index} style={{ padding: '0px' }}>
-              <a href={image.link}>
-                <div style={{
-                  width: '100%',
-                  height: '390px',
-                  overflow: 'hidden',
-                  borderRadius: '15px',
-                  position: 'relative',
-                  boxSizing: 'border-box',
-                  backgroundColor: '#f5f5f5',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}>
-                  <img
-                    src={image.url}
-                    alt={`Slide ${index + 1}`}
-                    style={{
-                      maxWidth: '100%',
-                      maxHeight: '100%',
-                      objectFit: 'contain', // image tsy tapaka
-                    }}
-                  />
-                </div>
-              </a>
-            </div>
-          ))}
-        </Slider>
-        <style>{`
-  .slick-prev,
-  .slick-next {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    color: white;
-    z-index: 1;
-  }
+            .slick-prev {
+              left: 10px;
+            }
 
-  .slick-prev {
-    left: 10px;
-  }
+            .slick-next {
+              right: 10px;
+            }
 
-  .slick-next {
-    right: 10px;
-  }
+            .slick-prev:before,
+            .slick-next:before {
+              font-size: 24px;
+              color: white;
+            }
 
-  .slick-prev:before,
-  .slick-next:before {
-    font-size: 24px;
-    color: white;
-  }
+            .slick-slide {
+              margin: 0px;
+              padding: 0px;
+            }
 
-  .slick-slide {
-    margin: 0px;
-    padding: 0px;
-  }
-  
-  .slick-list {
-    padding: 0px !important;
-  }
-`}</style>
-
+            .slick-list {
+              padding: 0px !important;
+            }
+          `}</style>
+        </div>
       </div>
     </>
   );

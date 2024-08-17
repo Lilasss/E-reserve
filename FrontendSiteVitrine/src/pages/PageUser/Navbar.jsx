@@ -17,6 +17,12 @@ const Navbar = () => {
               Accueil
             </a>
             <a
+              href="#evenement"
+              className="text-gray-900 hover:text-[#074E9B] px-3 py-2 rounded-md text-md font-medium transition duration-300 ease-in-out"
+            >
+              Événement
+            </a>
+            <a
               href="#voyage"
               className="text-gray-900 hover:text-[#074E9B] px-3 py-2 rounded-md text-md font-medium transition duration-300 ease-in-out"
             >
@@ -27,6 +33,12 @@ const Navbar = () => {
               className="text-gray-900 hover:text-[#074E9B] px-3 py-2 rounded-md text-md font-medium transition duration-300 ease-in-out"
             >
               Information
+            </a>
+            <a
+              href="#reservation"
+              className="text-gray-900 hover:text-[#074E9B] px-3 py-2 rounded-md text-md font-medium transition duration-300 ease-in-out"
+            >
+              Réservation de Transport
             </a>
             <a
               href="#login"

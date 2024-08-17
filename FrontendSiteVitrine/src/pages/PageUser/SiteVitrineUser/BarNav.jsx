@@ -1,15 +1,27 @@
-import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { FaChevronDown } from 'react-icons/fa';
 import logoImage from '../../../assets/1logo.png';
 import '../../../layout/Header.css';
-import Carousel from './Caroussel';
 import Transport from './Transport';
 import Reserve from '../Reserve';
-
+import Carousel from './Caroussel';
+import Footer from '../../../layout/Footer';
 
 const BarNav = () => {
     const navigate = useNavigate();
+    const location = useLocation();
+
+    useEffect(() => {
+        const queryParams = new URLSearchParams(location.search);
+        const section = queryParams.get('section');
+        if (section) {
+            const element = document.getElementById(section);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+    }, [location]);
 
     const scrollToSection = (id) => {
         const element = document.getElementById(id);
@@ -39,14 +51,14 @@ const BarNav = () => {
                                     <FaChevronDown className="ml-2 text-sm" style={{ fontWeight: 'normal' }} />
                                 </span>
                                 <ul className="absolute left-0 mt-2 w-48 bg-white text-blue-800 shadow-lg rounded-lg opacity-0 group-hover:opacity-100 group-hover:translate-y-1 transition-all duration-300 ease-in-out transform scale-95 group-hover:scale-100">
-                                    <li className="hover:bg-blue-800 hover:text-white transition rounded-t-lg">
-                                        <button onClick={() => scrollToSection('carousel')} className="block px-4 py-2">Événement</button>
+                                    <li className="hover:bg-blue-600 hover:text-white transition rounded-t-lg">
+                                        <button onClick={() => scrollToSection('carousel')} className="block px-4 py-2 text-left w-full">Événement</button>
                                     </li>
-                                    <li className="hover:bg-blue-800 hover:text-white transition">
-                                        <Link to="/services/chambre" className="block px-4 py-2">Chambre</Link>
+                                    <li className="hover:bg-blue-600 hover:text-white transition">
+                                        <button onClick={() => scrollToSection('chambre')} className="block px-4 py-2 text-left w-full">Chambre</button>
                                     </li>
-                                    <li className="hover:bg-blue-800 hover:text-white transition rounded-b-lg">
-                                        <button onClick={() => scrollToSection('reserve')} className="block px-4 py-2">Transport</button>
+                                    <li className="hover:bg-blue-600 hover:text-white transition rounded-b-lg">
+                                        <button onClick={() => scrollToSection('reserve')} className="block px-4 py-2 text-left w-full">Transport</button>
                                     </li>
                                 </ul>
                             </li>
@@ -62,16 +74,23 @@ const BarNav = () => {
                     </nav>
                 </div>
             </header>
+
             <div id="carousel">
                 <Carousel />
+            </div>
+
+            <div id="chambre">
+                {/* Contenu pour la chambre */}
             </div>
 
             <div id="reserve">
                 <Reserve />
             </div>
 
-            <div id="transport">
-                <Transport />
+            
+            
+            <div className="pt-32">
+                <Footer />
             </div>
         </>
     );

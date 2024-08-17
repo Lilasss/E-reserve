@@ -6,7 +6,6 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Home from './pages/Home.jsx'
 import Login from './pages/Login.jsx'
 import Inscription from './pages/Inscription.jsx'
-import BarNav from './pages/PageUser/SiteVitrineUser/BarNav.jsx'
 import Sidebar from './pages/PageAdmin/views/Sidebar.jsx'
 import AdminPage from './pages/PageSuperAdmin/Adminpage.jsx'
 import Dashboard from './pages/PageSuperAdmin/Dashboard.jsx'
@@ -15,6 +14,7 @@ import Adminpages from './pages/PageAdmin/services/Adminpages.jsx'
 import AdDashboard from './pages/PageAdmin/services/AdDashboard.jsx'
 import Evenement from './pages/PageAdmin/services/Evenement.jsx'
 import CreateEvent from './pages/PageAdmin/services/CreateEvent.jsx'
+import BarNav from './pages/PageUser/SiteVitrineUser/BarNav.jsx'
 
 
 const router = createBrowserRouter([
@@ -49,6 +49,12 @@ const router = createBrowserRouter([
   },
 
   {
+    path: "user",
+    element: <BarNav />,
+  
+  },
+
+  {
     path: "superadmin",
     element: <AdminPage />,
     children: [
@@ -80,9 +86,10 @@ const router = createBrowserRouter([
 
       {
         path: "createevent",
-        element: <CreateEvent />, // Ajoutez cette ligne
+        element: <CreateEvent />,
       },
     ],
+
   },
 
 ])

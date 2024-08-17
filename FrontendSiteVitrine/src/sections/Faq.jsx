@@ -34,19 +34,13 @@ const Faq = () => {
   const contentRefs = useRef([]);
 
   useEffect(() => {
-    if (expanded !== null) {
-      contentRefs.current.forEach((ref, index) => {
-        if (ref) {
-          ref.style.maxHeight = expanded === index ? `${ref.scrollHeight}px` : "0px";
-        }
-      });
-    } else {
-      contentRefs.current.forEach((ref) => {
-        if (ref) {
-          ref.style.maxHeight = "0px";
-        }
-      });
-    }
+    contentRefs.current.forEach((ref, index) => {
+      if (ref) {
+        ref.style.opacity = expanded === index ? "1" : "0";
+        ref.style.visibility = expanded === index ? "visible" : "hidden";
+        ref.style.maxHeight = expanded === index ? `${ref.scrollHeight}px` : "0px";
+      }
+    });
   }, [expanded]);
 
   return (
@@ -57,7 +51,7 @@ const Faq = () => {
           {faqData.map((faq, index) => (
             <div key={index} className="mb-4">
               <button
-                className="w-full text-left p-4 border border-gray-300 rounded-lg flex items-center justify-between bg-white shadow-md focus:outline-none focus:ring-0 transition-all"
+                className="w-full text-left p-4 border border-gray-300 rounded-lg flex items-center justify-between bg-white shadow-md focus:outline-none transition-all hover:bg-gray-100"
                 onClick={() => setExpanded(expanded === index ? null : index)}
               >
                 <span className="font-bold text-gray-700">{faq.question}</span>
@@ -67,13 +61,12 @@ const Faq = () => {
               </button>
               <div
                 ref={(el) => (contentRefs.current[index] = el)}
-                className={`overflow-hidden transition-max-height duration-500 ease-in-out ${expanded === index ? "max-h-screen" : "max-h-0"}`}
+                className={`overflow-hidden transition-all duration-500 ease-in-out ${expanded === index ? "opacity-100 visible" : "opacity-0 invisible"}`}
                 style={{
                   maxHeight: expanded === index ? `${contentRefs.current[index]?.scrollHeight}px` : '0px',
-                  backgroundColor: 'transparent', // Assure que le fond est transparent
                 }}
               >
-                <div className="p-4 text-center">
+                <div className="p-4 text-center bg-white">
                   {faq.answer}
                 </div>
               </div>

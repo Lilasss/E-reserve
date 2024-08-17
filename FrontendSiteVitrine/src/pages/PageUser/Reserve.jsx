@@ -73,18 +73,18 @@ const Reserve = () => {
   return (
     <>
       <div className="pt-28 pb-8 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto"> 
-          <h2 className="text-xl mb-6 text-blue-800 flex items-center">
-            {/* <span className="border-2 border-blue-800 bg-blue-200 rounded-full px-3 py-1 mr-3 text-sm">1</span> */}
-            Rechercher
+        <div className="max-w-7xl mx-auto">
+          {/* Ajoutez un titre ou une description pour la section Transport */}
+          <h2 className="text-2xl mb-6 text-blue-800 flex items-center font-semibold">
+            Réservation Transport
           </h2>
 
           <form
             onSubmit={handleSubmit}
             className="bg-white p-8 rounded-lg shadow-lg flex flex-wrap gap-8 items-center"
           >
-            <div className="flex flex-col flex-1 min-w-[200px]"> 
-              <label className="block text-gray-500 mb-2">Départ</label>
+            <div className="flex flex-col flex-1 min-w-[200px]">
+              <label className="block text-gray-500 mb-2">Lieu de départ</label>
               <Select
                 styles={customStyles}
                 value={departure}
@@ -96,7 +96,7 @@ const Reserve = () => {
             </div>
 
             <div className="flex flex-col flex-1 min-w-[200px]">
-              <label className="block text-gray-500 mb-2">Arrivée</label>
+              <label className="block text-gray-500 mb-2">Lieu d'arrivée</label>
               <Select
                 styles={customStyles}
                 value={arrival}
@@ -108,7 +108,7 @@ const Reserve = () => {
             </div>
 
             <div className="flex flex-col flex-1 min-w-[200px]">
-              <label className="block text-gray-500 mb-2">Date du voyage</label>
+              <label className="block text-gray-500 mb-2">Date</label>
               <input
                 type="date"
                 className="w-full px-4 py-3 border rounded-lg focus:outline-none"
@@ -119,7 +119,7 @@ const Reserve = () => {
             </div>
 
             <div className="flex flex-col flex-1 min-w-[200px]">
-              <label className="block text-gray-500 mb-2">Voyageur(s)</label>
+              <label className="block text-gray-500 mb-2">Place</label>
               <div className="flex items-center">
                 <button
                   type="button"
