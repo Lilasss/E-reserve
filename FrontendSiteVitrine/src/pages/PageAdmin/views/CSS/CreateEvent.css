@@ -6,7 +6,7 @@ button {
 }
 
 button:hover {
-    background-color: #2d3748; /* Couleur de fond survol pour le bouton */
+
     transform: scale(1.05); /* Légère augmentation de la taille survol */
     box-shadow: 0 0 8px rgba(0, 0, 0, 0.1); /* Ombre légère survol */
 }
