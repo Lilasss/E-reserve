@@ -59,18 +59,8 @@ function AdminManagement() {
     };
 
     const admins = [
-        {
-            id: 1,
-            name: 'Arat',
-            email: 'arat2@gmail.com',
-            contractEndDate: '2024-09-30',
-        },
-        {
-            id: 2,
-            name: 'SOPA kal',
-            email: 'sopakal.@gmail.com',
-            contractEndDate: '2024-08-20',
-        },
+        { id: 1, name: 'Arat', email: 'arat2@gmail.com', contractEndDate: '2024-12-31' },
+        { id: 2, name: 'SOPA kal', email: 'sopakal.@gmail.com', contractEndDate: '2025-01-15' },
     ];
 
     return (
@@ -87,15 +77,14 @@ function AdminManagement() {
 
                     <button
                         className={`ml-6 px-6 py-3 text-lg transition-colors duration-200 rounded-t-lg 
-    ${activeTab === 'contractDeadline' ? 'border-b-4 border-teal-600 text-gray-800 bg-white shadow-md' : 'text-gray-600'}
-    ${!isAdminFormComplete() ? 'cursor-not-allowed opacity-50' : ''}`}
+                        ${activeTab === 'contractDeadline' ? 'border-b-4 border-teal-600 text-gray-800 bg-white shadow-md' : 'text-gray-600'}
+                        ${!isAdminFormComplete() ? 'cursor-not-allowed opacity-50' : ''}`}
                         onClick={() => isAdminFormComplete() && setActiveTab('contractDeadline')}
                         disabled={!isAdminFormComplete()}
                         style={{ borderBottomWidth: activeTab === 'contractDeadline' ? '4px' : '0' }}
                     >
                         Délai de Contrat
                     </button>
-
                 </div>
 
                 <div className="w-full max-w-lg bg-white p-8 rounded-xl shadow-lg">
@@ -145,8 +134,50 @@ function AdminManagement() {
                                         setAdminData({ ...adminData, role: selectedOption.value })
                                     }
                                     placeholder="Sélectionner un rôle"
-                                    className="react-select-container"
+                                    className="react-select-container w-full"
                                     classNamePrefix="react-select"
+                                    styles={{
+                                        control: (base) => ({
+                                            ...base,
+                                            borderColor: 'rgba(209, 213, 219, 1)',
+                                            borderRadius: '0.5rem',
+                                            padding: '0.5rem',
+                                            boxShadow: 'none',
+                                            '&:hover': {
+                                                borderColor: 'rgba(75, 85, 99, 1)',
+                                            },
+                                        }),
+                                        menu: (base) => ({
+                                            ...base,
+                                            borderRadius: '0.5rem',
+                                            marginTop: '0.25rem',
+                                        }),
+                                        option: (base, state) => ({
+                                            ...base,
+                                            backgroundColor: state.isFocused ? 'rgba(75, 85, 99, 0.1)' : 'white',
+                                            '&:active': {
+                                                backgroundColor: 'rgba(75, 85, 99, 0.2)',
+                                            },
+                                        }),
+                                        singleValue: (base) => ({
+                                            ...base,
+                                            color: 'rgba(55, 65, 81, 1)',
+                                        }),
+                                        placeholder: (base) => ({
+                                            ...base,
+                                            color: 'rgba(107, 114, 128, 1)',
+                                        }),
+                                        indicatorSeparator: () => ({
+                                            display: 'none',
+                                        }),
+                                        dropdownIndicator: (base) => ({
+                                            ...base,
+                                            color: 'rgba(107, 114, 128, 1)',
+                                            '&:hover': {
+                                                color: 'rgba(55, 65, 81, 1)',
+                                            },
+                                        }),
+                                    }}
                                     required
                                 />
                             </div>
@@ -165,7 +196,7 @@ function AdminManagement() {
 
                     {activeTab === 'contractDeadline' && (
                         <form onSubmit={handleSubmitContract}>
-                            <h2 className="text-2xl mb-6 text-center text-gray-800">Délai de Contrat</h2>
+                            <h2 className="text-lg mb-6 text-center text-gray-800">Délai de Contrat</h2>
                             <div className="mb-6">
                                 <label className="block text-gray-700 text-sm font-medium mb-2" htmlFor="clientName">
                                     Nom de l'entreprise
@@ -213,15 +244,14 @@ function AdminManagement() {
             <AdminList admins={admins} />
 
             {showSuccessModal && (
-                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-                    <div className="bg-white p-8  shadow-lg max-w-sm w-full text-center">
-                        <AiOutlineCheckCircle className="text-green-500 text-4xl mb-4 mx-auto" />
-                        <h3 className="text-xl font-semibold mb-4">Admin ajouté avec succès</h3>
-                        <button
-                            onClick={closeModal}
-                            className="bg-red-800 text-white px-6 py-3
-                            hover:bg-red-900 transition-colors duration-200"
-                        >
+                <div
+                    className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 transition-opacity duration-500"
+                    style={{ opacity: showSuccessModal ? 1 : 0 }}
+                >
+                    <div className="modal-content">
+                        <AiOutlineCheckCircle className="modal-icon" />
+                        <h3 className="modal-title font-bold">Admin ajouté avec succès</h3>
+                        <button onClick={closeModal} className="modal-close-btn">
                             Fermer
                         </button>
                     </div>
