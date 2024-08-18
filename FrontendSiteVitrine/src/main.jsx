@@ -5,7 +5,6 @@ import './index.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Home from './pages/Home.jsx'
 import Login from './pages/Login.jsx'
-import Inscription from './pages/Inscription.jsx'
 import Sidebar from './pages/PageAdmin/views/Sidebar.jsx'
 import AdminPage from './pages/PageSuperAdmin/Adminpage.jsx'
 import Dashboard from './pages/PageSuperAdmin/Dashboard.jsx'
@@ -34,11 +33,6 @@ const router = createBrowserRouter([
   },
 
   {
-    path: "inscription",
-    element: <Inscription />
-  },
-
-  {
     path: "reservation",
     element: <BarNav />
   },
@@ -51,7 +45,7 @@ const router = createBrowserRouter([
   {
     path: "user",
     element: <BarNav />,
-  
+
   },
 
   {

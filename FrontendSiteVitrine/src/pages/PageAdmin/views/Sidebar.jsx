@@ -28,7 +28,7 @@ function Sidebar() {
                     <ClipboardDocumentListIcon className="h-6 w-6" />
                     <span className="ml-3 hidden md:inline">Gestion d'Admin</span>
                 </Link>
-                
+
             </nav>
         </div>
     );
