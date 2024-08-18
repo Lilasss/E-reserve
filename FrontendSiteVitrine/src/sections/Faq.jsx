@@ -14,7 +14,6 @@ const faqData = [
           >
             Contactez-nous
           </button>
-          {/* Ajoutez le bouton "Introduire une demande" ici si nécessaire */}
         </div>
       </div>
     ),

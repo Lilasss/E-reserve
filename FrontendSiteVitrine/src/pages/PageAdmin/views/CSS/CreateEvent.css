@@ -1,12 +1,8 @@
-/* CreateEvent.css */
-
-/* Effets de transition pour les boutons */
 button {
     transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 button:hover {
 
-    transform: scale(1.05); /* Légère augmentation de la taille survol */
-    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1); /* Ombre légère survol */
+    /* box-shadow: 0 0 8px rgba(0, 0, 0, 0.1); */
 }
