@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { FaChevronDown } from 'react-icons/fa';
 import logoImage from '../../../assets/1logo.png';
+import TicketStepsImage from '../assets/show.jpg'; // Adjust the path to your uploaded image
 import '../../../layout/Header.css';
 import Reserve from '../Reserve';
 import Carousel from './Caroussel';
@@ -85,7 +86,27 @@ const BarNav = () => {
             <div id="reserve">
                 <Reserve />
             </div>
+
             <TicketSteps />
+
+            <div className="flex justify-center items-center py-10">
+                <div className="w-full max-w-4xl p-5 bg-white rounded-lg shadow-lg">
+                    <div className="flex flex-col lg:flex-row items-center lg:items-start">
+                        <div className="lg:w-1/2 p-5">
+                            <img src={TicketStepsImage} alt="TicketSteps" className="w-full h-auto rounded-lg shadow-lg" />
+                        </div>
+                        <div className="lg:w-1/2 p-5 flex flex-col justify-center">
+                            <h2 className="text-3xl font-bold mb-4 text-center lg:text-left">Gérez facilement vos services de réservations</h2>
+                            <p className="text-gray-600 mb-6 text-center lg:text-left">
+                                Ticketplace est une plateforme 100% en ligne de gestion d’événements incluant : Billetterie en ligne et au guichet, inscriptions, invitations, contrôle d’accès, finance, marketing, etc... Elle permet l’administration à 360° et la supervision en temps réel de votre événement.
+                            </p>
+                            <button className="bg-[#0A5DA6] text-white font-semibold py-3 px-6 rounded-lg hover:bg-[#1f405d] transition duration-300 mx-auto lg:mx-0">
+                                Créer un événement
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
 
             <div className="pt-32">
