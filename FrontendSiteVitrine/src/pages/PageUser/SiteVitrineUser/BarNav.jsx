@@ -6,6 +6,7 @@ import '../../../layout/Header.css';
 import Reserve from '../Reserve';
 import Carousel from './Caroussel';
 import Footer from '../../../layout/Footer';
+import TicketSteps from '../../../sections/SiteVitrine1/TicketSteps';
 
 const BarNav = () => {
     const navigate = useNavigate();
@@ -84,7 +85,7 @@ const BarNav = () => {
             <div id="reserve">
                 <Reserve />
             </div>
-
+            <TicketSteps />
 
 
             <div className="pt-32">
