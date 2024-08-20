@@ -5,7 +5,7 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 const TicketSteps = () => {
     return (
         <div className="relative min-h-72 bg-fixed bg-cover bg-center text-white" style={{ backgroundImage: `url(${backgroundImage})` }}>
-            <div className="relative z-10 py-12">
+            <div className="relative z-10 py-12" style={{ fontFamily: 'Poppins, sans-serif' }}>
                 <div className="text-center text-2xl font-bold mb-8">COMMENT ACHETER VOTRE TICKET ?</div>
                 <div className="flex justify-center space-x-48">
                     <div className="flex flex-col items-center group">
