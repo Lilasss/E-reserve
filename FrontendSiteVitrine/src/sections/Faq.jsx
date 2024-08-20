@@ -65,7 +65,7 @@ const Faq = () => {
                   maxHeight: expanded === index ? `${contentRefs.current[index]?.scrollHeight}px` : '0px',
                 }}
               >
-                <div className="p-4 text-center bg-white">
+                <div className="p-4 text-center">
                   {faq.answer}
                 </div>
               </div>

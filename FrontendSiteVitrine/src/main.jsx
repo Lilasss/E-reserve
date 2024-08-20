@@ -14,6 +14,7 @@ import AdDashboard from './pages/PageAdmin/services/AdDashboard.jsx'
 import Evenement from './pages/PageAdmin/services/Evenement.jsx'
 import CreateEvent from './pages/PageAdmin/services/CreateEvent.jsx'
 import BarNav from './pages/PageUser/SiteVitrineUser/BarNav.jsx'
+import VenteEvent from './pages/PageAdmin/views/VenteEvent.jsx'
 
 
 const router = createBrowserRouter([
@@ -82,6 +83,11 @@ const router = createBrowserRouter([
         path: "createevent",
         element: <CreateEvent />,
       },
+
+      {
+        path: "venteevent",
+        element: <VenteEvent />,
+      }
     ],
 
   },
