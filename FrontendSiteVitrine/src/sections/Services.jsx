@@ -16,7 +16,6 @@ const Services = () => {
             <Carousel />
             <section  className="bg-gray-100 py-12">
                 <div className="container mx-auto text-center">
-                    {/* <h2 className="text-4xl font-bold mb-10 text-gray-700">Nos Services</h2> */}
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                         {services.map((service, index) => (
                             <div
