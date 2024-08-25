@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import 'animate.css';
 import illustration from '../assets/Connecter.png';
@@ -7,46 +7,53 @@ import logoImage from '../assets/2logo.png';
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
-    const [phone, setPhone] = useState('');
+    const [rememberMe, setRememberMe] = useState(false);
     const [isLogin, setIsLogin] = useState(true);
     const [isEmailSent, setIsEmailSent] = useState(false);
 
     const navigate = useNavigate();
 
+    useEffect(() => {
+        const savedEmail = localStorage.getItem('email');
+        const savedPassword = localStorage.getItem('password');
+        if (savedEmail && savedPassword) {
+            setEmail(savedEmail);
+            setPassword(savedPassword);
+            setRememberMe(true);
+        }
+    }, []);
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (isLogin) {
-            if (email === 'nomena@gmail.com' && password === '2202') {
-                navigate('/admin/evenement');
-            } else if (email === 'razafindramboahantasoa@gmail.com' && password === '2202') {
-                navigate('/superadmin/adminmanagement');
+            if ((email === 'nomena@gmail.com' && password === '2202') || 
+                (email === 'razafindramboahantasoa@gmail.com' && password === '2202')) {
+                
+                if (rememberMe) {
+                    localStorage.setItem('email', email);
+                    localStorage.setItem('password', password);
+                } else {
+                    localStorage.removeItem('email');
+                    localStorage.removeItem('password');
+                }
+
+                if (email === 'nomena@gmail.com') {
+                    navigate('/admin/evenement');
+                } else if (email === 'razafindramboahantasoa@gmail.com') {
+                    navigate('/superadmin/adminmanagement');
+                }
             } else {
                 alert('Identifiants incorrects');
             }
         } else {
-            console.log(`Email: ${email}, Password: ${password}, FirstName: ${firstName}, LastName: ${lastName}, Phone: ${phone}`);
-
-            const response = await fetch('/api/send-verification-email', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ email }),
-            });
-
-            if (response.ok) {
-                setIsEmailSent(true);
-            } else {
-                console.error('Échec de l\'envoi de l\'email de vérification.');
-            }
+            console.log(`Email: ${email}, Password: ${password}`);
+            // Handle registration
         }
     };
 
     return (
         <div className="flex justify-center items-center min-h-screen bg-gray-100">
-            <div className="hidden md:flex justify-center items-center" style={{ width: '500px', height: '500px', marginRight: '100px', marginTop: '90PX' }}>
+            <div className="hidden md:flex justify-center items-center" style={{ width: '500px', height: '500px', marginRight: '100px', marginTop: '90px' }}>
                 <img
                     src={illustration}
                     alt="Illustration"
@@ -62,52 +69,6 @@ const Login = () => {
                         </h2>
                     </div>
                     <form onSubmit={handleSubmit}>
-                        {!isLogin && (
-                            <>
-                                <div className="mb-4">
-                                    <label htmlFor="firstName" className="block text-sm font-medium text-gray-700">
-                                        Prénom
-                                    </label>
-                                    <input
-                                        type="text"
-                                        id="firstName"
-                                        className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-blue-500 focus:ring-blue-500 transition duration-300 ease-in-out transform focus:scale-105"
-                                        placeholder="Votre Prénom"
-                                        value={firstName}
-                                        onChange={(e) => setFirstName(e.target.value)}
-                                        required
-                                    />
-                                </div>
-                                <div className="mb-4">
-                                    <label htmlFor="lastName" className="block text-sm font-medium text-gray-700">
-                                        Nom
-                                    </label>
-                                    <input
-                                        type="text"
-                                        id="lastName"
-                                        className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-blue-500 focus:ring-blue-500 transition duration-300 ease-in-out transform focus:scale-105"
-                                        placeholder="Votre Nom"
-                                        value={lastName}
-                                        onChange={(e) => setLastName(e.target.value)}
-                                        required
-                                    />
-                                </div>
-                                <div className="mb-4">
-                                    <label htmlFor="phone" className="block text-sm font-medium text-gray-700">
-                                        Téléphone
-                                    </label>
-                                    <input
-                                        type="text"
-                                        id="phone"
-                                        className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-blue-500 focus:ring-blue-500 transition duration-300 ease-in-out transform focus:scale-105"
-                                        placeholder="Votre Numéro de téléphone"
-                                        value={phone}
-                                        onChange={(e) => setPhone(e.target.value)}
-                                        required
-                                    />
-                                </div>
-                            </>
-                        )}
                         <div className="mb-4">
                             <label htmlFor="email" className="block text-sm font-medium text-gray-700">
                                 Email
@@ -136,6 +97,18 @@ const Login = () => {
                                 required
                             />
                         </div>
+                        <div className="mb-4 flex items-center">
+                            <input
+                                type="checkbox"
+                                id="rememberMe"
+                                checked={rememberMe}
+                                onChange={(e) => setRememberMe(e.target.checked)}
+                                className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                            />
+                            <label htmlFor="rememberMe" className="ml-2 block text-sm text-gray-900">
+                                Se souvenir de moi
+                            </label>
+                        </div>
                         <button
                             type="submit"
                             className="w-full bg-gradient-to-r from-blue-500 to-blue-800 text-white py-2 px-4 rounded-md hover:from-blue-600 hover:to-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition duration-300 ease-in-out transform hover:scale-105"
@@ -154,14 +127,14 @@ const Login = () => {
                                     <a href="#" className="text-blue-500 hover:underline" onClick={() => setIsLogin(true)}>
                                         Connectez-vous ici
                                     </a>
-                                    {isEmailSent && (
-                                        <p className="mt-4 text-sm text-center text-gray-600">
-                                            Un email de vérification a été envoyé. Veuillez vérifier votre boîte de réception.
-                                        </p>
-                                    )}
                                 </>
                             )}
                         </p>
+                        {isEmailSent && (
+                            <p className="mt-4 text-sm text-center text-gray-600">
+                                Un email de vérification a été envoyé. Veuillez vérifier votre boîte de réception.
+                            </p>
+                        )}
                     </form>
                 </div>
             </div>
