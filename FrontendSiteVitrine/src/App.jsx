@@ -6,12 +6,13 @@ import Navbar from './pages/PageUser/Navbar';
 import BarNav from './pages/PageUser/SiteVitrineUser/BarNav';
 import Carousel from './pages/PageUser/SiteVitrineUser/Caroussel';
 import AdminPage from './pages/PageSuperAdmin/Adminpage';
+import Event from './pages/PageUser/SiteVitrineUser/Evenement/Event';
 
 function App() {
   return (
     <>
-
-      <BarNav />
+ {/* style={{ fontFamily: 'Poppins, sans-serif' }} */}
+      <Event />
       {/* <Home /> */}
       {/* <Reserve /> */}
       {/* <Carousel /> */}
