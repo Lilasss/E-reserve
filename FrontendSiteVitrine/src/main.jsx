@@ -15,6 +15,8 @@ import Evenement from './pages/PageAdmin/services/Evenement.jsx'
 import CreateEvent from './pages/PageAdmin/services/CreateEvent.jsx'
 import BarNav from './pages/PageUser/SiteVitrineUser/BarNav.jsx'
 import VenteEvent from './pages/PageAdmin/views/VenteEvent.jsx'
+import Event from './pages/PageUser/SiteVitrineUser/Evenement/Event.jsx'
+import EventDetail from './pages/PageUser/SiteVitrineUser/Evenement/EventDetail.jsx'
 
 
 const router = createBrowserRouter([
@@ -90,6 +92,15 @@ const router = createBrowserRouter([
       }
     ],
 
+  },
+
+  {
+    path: "events",
+    element: <Event />
+  },
+  {
+    path: "event/:id",
+    element: <EventDetail />
   },
 
 ])
