@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { FaMapMarkerAlt, FaCalendarAlt, FaClock } from 'react-icons/fa';
 import flyerImage from '../../assets/flyer.jpeg';
@@ -13,6 +13,10 @@ const eventsData = {
         lieu: 'Antananarivo',
         date: '2024-08-25T18:00:00',
         description: "Cet événement met en lumière les cultures locales à travers des performances artistiques et des expositions.",
+        tickets: [
+            { name: 'Normal', price: 30000 },
+            { name: 'VIP', price: 50000 },
+        ]
     },
     2: {
         name: 'Conférence internationale',
@@ -21,8 +25,118 @@ const eventsData = {
         lieu: 'Toamasina',
         date: '2024-09-12T09:00:00',
         description: "Une conférence rassemblant des experts du monde entier pour discuter des avancées en éducation.",
+        tickets: [
+            { name: 'Normal', price: 25000 }
+        ]
     },
 };
+
+function TicketOptions({ ticket, addToCart }) {
+    const [quantity, setQuantity] = useState(0);
+
+    const handleDecrement = () => {
+        if (quantity > 0) {
+            setQuantity(quantity - 1);
+        }
+    };
+
+    const handleIncrement = () => {
+        setQuantity(quantity + 1);
+    };
+
+    const handleAddToCart = () => {
+        if (quantity > 0) {
+            addToCart(ticket, quantity);
+            setQuantity(0); // Reset quantity after adding to cart
+        }
+    };
+
+    return (
+        <div className="flex items-center justify-between bg-white p-4 rounded-lg shadow-md mt-4">
+            <div className="text-lg text-gray-800">{ticket.name}</div>
+            <div className="text-lg font-semibold text-gray-800">{`MGA ${ticket.price.toLocaleString()}`}</div>
+            <div className="flex items-center">
+                <button
+                    onClick={handleDecrement}
+                    className="px-2 py-1 text-gray-800 border border-gray-300 rounded-l-md focus:outline-none"
+                >
+                    -
+                </button>
+                <input
+                    type="text"
+                    readOnly
+                    value={quantity}
+                    className="w-12 text-center border-t border-b border-gray-300 focus:outline-none text-black"
+                />
+                <button
+                    onClick={handleIncrement}
+                    className="px-2 py-1 text-gray-800 border border-gray-300 rounded-r-md focus:outline-none"
+                >
+                    +
+                </button>
+            </div>
+            <button
+                onClick={handleAddToCart}
+                className="ml-4 px-6 py-2 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-600 focus:outline-none"
+            >
+                Ajouter
+            </button>
+        </div>
+    );
+}
+
+function Cart({ cartItems, removeFromCart }) {
+    const total = cartItems.reduce((sum, item) => sum + item.quantity * item.ticket.price, 0);
+
+    return (
+        <div className="mt-8 p-6 bg-white rounded-lg shadow-lg">
+            <h2 className="text-2xl font-bold mb-4 text-gray-800">Panier</h2>
+            {cartItems.length === 0 ? (
+                <p className="text-lg text-gray-600">Le panier est vide.</p>
+            ) : (
+                <div className="overflow-x-auto">
+                    <table className="min-w-full divide-y divide-gray-200">
+                        <thead className="bg-gray-100">
+                            <tr>
+                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Produit</th>
+                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Quantité</th>
+                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Prix</th>
+                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody className="bg-white divide-y divide-gray-200">
+                            {cartItems.map((item, index) => (
+                                <tr key={index}>
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                        {item.ticket.name}
+                                    </td>
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                        {item.quantity}
+                                    </td>
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                        {`MGA ${(item.quantity * item.ticket.price).toLocaleString()}`}
+                                    </td>
+                                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                        <button
+                                            onClick={() => removeFromCart(index)}
+                                            className="text-red-600 hover:text-red-900"
+                                        >
+                                            Supprimer
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                    <div className="mt-4 text-lg font-bold text-gray-800">
+                        Total: {`MGA ${total.toLocaleString()}`}
+                    </div>
+                </div>
+            )}
+        </div>
+    );
+}
+
 
 function EventDetail() {
     const { id } = useParams();
@@ -33,6 +147,7 @@ function EventDetail() {
         minutes: 0,
         seconds: 0,
     });
+    const [cart, setCart] = useState([]);
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -55,6 +170,22 @@ function EventDetail() {
 
         return () => clearInterval(interval);
     }, [event.date]);
+
+    const addToCart = (ticket, quantity) => {
+        setCart((prevCart) => {
+            const existingIndex = prevCart.findIndex((item) => item.ticket.name === ticket.name);
+            if (existingIndex > -1) {
+                const newCart = [...prevCart];
+                newCart[existingIndex].quantity += quantity;
+                return newCart;
+            }
+            return [...prevCart, { ticket, quantity }];
+        });
+    };
+
+    const removeFromCart = (index) => {
+        setCart((prevCart) => prevCart.filter((_, i) => i !== index));
+    };
 
     if (!event) {
         return <div>Événement non trouvé</div>;
@@ -128,21 +259,22 @@ function EventDetail() {
                     <h2 className="text-2xl font-bold mb-4 text-gray-800">{event.name}</h2>
                     <p className="text-lg text-gray-600">{event.description}</p>
                 </div>
-
+            </div>
+            <div className="container mx-auto my-16 px-0 text-white">
                 <div className="flex flex-col lg:flex-row mt-8 gap-8" style={{ fontFamily: 'Poppins, sans-serif' }}>
-                    <div className="bg-white p-6 rounded-lg shadow-lg w-full lg:w-1/2">
+                    <div className="bg-white p-6 shadow-lg w-full lg:w-2/3">
                         <h2 className="text-lg text-black mb-4">PLAN DE SITE</h2>
                         <p className="text-gray-600 text-xs text-center">Plan de salle non disponible</p>
                     </div>
-                    <div className="bg-white p-6 rounded-lg shadow-lg w-full lg:w-1/2">
+                    <div className="bg-white p-6 shadow-lg w-full lg:w-1/2">
                         <h2 className="text-lg text-black mb-4">TYPE DE BILLETS</h2>
-                        <div className="flex items-center justify-between">
-                            <p className="text-gray-600"></p>
-                        </div>
+                        {event.tickets.map((ticket, index) => (
+                            <TicketOptions key={index} ticket={ticket} addToCart={addToCart} />
+                        ))}
                     </div>
                 </div>
-
             </div>
+            <Cart cartItems={cart} removeFromCart={removeFromCart} />
         </>
     );
 }
