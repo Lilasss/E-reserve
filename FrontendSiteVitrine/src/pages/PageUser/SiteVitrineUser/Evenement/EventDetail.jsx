@@ -31,9 +31,7 @@ const eventsData = {
     },
 };
 
-function TicketOptions({ ticket, addToCart }) {
-    const [quantity, setQuantity] = useState(0);
-
+function TicketOptions({ ticket, quantity, setQuantity }) {
     const handleDecrement = () => {
         if (quantity > 0) {
             setQuantity(quantity - 1);
@@ -42,13 +40,6 @@ function TicketOptions({ ticket, addToCart }) {
 
     const handleIncrement = () => {
         setQuantity(quantity + 1);
-    };
-
-    const handleAddToCart = () => {
-        if (quantity > 0) {
-            addToCart(ticket, quantity);
-            setQuantity(0); // Reset quantity after adding to cart
-        }
     };
 
     return (
@@ -75,68 +66,9 @@ function TicketOptions({ ticket, addToCart }) {
                     +
                 </button>
             </div>
-            <button
-                onClick={handleAddToCart}
-                className="ml-4 px-6 py-2 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-600 focus:outline-none"
-            >
-                Ajouter
-            </button>
         </div>
     );
 }
-
-function Cart({ cartItems, removeFromCart }) {
-    const total = cartItems.reduce((sum, item) => sum + item.quantity * item.ticket.price, 0);
-
-    return (
-        <div className="mt-8 p-6 bg-white rounded-lg shadow-lg">
-            <h2 className="text-2xl font-bold mb-4 text-gray-800">Panier</h2>
-            {cartItems.length === 0 ? (
-                <p className="text-lg text-gray-600">Le panier est vide.</p>
-            ) : (
-                <div className="overflow-x-auto">
-                    <table className="min-w-full divide-y divide-gray-200">
-                        <thead className="bg-gray-100">
-                            <tr>
-                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Produit</th>
-                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Quantité</th>
-                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Prix</th>
-                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody className="bg-white divide-y divide-gray-200">
-                            {cartItems.map((item, index) => (
-                                <tr key={index}>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                                        {item.ticket.name}
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                        {item.quantity}
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                        {`MGA ${(item.quantity * item.ticket.price).toLocaleString()}`}
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                        <button
-                                            onClick={() => removeFromCart(index)}
-                                            className="text-red-600 hover:text-red-900"
-                                        >
-                                            Supprimer
-                                        </button>
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                    <div className="mt-4 text-lg font-bold text-gray-800">
-                        Total: {`MGA ${total.toLocaleString()}`}
-                    </div>
-                </div>
-            )}
-        </div>
-    );
-}
-
 
 function EventDetail() {
     const { id } = useParams();
@@ -147,7 +79,9 @@ function EventDetail() {
         minutes: 0,
         seconds: 0,
     });
-    const [cart, setCart] = useState([]);
+    const [quantities, setQuantities] = useState(
+        event.tickets.map(() => 0)
+    );
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -171,20 +105,13 @@ function EventDetail() {
         return () => clearInterval(interval);
     }, [event.date]);
 
-    const addToCart = (ticket, quantity) => {
-        setCart((prevCart) => {
-            const existingIndex = prevCart.findIndex((item) => item.ticket.name === ticket.name);
-            if (existingIndex > -1) {
-                const newCart = [...prevCart];
-                newCart[existingIndex].quantity += quantity;
-                return newCart;
-            }
-            return [...prevCart, { ticket, quantity }];
-        });
-    };
+    const total = quantities.reduce(
+        (sum, quantity, index) => sum + quantity * event.tickets[index].price,
+        0
+    );
 
-    const removeFromCart = (index) => {
-        setCart((prevCart) => prevCart.filter((_, i) => i !== index));
+    const handleValidate = () => {
+        alert(`Vous avez acheté pour un total de MGA ${total.toLocaleString()}`);
     };
 
     if (!event) {
@@ -269,12 +196,33 @@ function EventDetail() {
                     <div className="bg-white p-6 shadow-lg w-full lg:w-1/2">
                         <h2 className="text-lg text-black mb-4">TYPE DE BILLETS</h2>
                         {event.tickets.map((ticket, index) => (
-                            <TicketOptions key={index} ticket={ticket} addToCart={addToCart} />
+                            <TicketOptions
+                                key={index}
+                                ticket={ticket}
+                                quantity={quantities[index]}
+                                setQuantity={(newQuantity) => {
+                                    setQuantities(prevQuantities => {
+                                        const newQuantities = [...prevQuantities];
+                                        newQuantities[index] = newQuantity;
+                                        return newQuantities;
+                                    });
+                                }}
+                            />
                         ))}
+                        <div className="flex justify-between items-center mt-8">
+                            <span className="text-lg text-black font-semibold">
+                                Total: MGA {total.toLocaleString()}
+                            </span>
+                            <button
+                                onClick={handleValidate}
+                                className="px-4 py-2 bg-yellow-500 text-white rounded-lg shadow-md focus:outline-none hover:bg-yellow-600"
+                            >
+                                Valider
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
-            <Cart cartItems={cart} removeFromCart={removeFromCart} />
         </>
     );
 }
