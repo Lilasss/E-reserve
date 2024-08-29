@@ -6,7 +6,7 @@ import { FaShoppingCart } from 'react-icons/fa';
 function Confirmation() {
     const location = useLocation();
     const { event, quantities, total } = location.state || {};
-    
+
     const ticketDetails = event.tickets.map((ticket, index) => ({
         ...ticket,
         quantity: quantities[index],
