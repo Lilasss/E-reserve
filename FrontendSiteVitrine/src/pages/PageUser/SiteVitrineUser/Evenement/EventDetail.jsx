@@ -1,5 +1,6 @@
+// EventDetail.js
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { FaMapMarkerAlt, FaCalendarAlt, FaClock } from 'react-icons/fa';
 import flyerImage from '../../assets/flyer.jpeg';
 import educationImage from '../../assets/Education.jpeg';
@@ -45,7 +46,7 @@ function TicketOptions({ ticket, quantity, setQuantity }) {
     return (
         <div className="flex items-center justify-between bg-white p-4 rounded-lg shadow-md mt-4">
             <div className="text-lg text-gray-800">{ticket.name}</div>
-            <div className="text-lg font-semibold text-gray-800">{`MGA ${ticket.price.toLocaleString()}`}</div>
+            <div className="text-lg font-semibold text-gray-800">{`${ticket.price.toLocaleString()} Ar`}</div>
             <div className="flex items-center">
                 <button
                     onClick={handleDecrement}
@@ -72,6 +73,7 @@ function TicketOptions({ ticket, quantity, setQuantity }) {
 
 function EventDetail() {
     const { id } = useParams();
+    const navigate = useNavigate();
     const event = eventsData[id];
     const [countdown, setCountdown] = useState({
         days: 0,
@@ -111,7 +113,7 @@ function EventDetail() {
     );
 
     const handleValidate = () => {
-        alert(`Vous avez acheté pour un total de MGA ${total.toLocaleString()}`);
+        navigate('/confirmation', { state: { event, quantities, total } });
     };
 
     if (!event) {
@@ -121,7 +123,6 @@ function EventDetail() {
     return (
         <>
             <BarNav />
-
             <div className="container mx-auto my-16 px-9 text-white">
                 <div className="flex flex-col lg:flex-row items-center lg:space-x-8 bg-gray-900 shadow-lg">
                     <img
@@ -211,7 +212,7 @@ function EventDetail() {
                         ))}
                         <div className="flex justify-between items-center mt-8">
                             <span className="text-lg text-black font-semibold">
-                                Total: MGA {total.toLocaleString()}
+                                Total: {total.toLocaleString()} Ar 
                             </span>
                             <button
                                 onClick={handleValidate}
