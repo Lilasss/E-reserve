@@ -46,7 +46,7 @@ function TicketOptions({ ticket, quantity, setQuantity }) {
     return (
         <div className="flex items-center justify-between bg-white p-4 rounded-lg shadow-md mt-4">
             <div className="text-lg text-gray-800">{ticket.name}</div>
-            <div className="text-lg font-semibold text-gray-800">{`MGA ${ticket.price.toLocaleString()}`}</div>
+            <div className="text-lg font-semibold text-gray-800">{`${ticket.price.toLocaleString()} Ar`}</div>
             <div className="flex items-center">
                 <button
                     onClick={handleDecrement}
@@ -212,7 +212,7 @@ function EventDetail() {
                         ))}
                         <div className="flex justify-between items-center mt-8">
                             <span className="text-lg text-black font-semibold">
-                                Total: MGA {total.toLocaleString()}
+                                Total: {total.toLocaleString()} Ar 
                             </span>
                             <button
                                 onClick={handleValidate}
