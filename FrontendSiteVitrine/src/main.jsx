@@ -17,6 +17,7 @@ import BarNav from './pages/PageUser/SiteVitrineUser/BarNav.jsx'
 import VenteEvent from './pages/PageAdmin/views/VenteEvent.jsx'
 import Event from './pages/PageUser/SiteVitrineUser/Evenement/Event.jsx'
 import EventDetail from './pages/PageUser/SiteVitrineUser/Evenement/EventDetail.jsx'
+import Confirmation from './pages/PageUser/SiteVitrineUser/Evenement/Confirmation.jsx'
 
 
 const router = createBrowserRouter([
@@ -98,9 +99,15 @@ const router = createBrowserRouter([
     path: "events",
     element: <Event />
   },
+
   {
     path: "event/:id",
     element: <EventDetail />
+  },
+
+  {
+    path: "confirmation",
+    element: <Confirmation />
   },
 
 ])

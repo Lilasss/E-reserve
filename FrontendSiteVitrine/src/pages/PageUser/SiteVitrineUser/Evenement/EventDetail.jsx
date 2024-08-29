@@ -1,5 +1,6 @@
+// EventDetail.js
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { FaMapMarkerAlt, FaCalendarAlt, FaClock } from 'react-icons/fa';
 import flyerImage from '../../assets/flyer.jpeg';
 import educationImage from '../../assets/Education.jpeg';
@@ -72,6 +73,7 @@ function TicketOptions({ ticket, quantity, setQuantity }) {
 
 function EventDetail() {
     const { id } = useParams();
+    const navigate = useNavigate();
     const event = eventsData[id];
     const [countdown, setCountdown] = useState({
         days: 0,
@@ -111,7 +113,7 @@ function EventDetail() {
     );
 
     const handleValidate = () => {
-        alert(`Vous avez acheté pour un total de MGA ${total.toLocaleString()}`);
+        navigate('/confirmation', { state: { event, quantities, total } });
     };
 
     if (!event) {
@@ -121,7 +123,6 @@ function EventDetail() {
     return (
         <>
             <BarNav />
-
             <div className="container mx-auto my-16 px-9 text-white">
                 <div className="flex flex-col lg:flex-row items-center lg:space-x-8 bg-gray-900 shadow-lg">
                     <img
