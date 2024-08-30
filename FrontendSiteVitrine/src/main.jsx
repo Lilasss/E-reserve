@@ -18,6 +18,7 @@ import VenteEvent from './pages/PageAdmin/views/VenteEvent.jsx'
 import Event from './pages/PageUser/SiteVitrineUser/Evenement/Event.jsx'
 import EventDetail from './pages/PageUser/SiteVitrineUser/Evenement/EventDetail.jsx'
 import Confirmation from './pages/PageUser/SiteVitrineUser/Evenement/Confirmation.jsx'
+import Payment from './pages/PageUser/SiteVitrineUser/Evenement/Payment.jsx'
 
 
 const router = createBrowserRouter([
@@ -109,6 +110,12 @@ const router = createBrowserRouter([
     path: "confirmation",
     element: <Confirmation />
   },
+
+  {
+    path: "payment",
+    element: <Payment />
+
+  }
 
 ])
 ReactDOM.createRoot(document.getElementById('root')).render(

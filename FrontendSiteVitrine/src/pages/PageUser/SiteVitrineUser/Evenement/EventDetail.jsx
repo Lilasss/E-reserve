@@ -1,18 +1,17 @@
-// EventDetail.js
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { FaMapMarkerAlt, FaCalendarAlt, FaClock } from 'react-icons/fa';
 import flyerImage from '../../assets/flyer.jpeg';
 import educationImage from '../../assets/Education.jpeg';
 import BarNav from '../BarNav';
-
+import Stepper from './Step';
 const eventsData = {
     1: {
         name: 'KODO',
         image: flyerImage,
         type: 'Cultures',
         lieu: 'Antananarivo',
-        date: '2024-08-25T18:00:00',
+        date: '2024-09-25T18:00:00',
         description: "Cet événement met en lumière les cultures locales à travers des performances artistiques et des expositions.",
         tickets: [
             { name: 'Normal', price: 30000 },
@@ -27,7 +26,9 @@ const eventsData = {
         date: '2024-09-12T09:00:00',
         description: "Une conférence rassemblant des experts du monde entier pour discuter des avancées en éducation.",
         tickets: [
-            { name: 'Normal', price: 25000 }
+            { name: 'Normal', price: 25000 },
+            { name: 'VIP', price: 50000 },
+
         ]
     },
 };
@@ -123,17 +124,15 @@ function EventDetail() {
     return (
         <>
             <BarNav />
-            <div className="container mx-auto my-16 px-9 text-white">
-                <div className="flex flex-col lg:flex-row items-center lg:space-x-8 bg-gray-900 shadow-lg">
+            <div className="container mx-auto my-16 px-9">
+                <div className="flex flex-col lg:flex-row items-center lg:space-x-8 bg-gray-900 shadow-lg text-white">
                     <img
                         src={event.image}
                         alt={event.type}
                         className="w-full lg:w-1/3 shadow-lg object-cover"
                     />
                     <div className="lg:w-1/2 mt-8 lg:mt-0" style={{ fontFamily: 'Poppins, sans-serif' }}>
-                        <h2 className="text-3xl font-bold mb-2 text-white">
-                            {event.name}
-                        </h2>
+                        <h2 className="text-3xl font-bold mb-2 text-white">{event.name}</h2>
                         <p className="text-yellow-500 border border-yellow-500 rounded-full cursor-pointer px-4 py-2 inline-block mb-6">
                             {event.type}
                         </p>
@@ -183,11 +182,14 @@ function EventDetail() {
                         </div>
                     </div>
                 </div>
+
                 <div className="mt-8 p-6 bg-white rounded-lg shadow-lg">
                     <h2 className="text-2xl font-bold mb-4 text-gray-800">{event.name}</h2>
                     <p className="text-lg text-gray-600">{event.description}</p>
                 </div>
             </div>
+            <Stepper activeStep={1} />
+
             <div className="container mx-auto my-16 px-0 text-white">
                 <div className="flex flex-col lg:flex-row mt-8 gap-8" style={{ fontFamily: 'Poppins, sans-serif' }}>
                     <div className="bg-white p-6 shadow-lg w-full lg:w-2/3">
@@ -212,7 +214,7 @@ function EventDetail() {
                         ))}
                         <div className="flex justify-between items-center mt-8">
                             <span className="text-lg text-black font-semibold">
-                                Total: {total.toLocaleString()} Ar 
+                                Total: {total.toLocaleString()} Ar
                             </span>
                             <button
                                 onClick={handleValidate}
