@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import Navbar from './Navbar';
 
 const ReservationForm = () => {
   const [departure, setDeparture] = useState('');
@@ -19,7 +18,6 @@ const ReservationForm = () => {
 
   return (
     <>
-      <Navbar />
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-gray-100 to-gray-300 p-6">
         <form onSubmit={handleSubmit} className="bg-white p-10 shadow-2xl rounded-3xl w-full max-w-lg transition-all duration-300 hover:shadow-3xl">
           <h2 className="text-4xl font-bold mb-8 text-center text-gray-800">Choisissez votre itinéraire</h2>

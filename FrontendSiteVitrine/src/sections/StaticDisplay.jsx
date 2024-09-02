@@ -4,16 +4,16 @@ import { faCar, faBed, faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
 
 const items = [
-    { title: 'ÉVÉNEMENT', icon: faCalendarAlt, id: 'carousel' },
+    { title: 'ÉVÉNEMENT', icon: faCalendarAlt, id: 'events' },
     { title: 'CHAMBRE', icon: faBed, id: 'chambre' },
-    { title: 'TRANSPORT', icon: faCar, id: 'reserve' },
+    { title: 'TRANSPORT', icon: faCar, id: 'transporte' },
 ];
 
 const StaticDisplay = () => {
     const navigate = useNavigate();
 
     const handleClick = (id) => {
-        navigate(`/reservation?section=${id}`);
+        navigate(`/${id}`);
     };
 
     return (

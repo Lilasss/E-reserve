@@ -4,6 +4,7 @@ import { FaShoppingCart, FaUser, FaEnvelope, FaPhone, FaCheckCircle } from 'reac
 import BarNav from '../BarNav';
 import Info from './Info';
 import Stepper from './Step';
+import Footer from '../../../../layout/Footer';
 
 function Confirmation() {
     const location = useLocation();
@@ -95,6 +96,7 @@ function Confirmation() {
                     </div>
                 </div>
             </div>
+
         </>
     );
 }
