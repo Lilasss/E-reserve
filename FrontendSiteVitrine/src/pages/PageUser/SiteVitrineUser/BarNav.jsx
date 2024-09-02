@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import logoImage from '../../../assets/1logo.png';
+import { FaCalendarAlt, FaBus } from 'react-icons/fa';
+import images from '../assets/six.jpeg';
 import TicketStepsImage from '../assets/show.jpg';
 import '../../../layout/Header.css';
 import Reserve from '../Reserve';
@@ -8,6 +10,7 @@ import Carousel from './Caroussel';
 import Footer from '../../../layout/Footer';
 import TicketSteps from '../../../sections/SiteVitrine1/TicketSteps';
 import Event from './Evenement/Event';
+import TypeService from '../../../sections/TypeService';
 
 const BarNav = () => {
     const navigate = useNavigate();
@@ -60,12 +63,13 @@ const BarNav = () => {
                     </nav>
                 </div>
             </header>
+            {/* <TypeService /> */}
             {/* <Event /> */}
 
             {/* <div id="carousel">
                 <Carousel />
             </div> */}
-{/* 
+            {/* 
             <div id="chambre"></div>
             <div className="mt-6">
                 <TicketSteps />

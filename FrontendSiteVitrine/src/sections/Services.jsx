@@ -1,7 +1,7 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClipboardList, faHandsHelping, faGlobe } from '@fortawesome/free-solid-svg-icons';
-import Carousel from './Carousel';
+import StaticDisplay from './StaticDisplay';
 
 const services = [
     { title: 'Gestion de Réservations', description: 'Présentation des disponibilités, sélection des dates et des options de tarification, saisie des informations de contact et de paiement', icon: faClipboardList },
@@ -13,7 +13,8 @@ const Services = () => {
     return (
         <>
         <div id="services">
-            <Carousel />
+            <StaticDisplay />
+            
             <section  className="bg-gray-100 py-12">
                 <div className="container mx-auto text-center">
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">

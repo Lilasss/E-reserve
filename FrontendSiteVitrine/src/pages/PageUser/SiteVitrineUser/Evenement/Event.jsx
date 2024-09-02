@@ -10,7 +10,7 @@ import image3 from '../../assets/Culture.jpeg';
 import image4 from '../../assets/Education.jpeg';
 import TicketSteps from '../../../../sections/SiteVitrine1/TicketSteps';
 import TicketStepsImage from '../../assets/show.jpg';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const events = [
   { id: 1, image: dodoImage },
@@ -23,6 +23,7 @@ const events = [
 
 function Event() {
   const [showScroll, setShowScroll] = useState(false);
+  const navigate = useNavigate();
 
   const checkScrollTop = () => {
     if (!showScroll && window.scrollY > 200) {
@@ -36,6 +37,10 @@ function Event() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const handleCreateEventClick = () => {
+    navigate('/home');
+  };
+
   useEffect(() => {
     window.addEventListener('scroll', checkScrollTop);
     return () => window.removeEventListener('scroll', checkScrollTop);
@@ -44,48 +49,46 @@ function Event() {
   return (
     <>
       <BarNav />
-
       <div className="relative bg-[#0A5DA6] pt-0">
         <img src={images} alt="Background" className="absolute inset-0 w-full h-full object-cover opacity-30" />
         <div className="relative container mx-auto py-6 px-4">
-          <ul className="flex space-x-6 text-white mb-8 justify-center">
-            <li className="flex items-center space-x-2 px-6 py-3 border border-white rounded-full cursor-pointer hover:bg-white hover:text-blue-800 transition ease-in-out duration-300">
+          <ul className="flex space-x-6 text-white mb-8 justify-center mt-4">
+            <Link to="/events" className="flex items-center space-x-2 px-6 py-3 border border-white rounded-full cursor-pointer hover:bg-white hover:text-blue-800 transition ease-in-out duration-300">
               <FaCalendarAlt className="text-xl" />
               <span className="text-lg font-medium">Événement</span>
-            </li>
-            <li className="flex items-center space-x-2 px-6 py-3 border border-white rounded-full cursor-pointer hover:bg-white hover:text-blue-800 transition ease-in-out duration-300">
+            </Link>
+            <Link to="/transports" className="flex items-center space-x-2 px-6 py-3 border border-white rounded-full cursor-pointer hover:bg-white hover:text-blue-800 transition ease-in-out duration-300">
               <FaBus className="text-xl" />
               <span className="text-lg font-medium">Transport</span>
-            </li>
+            </Link>
           </ul>
-
-          <div className="flex flex-col lg:flex-row items-center lg:justify-center space-y-4 lg:space-y-0 lg:space-x-4">
-            <div className="w-full lg:w-80">
-              <div className="relative">
-                <input
-                  type="text"
-                  placeholder="Rechercher un événement..."
-                  className="w-full px-4 py-2 rounded-lg border border-gray-300 bg-white focus:outline-none focus:border-blue-500 shadow-md placeholder-gray-500 text-gray-700"
-                />
-                <FaSearch className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500" />
-              </div>
-            </div>
-            <div className="w-full lg:w-80">
-              <div className="relative">
-                <select className="w-full px-4 py-2 rounded-lg border border-gray-300 bg-white focus:outline-none focus:border-blue-500 shadow-md text-gray-700 appearance-none">
-                  <option value="">Sélectionner un mois</option>
-                </select>
-                <FaChevronDown className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500" />
-              </div>
-            </div>
-            <div className="w-full lg:w-80">
-              <div className="relative">
-                <select className="w-full px-4 py-2 rounded-lg border border-gray-300 bg-white focus:outline-none focus:border-blue-500 shadow-md text-gray-700 appearance-none">
-                  <option value="">Sélectionner une catégorie</option>
-                </select>
-                <FaChevronDown className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500" />
-              </div>
-            </div>
+        </div>
+      </div>
+      <div className="flex flex-col lg:flex-row items-center lg:justify-center space-y-4 lg:space-y-0 lg:space-x-4 mt-2">
+        <div className="w-full lg:w-80">
+          <div className="relative">
+            <input
+              type="text"
+              placeholder="Rechercher un événement..."
+              className="w-full px-4 py-2 rounded-lg border border-gray-300 bg-white focus:outline-none focus:border-blue-500 shadow-md placeholder-gray-500 text-gray-700"
+            />
+            <FaSearch className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500" />
+          </div>
+        </div>
+        <div className="w-full lg:w-80">
+          <div className="relative">
+            <select className="w-full px-4 py-2 rounded-lg border border-gray-300 bg-white focus:outline-none focus:border-blue-500 shadow-md text-gray-700 appearance-none">
+              <option value="">Sélectionner un mois</option>
+            </select>
+            <FaChevronDown className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500" />
+          </div>
+        </div>
+        <div className="w-full lg:w-80">
+          <div className="relative">
+            <select className="w-full px-4 py-2 rounded-lg border border-gray-300 bg-white focus:outline-none focus:border-blue-500 shadow-md text-gray-700 appearance-none">
+              <option value="">Sélectionner une catégorie</option>
+            </select>
+            <FaChevronDown className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500" />
           </div>
         </div>
       </div>
@@ -116,7 +119,10 @@ function Event() {
               <p className="text-gray-600 mb-6 text-center lg:text-left">
                 E-reserve est une plateforme 100% en ligne de gestion de service de réservation incluant : Billetterie en ligne, inscriptions, invitations, contrôle d’accès, marketing, etc... Elle permet l’administration et la supervision en temps réel de votre événement.
               </p>
-              <button className="bg-[#0A5DA6] text-white font-semibold py-3 px-6 rounded-lg hover:bg-[#1f405d] transition duration-300 mx-auto lg:mx-0">
+              <button
+                className="bg-[#0A5DA6] text-white font-semibold py-3 px-6 rounded-lg hover:bg-[#1f405d] transition duration-300 mx-auto lg:mx-0"
+                onClick={handleCreateEventClick}
+              >
                 Créer un événement
               </button>
             </div>
@@ -124,16 +130,13 @@ function Event() {
         </div>
       </div>
 
-      <div className="pt-12">
-        <Footer />
-      </div>
+      <div className="pt-12"><Footer /></div>
 
       {showScroll && (
         <div className="fixed bottom-4 right-4 z-50">
           <button
             onClick={scrollToTop}
-            className="bg-blue-600 text-white p-3 rounded-full shadow-lg hover:bg-blue-800 transition duration-300"
-          >
+            className="bg-[#0A5DA6] text-white p-3 rounded-full shadow-lg hover:bg-blue-800 transition duration-300">
             <FaArrowUp className="text-xl" />
           </button>
         </div>

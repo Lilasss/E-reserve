@@ -19,6 +19,7 @@ import Event from './pages/PageUser/SiteVitrineUser/Evenement/Event.jsx'
 import EventDetail from './pages/PageUser/SiteVitrineUser/Evenement/EventDetail.jsx'
 import Confirmation from './pages/PageUser/SiteVitrineUser/Evenement/Confirmation.jsx'
 import Payment from './pages/PageUser/SiteVitrineUser/Evenement/Payment.jsx'
+import Transport from './pages/PageUser/SiteVitrineUser/Transport/Transport.jsx'
 
 
 const router = createBrowserRouter([
@@ -115,7 +116,13 @@ const router = createBrowserRouter([
     path: "payment",
     element: <Payment />
 
-  }
+  },
+
+  {
+    path: "transports",
+    element: <Transport />
+
+  },
 
 ])
 ReactDOM.createRoot(document.getElementById('root')).render(

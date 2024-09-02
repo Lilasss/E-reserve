@@ -9,24 +9,20 @@ const Reserve = () => {
   const [arrival, setArrival] = useState(null);
   const [date, setDate] = useState('');
   const [passengers, setPassengers] = useState(1);
-  const [horaires, setHoraires] = useState({
-    matin: false,
-    apresMidi: false,
-    soir: false,
-  });
+  const [horaires, setHoraires] = useState('');
 
   const handleCheckboxChange = (e) => {
-    setHoraires({
-      ...horaires,
-      [e.target.name]: e.target.checked,
-    });
+    const { name } = e.target;
+    setHoraires(name);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    // Logique de soumission
   };
 
   const locations = [
+    // Vos options de localisation ici
   ];
 
   const customStyles = {
@@ -72,12 +68,8 @@ const Reserve = () => {
 
   return (
     <>
-      <div className="pt-28 pb-8 px-4 sm:px-6 lg:px-8">
+      <div className="pt-0 pb-8 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          {/* Ajoutez un titre ou une description pour la section Transport */}
-          <h2 className="text-2xl mb-6 text-blue-800 flex items-center font-semibold">
-            Réservation Transport
-          </h2>
 
           <form
             onSubmit={handleSubmit}
@@ -119,7 +111,7 @@ const Reserve = () => {
             </div>
 
             <div className="flex flex-col flex-1 min-w-[200px]">
-              <label className="block text-gray-500 mb-2">Place</label>
+              <label className="block text-gray-500 mb-2 text">Place</label>
               <div className="flex items-center">
                 <button
                   type="button"
@@ -136,39 +128,13 @@ const Reserve = () => {
             </div>
 
             <div className="flex flex-col flex-1 min-w-[200px]">
-              <label className="block text-gray-500 mb-2">Horaires</label>
-              <div className="flex flex-col">
-                <label className="inline-flex items-center mt-2">
-                  <input
-                    type="checkbox"
-                    name="matin"
-                    checked={horaires.matin}
-                    onChange={handleCheckboxChange}
-                    className="form-checkbox text-blue-600"
-                  />
-                  <span className="ml-2 text-gray-700">Matin</span>
-                </label>
-                <label className="inline-flex items-center mt-2">
-                  <input
-                    type="checkbox"
-                    name="apresMidi"
-                    checked={horaires.apresMidi}
-                    onChange={handleCheckboxChange}
-                    className="form-checkbox text-blue-600"
-                  />
-                  <span className="ml-2 text-gray-700">Après-Midi</span>
-                </label>
-                <label className="inline-flex items-center mt-2">
-                  <input
-                    type="checkbox"
-                    name="soir"
-                    checked={horaires.soir}
-                    onChange={handleCheckboxChange}
-                    className="form-checkbox text-blue-600"
-                  />
-                  <span className="ml-2 text-gray-700">Soir</span>
-                </label>
-              </div>
+              <button
+                type="submit"
+                className="flex items-center justify-center bg-green-500 text-white p-3 rounded-md focus:outline-none hover:bg-green-600 transition duration-300"
+                style={{ height: '48px', width: '48px' }}
+              >
+                <FaSearch className="w-6 h-6" />
+              </button>
             </div>
 
             <div className="flex items-center flex-shrink-0 w-full md:w-auto mt-6">
@@ -183,7 +149,6 @@ const Reserve = () => {
           </form>
         </div>
       </div>
-      <Place/>
     </>
   );
 };
