@@ -39,10 +39,7 @@ function Confirmation() {
 
             <div ref={confirmationRef} className="container mx-auto py-12 px-6 md:px-12 text-center">
                 <div className="flex justify-center items-center mb-8" style={{ fontFamily: 'Poppins, sans-serif' }}>
-                    {/* <FaCheckCircle className="text-green-500 text-2xl mr-3" /> */}
-                    {/* <h2 className="text-2xl font-semibold text-green-500">Confirmation de la Commande</h2> */}
                 </div>
-
                 <div className="flex flex-col md:flex-row gap-8">
                     <div className="flex-1 bg-white rounded-lg shadow p-6">
                         <h3 className="text-xl font-semibold text-gray-800 mb-6" style={{ fontFamily: 'Poppins, sans-serif' }}>Informations personnelles</h3>
@@ -94,9 +91,12 @@ function Confirmation() {
                             hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">Confirmer
                         </button>
                     </div>
-                </div>
-            </div>
 
+                </div>
+
+
+            </div>
+            <Footer />
         </>
     );
 }

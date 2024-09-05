@@ -10,7 +10,7 @@ const Footer = () => {
                         <FaMapMarkerAlt className="text-3xl text-yellow-300 mr-4" />
                         <div>
                             <h3 className="text-lg font-bold">Adresse</h3>
-                            <p className="text-white">Antananarivo, Madagascar</p>
+                            <p className="text-white">Fianrantsoa, Madagascar</p>
                         </div>
                     </div>
                     <div className="flex items-center">
