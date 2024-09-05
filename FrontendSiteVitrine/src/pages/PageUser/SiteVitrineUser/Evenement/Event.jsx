@@ -49,46 +49,40 @@ function Event() {
   return (
     <>
       <BarNav />
-      <div className="relative bg-[#0A5DA6] pt-0">
+      <div className="relative bg-[#0A5DA6] pt-0" style={{ fontFamily: 'Poppins, sans-serif' }}>
         <img src={images} alt="Background" className="absolute inset-0 w-full h-full object-cover opacity-30" />
-        <div className="relative container mx-auto py-6 px-4">
-          <ul className="flex space-x-6 text-white mb-8 justify-center mt-4">
-            <Link to="/events" className="flex items-center space-x-2 px-6 py-3 border border-white rounded-full cursor-pointer hover:bg-white hover:text-blue-800 transition ease-in-out duration-300">
-              <FaCalendarAlt className="text-xl" />
-              <span className="text-lg font-medium">Événement</span>
-            </Link>
-            <Link to="/transports" className="flex items-center space-x-2 px-6 py-3 border border-white rounded-full cursor-pointer hover:bg-white hover:text-blue-800 transition ease-in-out duration-300">
-              <FaBus className="text-xl" />
-              <span className="text-lg font-medium">Transport</span>
-            </Link>
-          </ul>
-        </div>
-      </div>
-      <div className="flex flex-col lg:flex-row items-center lg:justify-center space-y-4 lg:space-y-0 lg:space-x-4 mt-2">
-        <div className="w-full lg:w-80">
-          <div className="relative">
-            <input
-              type="text"
-              placeholder="Rechercher un événement..."
-              className="w-full px-4 py-2 rounded-lg border border-gray-300 bg-white focus:outline-none focus:border-blue-500 shadow-md placeholder-gray-500 text-gray-700"
-            />
-            <FaSearch className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500" />
-          </div>
-        </div>
-        <div className="w-full lg:w-80">
-          <div className="relative">
-            <select className="w-full px-4 py-2 rounded-lg border border-gray-300 bg-white focus:outline-none focus:border-blue-500 shadow-md text-gray-700 appearance-none">
-              <option value="">Sélectionner un mois</option>
-            </select>
-            <FaChevronDown className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500" />
-          </div>
-        </div>
-        <div className="w-full lg:w-80">
-          <div className="relative">
-            <select className="w-full px-4 py-2 rounded-lg border border-gray-300 bg-white focus:outline-none focus:border-blue-500 shadow-md text-gray-700 appearance-none">
-              <option value="">Sélectionner une catégorie</option>
-            </select>
-            <FaChevronDown className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500" />
+        
+        <div className="container mx-auto py-10">
+          <h1 className="text-3xl font-bold text-white text-center mb-8" style={{ fontFamily: 'Poppins, sans-serif' }}>
+            Réserver des billets d'événements
+          </h1>
+          <div className="flex flex-col lg:flex-row items-center lg:justify-center space-y-4 lg:space-y-0 lg:space-x-4">
+            <div className="w-full lg:w-80">
+              <div className="relative">
+                <input
+                  type="text"
+                  placeholder="Rechercher un événement..."
+                  className="w-full px-4 py-2 rounded-lg border border-gray-300 bg-white focus:outline-none focus:border-blue-500 shadow-md placeholder-gray-500 text-gray-700"
+                />
+                <FaSearch className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500" />
+              </div>
+            </div>
+            <div className="w-full lg:w-80" >
+              <div className="relative">
+                <select className="w-full px-4 py-2 rounded-lg border border-gray-300 bg-white focus:outline-none focus:border-blue-500 shadow-md placeholder-gray-500 text-gray-500 appearance-none">
+                  <option value="">Sélectionner un mois</option>
+                </select>
+                <FaChevronDown className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500" />
+              </div>
+            </div>
+            <div className="w-full lg:w-80">
+              <div className="relative">
+                <select className="w-full px-4 py-2 rounded-lg border border-gray-300 bg-white focus:outline-none focus:border-blue-500 shadow-md text-gray-500 appearance-none">
+                  <option value="">Sélectionner une catégorie</option>
+                </select>
+                <FaChevronDown className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500" />
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -130,8 +124,6 @@ function Event() {
         </div>
       </div>
 
-      <div className="pt-12"><Footer /></div>
-
       {showScroll && (
         <div className="fixed bottom-4 right-4 z-50">
           <button
@@ -141,6 +133,8 @@ function Event() {
           </button>
         </div>
       )}
+
+      <Footer />
     </>
   );
 }

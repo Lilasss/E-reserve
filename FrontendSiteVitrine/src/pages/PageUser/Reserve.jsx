@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import Select from 'react-select';
-import { FaMapMarkerAlt, FaSearch } from 'react-icons/fa';
-import Navbar from './Navbar';
-import Place from './Place';
+import { FaMapMarkerAlt, FaSearch, FaCalendarAlt } from 'react-icons/fa';
+import DatePicker from 'react-datepicker';
 
 const Reserve = () => {
   const [departure, setDeparture] = useState(null);
   const [arrival, setArrival] = useState(null);
-  const [date, setDate] = useState('');
+  const [date, setDate] = useState(null);
   const [passengers, setPassengers] = useState(1);
   const [horaires, setHoraires] = useState('');
 
@@ -68,15 +67,14 @@ const Reserve = () => {
 
   return (
     <>
-      <div className="pt-0 pb-8 px-4 sm:px-6 lg:px-8">
+      <div className="pt-0 pb-8 px-4 sm:px-6 lg:px-8" style={{ fontFamily: 'Poppins, sans-serif' }}>
         <div className="max-w-7xl mx-auto">
-
           <form
             onSubmit={handleSubmit}
-            className="bg-white p-8 rounded-lg shadow-lg flex flex-wrap gap-8 items-center"
+            className="bg-white p-8 rounded-lg shadow-lg flex flex-wrap gap-8 items-center text-base relative z-10"
           >
             <div className="flex flex-col flex-1 min-w-[200px]">
-              <label className="block text-gray-500 mb-2">Lieu de départ</label>
+              <label className="block text-gray-500 mb-2 text-base">Lieu de départ</label>
               <Select
                 styles={customStyles}
                 value={departure}
@@ -88,7 +86,7 @@ const Reserve = () => {
             </div>
 
             <div className="flex flex-col flex-1 min-w-[200px]">
-              <label className="block text-gray-500 mb-2">Lieu d'arrivée</label>
+              <label className="block text-gray-500 mb-2 text-base">Lieu d'arrivée</label>
               <Select
                 styles={customStyles}
                 value={arrival}
@@ -99,45 +97,37 @@ const Reserve = () => {
               />
             </div>
 
-            <div className="flex flex-col flex-1 min-w-[200px]">
-              <label className="block text-gray-500 mb-2">Date</label>
-              <input
-                type="date"
-                className="w-full px-4 py-3 border rounded-lg focus:outline-none"
-                value={date}
-                onChange={(e) => setDate(e.target.value)}
-                style={{ borderColor: '#e2e8f0', boxShadow: 'none' }}
-              />
+            <div className="flex flex-col flex-1 min-w-[200px] relative">
+              <label className="block text-gray-500 mb-2 text-base">Date</label>
+              <div className="relative">
+                <DatePicker
+                  selected={date}
+                  onChange={(date) => setDate(date)}
+                  dateFormat="dd/MM/yyyy"
+                  className="w-full px-4 py-3 border rounded-lg focus:outline-none text-base"
+                  placeholderText="Sélectionner une date"
+                />
+              </div>
             </div>
 
             <div className="flex flex-col flex-1 min-w-[200px]">
-              <label className="block text-gray-500 mb-2 text">Place</label>
+              <label className="block text-gray-500 mb-2 text-base">Place</label>
               <div className="flex items-center">
                 <button
                   type="button"
-                  className="bg-gray-200 px-4 py-2 border border-gray-300 focus:outline-none hover:bg-gray-300 transition duration-150 ease-in-out"
+                  className="bg-gray-200 px-4 py-2 border border-gray-300 focus:outline-none hover:bg-gray-300 transition ease-in-out text-base"
                   onClick={() => setPassengers(passengers > 1 ? passengers - 1 : 1)}
                 >-</button>
-                <span className="px-7">{passengers}</span>
+                <span className="px-7 text-base">{passengers}</span>
                 <button
                   type="button"
-                  className="bg-gray-200 px-4 py-2 border border-gray-300 focus:outline-none hover:bg-gray-300 transition duration-150 ease-in-out"
+                  className="bg-gray-200 px-4 py-2 border border-gray-300 focus:outline-none hover:bg-gray-300 transition duration-150 ease-in-out text-base"
                   onClick={() => setPassengers(passengers + 1)}
                 >+</button>
               </div>
             </div>
 
-            <div className="flex flex-col flex-1 min-w-[200px]">
-              <button
-                type="submit"
-                className="flex items-center justify-center bg-green-500 text-white p-3 rounded-md focus:outline-none hover:bg-green-600 transition duration-300"
-                style={{ height: '48px', width: '48px' }}
-              >
-                <FaSearch className="w-6 h-6" />
-              </button>
-            </div>
-
-            <div className="flex items-center flex-shrink-0 w-full md:w-auto mt-6">
+            <div className="mt-7">
               <button
                 type="submit"
                 className="flex items-center justify-center bg-green-500 text-white p-3 rounded-md focus:outline-none hover:bg-green-600 transition duration-300"

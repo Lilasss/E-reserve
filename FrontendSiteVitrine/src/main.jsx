@@ -20,6 +20,8 @@ import EventDetail from './pages/PageUser/SiteVitrineUser/Evenement/EventDetail.
 import Confirmation from './pages/PageUser/SiteVitrineUser/Evenement/Confirmation.jsx'
 import Payment from './pages/PageUser/SiteVitrineUser/Evenement/Payment.jsx'
 import Transport from './pages/PageUser/SiteVitrineUser/Transport/Transport.jsx'
+import TicketInfo from './pages/PageUser/SiteVitrineUser/Evenement/TicketInfo.jsx'
+import TransportDetails from './pages/PageUser/SiteVitrineUser/Transport/TransportDetails.jsx'
 
 
 const router = createBrowserRouter([
@@ -119,10 +121,24 @@ const router = createBrowserRouter([
   },
 
   {
+    path: "ticketinfo",
+    element: <TicketInfo />
+
+  },
+
+
+  {
     path: "transports",
     element: <Transport />
 
   },
+
+  {
+    path: "transportdetail",
+    element: <TransportDetails />
+
+  },
+  
 
 ])
 ReactDOM.createRoot(document.getElementById('root')).render(
