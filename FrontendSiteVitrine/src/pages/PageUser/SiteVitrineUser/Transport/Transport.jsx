@@ -1,14 +1,15 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import BarNav from '../BarNav';
 import Reserve from '../../Reserve';
 import images from '../../assets/six.jpeg';
-import { Link } from 'react-router-dom';
 import TicketSteps from '../../../../sections/SiteVitrine1/TicketSteps';
 import Footer from '../../../../layout/Footer';
 import TransportTabs from './TransportTabs';
-import TransportDetails from './TransportDetails';
+import TicketStepsImage from '../../assets/show.jpg';
 
 function Transport() {
+    const navigate = useNavigate();
     return (
         <>
             <BarNav />
@@ -22,9 +23,31 @@ function Transport() {
                 <div className="mt-"><Reserve /></div>
             </div>
             <TransportTabs />
-            <div className="mt-48">
+            
+            <div className="mt-10">
                 <TicketSteps />
             </div>
+
+            <div className="flex justify-center items-center py-10">
+                <div className="w-full max-w-4xl p-5 bg-white rounded-lg shadow-lg">
+                    <div className="flex flex-col lg:flex-row items-center lg:items-start">
+                        <div className="lg:w-1/2 p-5">
+                            <img src={TicketStepsImage} alt="TicketSteps" className="w-full h-auto rounded-lg shadow-lg" />
+                        </div>
+                        <div className="lg:w-1/2 p-5 flex flex-col justify-center">
+                            <h2 className="text-3xl font-bold mb-4 text-center lg:text-left">
+                                Gérez facilement vos services de transport
+                            </h2>
+                            <p className="text-gray-600 mb-6 text-center lg:text-left">
+                                E-reserve est une plateforme 100% en ligne de gestion de services de transport. Elle permet l'administration
+                                et la supervision en temps réel de votre flotte de véhicules, de la réservation à la gestion des trajets.
+                            </p>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div className="pt-12">
                 <Footer />
             </div>

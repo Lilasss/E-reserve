@@ -22,6 +22,7 @@ import Payment from './pages/PageUser/SiteVitrineUser/Evenement/Payment.jsx'
 import Transport from './pages/PageUser/SiteVitrineUser/Transport/Transport.jsx'
 import TicketInfo from './pages/PageUser/SiteVitrineUser/Evenement/TicketInfo.jsx'
 import TransportDetails from './pages/PageUser/SiteVitrineUser/Transport/TransportDetails.jsx'
+import TransportReserve from './pages/PageUser/SiteVitrineUser/Transport/TransportReserve.jsx'
 
 
 const router = createBrowserRouter([
@@ -138,6 +139,12 @@ const router = createBrowserRouter([
     element: <TransportDetails />
 
   },
+  {
+    path: "transportreserve",
+    element: <TransportReserve />
+
+  },
+  
   
 
 ])
