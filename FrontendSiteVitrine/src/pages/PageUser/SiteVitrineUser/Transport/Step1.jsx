@@ -16,11 +16,11 @@ const Step1 = ({ handleNext, handleCancel }) => {
                     </thead>
                     <tbody>
                         <tr>
-                            <td className="border-t px-4 py-2">Exemple Voyage</td>
-                            <td className="border-t px-4 py-2">Exemple Catégorie</td>
-                            <td className="border-t px-4 py-2">Exemple Place</td>
-                            <td className="border-t px-4 py-2">100€</td>
-                            <td className="border-t px-4 py-2">100€</td>
+                            <td className="border-t px-4 py-2">Voyage</td>
+                            <td className="border-t px-4 py-2">Catégorie</td>
+                            <td className="border-t px-4 py-2">Place</td>
+                            <td className="border-t px-4 py-2">100000</td>
+                            <td className="border-t px-4 py-2">100000</td>
                         </tr>
                     </tbody>
                 </table>

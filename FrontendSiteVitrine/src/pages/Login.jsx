@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { FaChevronDown } from 'react-icons/fa';
 import 'animate.css';
 import illustration from '../assets/Connecter.png';
 import logoImage from '../assets/2logo.png';
@@ -8,47 +9,13 @@ const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [rememberMe, setRememberMe] = useState(false);
-    const [isLogin, setIsLogin] = useState(true);
-    const [isEmailSent, setIsEmailSent] = useState(false);
+    const [role, setRole] = useState('Utilisateur');
 
     const navigate = useNavigate();
 
-    useEffect(() => {
-        const savedEmail = localStorage.getItem('email');
-        const savedPassword = localStorage.getItem('password');
-        if (savedEmail && savedPassword) {
-            setEmail(savedEmail);
-            setPassword(savedPassword);
-            setRememberMe(true);
-        }
-    }, []);
-
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
-        if (isLogin) {
-            if ((email === 'nomena@gmail.com' && password === '2202') || 
-                (email === 'razafindramboahantasoa@gmail.com' && password === '2202')) {
-                
-                if (rememberMe) {
-                    localStorage.setItem('email', email);
-                    localStorage.setItem('password', password);
-                } else {
-                    localStorage.removeItem('email');
-                    localStorage.removeItem('password');
-                }
-
-                if (email === 'nomena@gmail.com') {
-                    navigate('/admin/evenement');
-                } else if (email === 'razafindramboahantasoa@gmail.com') {
-                    navigate('/superadmin/adminmanagement');
-                }
-            } else {
-                alert('Identifiants incorrects');
-            }
-        } else {
-            console.log(`Email: ${email}, Password: ${password}`);
-            // Handle registration
-        }
+        console.log(`Role: ${role}, Email: ${email}, Password: ${password}`);
     };
 
     return (
@@ -65,10 +32,11 @@ const Login = () => {
                     <div className="text-center mb-6">
                         <img src={logoImage} alt="E-Reserve" className="w-32 h-auto mx-auto" />
                         <h2 className="text-3xl font-bold text-blue-800 mt-4">
-                            {isLogin ? 'Connectez-Vous' : 'Inscrivez-Vous'}
+                            Connectez-Vous
                         </h2>
                     </div>
                     <form onSubmit={handleSubmit}>
+                        {/* Autres champs */}
                         <div className="mb-4">
                             <label htmlFor="email" className="block text-sm font-medium text-gray-700">
                                 Email
@@ -77,7 +45,7 @@ const Login = () => {
                                 type="email"
                                 id="email"
                                 className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-blue-500 focus:ring-blue-500 transition duration-300 ease-in-out transform focus:scale-105"
-                                placeholder="Votre Email"
+                                placeholder="Votre email"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 required
@@ -91,11 +59,31 @@ const Login = () => {
                                 type="password"
                                 id="password"
                                 className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-blue-500 focus:ring-blue-500 transition duration-300 ease-in-out transform focus:scale-105"
-                                placeholder="Votre Mot de passe"
+                                placeholder="Votre mot de passe"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                                 required
                             />
+                        </div>
+                        <div className="mb-4 relative">
+                            <label htmlFor="role" className="block text-sm font-medium text-gray-700">
+                                Sélectionnez votre rôle
+                            </label>
+                            <div className="relative">
+                                <select
+                                    id="role"
+                                    value={role}
+                                    onChange={(e) => setRole(e.target.value)}
+                                    className="block w-full mt-1 pl-4 pr-10 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:border-blue-500 focus:ring-blue-500 text-gray-700 transition duration-300 ease-in-out appearance-none"
+                                >
+                                    <option value="Utilisateur">Utilisateur</option>
+                                    <option value="Admin">Admin</option>
+                                    <option value="SuperAdmin">SuperAdmin</option>
+                                </select>
+                                <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                                    <FaChevronDown className="text-gray-400" />
+                                </div>
+                            </div>
                         </div>
                         <div className="mb-4 flex items-center">
                             <input
@@ -113,29 +101,16 @@ const Login = () => {
                             type="submit"
                             className="w-full bg-gradient-to-r from-blue-500 to-blue-800 text-white py-2 px-4 rounded-md hover:from-blue-600 hover:to-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition duration-300 ease-in-out transform hover:scale-105"
                         >
-                            {isLogin ? 'Se Connecter' : 'S\'inscrire'}
+                            Se Connecter
                         </button>
-                        <p className="mt-4 text-sm text-center text-gray-600">
-                            {isLogin ? (
-                                <>Vous n'avez pas de compte?{' '}
-                                    <a href="#" className="text-blue-500 hover:underline" onClick={() => setIsLogin(false)}>
-                                        Inscrivez-vous ici
-                                    </a></>
-                            ) : (
-                                <>
-                                    Vous avez déjà un compte?{' '}
-                                    <a href="#" className="text-blue-500 hover:underline" onClick={() => setIsLogin(true)}>
-                                        Connectez-vous ici
-                                    </a>
-                                </>
-                            )}
-                        </p>
-                        {isEmailSent && (
-                            <p className="mt-4 text-sm text-center text-gray-600">
-                                Un email de vérification a été envoyé. Veuillez vérifier votre boîte de réception.
-                            </p>
-                        )}
                     </form>
+
+                    <div className="mt-6 flex justify-center">
+                        <button className="flex items-center justify-center w-full bg-white border border-gray-300 rounded-md py-2 text-gray-700 shadow-sm hover:bg-gray-100 transition duration-300 ease-in-out">
+                            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" className="w-5 h-5 mr-2" />
+                            Se connecter avec Google
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
