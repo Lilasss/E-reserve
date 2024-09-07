@@ -23,9 +23,7 @@ const BarNav = () => {
         <>
             <header className="bg-gradient-to-r from-[#0A5DA6] to-[#0A5DA6] p-5 text-white shadow-lg">
                 <div className="container mx-auto flex justify-between items-center">
-                    {/* Logo and navigation links in the same container */}
                     <div className="flex items-center space-x-8">
-                        {/* Logo */}
                         <h1 className="flex items-center cursor-pointer" onClick={() => navigate('/home')}>
                             <img src={logoImage} alt="E-Reserve" className="h-12 w-auto" />
                         </h1>
@@ -44,7 +42,6 @@ const BarNav = () => {
                         </div>
                     </div>
 
-                    {/* Admin and Login buttons */}
                     <nav>
                         <ul className="flex space-x-10">
                             <li>

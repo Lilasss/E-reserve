@@ -1,6 +1,13 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
-const Step1 = ({ handleNext, handleCancel }) => {
+const Step1 = ({ handleNext }) => {
+    const navigate = useNavigate();
+
+    const handleCancel = () => {
+        navigate('/transports'); // Redirige vers la page des transports
+    };
+
     return (
         <div>
             <div className="overflow-x-auto mt-8">
@@ -26,7 +33,7 @@ const Step1 = ({ handleNext, handleCancel }) => {
                 </table>
             </div>
 
-            <div className="flex justify-between mt-6">
+            <div className="flex justify-between mt-72">
                 <button
                     onClick={handleCancel}
                     className="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition"
