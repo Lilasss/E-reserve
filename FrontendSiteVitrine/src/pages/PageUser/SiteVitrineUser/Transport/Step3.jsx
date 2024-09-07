@@ -84,7 +84,7 @@ const Step3 = ({ handlePrev }) => {
                 <button
                     className="bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600"
                 >
-                    Confirmer
+                    Confirmers
                 </button>
             </div>
         </>
