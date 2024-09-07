@@ -1,15 +1,15 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { FaTrain, FaBus, FaSort } from 'react-icons/fa';
 import TransportDetails from './TransportDetails';
+import { useNavigate } from 'react-router-dom';
 
-// Données d'exemple pour Taxi-brousse
 const taxiBrousseData = [
     {
         name: 'Cotisse',
         date_depart: '2024-09-28',
         heure_depart: '08:00',
-        lieu_depart: { code: 'T001', nom: 'Antananarivo' },
-        lieu_arriver: { code: 'T002', nom: 'Fianarantsoa' },
+        lieu_depart: { nom: 'Antananarivo' },
+        lieu_arriver: { nom: 'Fianarantsoa' },
         nombre_place: 15,
         prix: 50000,
     },
@@ -17,8 +17,8 @@ const taxiBrousseData = [
         name: 'Soatrans',
         date_depart: '2024-09-30',
         heure_depart: '08:00',
-        lieu_depart: { code: 'T001', nom: 'Antsirabe' },
-        lieu_arriver: { code: 'T002', nom: 'Antananarivo' },
+        lieu_depart: { nom: 'Antsirabe' },
+        lieu_arriver: { nom: 'Antananarivo' },
         nombre_place: 15,
         prix: 20000,
     },
@@ -29,17 +29,17 @@ const trainData = [
         name: 'Garabe',
         date_depart: '2024-09-20',
         heure_depart: '14:00',
-        lieu_depart: { code: 'R001', nom: 'Antananarivo' },
-        lieu_arriver: { code: 'R002', nom: 'Toamasina' },
+        lieu_depart: { nom: 'Antananarivo' },
+        lieu_arriver: { nom: 'Toamasina' },
         nombre_place: 56,
-        prix: 12000,
+        prix: 13000,
     },
     {
         name: 'Gare',
         date_depart: '2024-09-24',
         heure_depart: '14:00',
-        lieu_depart: { code: 'R001', nom: 'Fianarantsoa' },
-        lieu_arriver: { code: 'R002', nom: 'Manakara' },
+        lieu_depart: { nom: 'Fianarantsoa' },
+        lieu_arriver: { nom: 'Manakara' },
         nombre_place: 56,
         prix: 12000,
     },
@@ -86,7 +86,11 @@ function TransportTabs() {
             document.removeEventListener('mousedown', handleClickOutside);
         };
     }, []);
+    const navigate = useNavigate();
 
+    const handleReserveClick = () => {
+        navigate('/transportreserve');
+    };
     return (
         <div className="w-full max-w-5xl mx-auto p-6 text-base" style={{ fontFamily: 'Poppins, sans-serif' }}>
             <div className="flex justify-around border-b border-gray-300 relative">
@@ -123,25 +127,30 @@ function TransportTabs() {
                         Prix
                         <FaSort className="ml-2" size={16} />
                     </button>
+
                     {priceSortOpen && (
                         <div className="absolute left-0 mt-2 w-48 bg-white border border-gray-300 rounded shadow-lg">
                             <button
                                 onClick={() => selectSortOption('Moins cher')}
                                 className="block w-full text-left px-4 py-2 hover:bg-gray-100"
-                            >
-                                Moins cher
+                            >Moins cher
                             </button>
                             <button
                                 onClick={() => selectSortOption('Plus cher')}
                                 className="block w-full text-left px-4 py-2 hover:bg-gray-100"
-                            >
-                                Plus cher
+                            >Plus cher
                             </button>
                         </div>
                     )}
                 </div>
             </div>
-            
+            <button
+                className="bg-[#0A5DA6] text-white font-semibold py-3 px-6 rounded-lg hover:bg-[#1f405d] transition duration-300 mx-auto lg:mx-0"
+                onClick={handleReserveClick}
+            >
+                Réserver
+            </button>
+
             <div className="mt-4">
                 {activeTab === 'Taxi-brousse' && (
                     <div>
