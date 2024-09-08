@@ -74,7 +74,7 @@ const Step3 = ({ handlePrev }) => {
                 </div>
             </div>
 
-            <div className="flex justify-between mt-8">
+            <div className="flex justify-between mt-14">
                 <button
                     onClick={handlePrev}
                     className="bg-gray-500 text-white py-2 px-4 rounded-lg hover:bg-gray-600"
@@ -84,7 +84,7 @@ const Step3 = ({ handlePrev }) => {
                 <button
                     className="bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600"
                 >
-                    Confirmers
+                    Confirmer
                 </button>
             </div>
         </>

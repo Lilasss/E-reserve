@@ -36,7 +36,6 @@ const Login = () => {
                         </h2>
                     </div>
                     <form onSubmit={handleSubmit}>
-                        {/* Autres champs */}
                         <div className="mb-4">
                             <label htmlFor="email" className="block text-sm font-medium text-gray-700">
                                 Email
