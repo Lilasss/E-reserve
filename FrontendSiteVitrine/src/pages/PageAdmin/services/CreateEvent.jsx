@@ -84,7 +84,7 @@ const CreateEvent = () => {
                                     />
                                 </div>
                                 <div>
-                                    <label>Catégorie de l'évènement</label>
+                                    <label>Catégorie de l'évènements ok</label>
                                     <Select
                                         value={category}
                                         onChange={setCategory}
