@@ -1,6 +1,13 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
-const Step1 = ({ handleNext, handleCancel }) => {
+const Step1 = ({ handleNext }) => {
+    const navigate = useNavigate();
+
+    const handleCancel = () => {
+        navigate('/transports'); // Redirige vers la page des transports
+    };
+
     return (
         <div>
             <div className="overflow-x-auto mt-8">
@@ -16,17 +23,17 @@ const Step1 = ({ handleNext, handleCancel }) => {
                     </thead>
                     <tbody>
                         <tr>
-                            <td className="border-t px-4 py-2">Exemple Voyage</td>
-                            <td className="border-t px-4 py-2">Exemple Catégorie</td>
-                            <td className="border-t px-4 py-2">Exemple Place</td>
-                            <td className="border-t px-4 py-2">100€</td>
-                            <td className="border-t px-4 py-2">100€</td>
+                            <td className="border-t px-4 py-2">Voyage</td>
+                            <td className="border-t px-4 py-2">Catégorie</td>
+                            <td className="border-t px-4 py-2">Place</td>
+                            <td className="border-t px-4 py-2">100000</td>
+                            <td className="border-t px-4 py-2">100000</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
 
-            <div className="flex justify-between mt-6">
+            <div className="flex justify-between mt-72">
                 <button
                     onClick={handleCancel}
                     className="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition"

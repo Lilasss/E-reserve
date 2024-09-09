@@ -26,7 +26,6 @@ function PaymentPage() {
     }
 
     const handlePayment = () => {
-        // Redirection vers la page de détails du billet
         navigate('/ticketinfo', { state: { event, quantities, total } });
     };
 
