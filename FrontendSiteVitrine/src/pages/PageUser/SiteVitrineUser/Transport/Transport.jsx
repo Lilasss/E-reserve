@@ -23,7 +23,7 @@ function Transport() {
                 <div className="mt-"><Reserve /></div>
             </div>
             <TransportTabs />
-            
+
             <div className="mt-10">
                 <TicketSteps />
             </div>
@@ -40,7 +40,7 @@ function Transport() {
                             </h2>
                             <p className="text-gray-600 mb-6 text-center lg:text-left">
                                 E-reserve est une plateforme 100% en ligne de gestion de services de transport. Elle permet l'administration
-                                et la supervision en temps réel de votre flotte de véhicules, de la réservation à la gestion des trajets.
+                                et la supervision en temps réel de la réservation à la gestion des trajets.
                             </p>
 
                         </div>

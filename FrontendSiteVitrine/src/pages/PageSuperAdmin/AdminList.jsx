@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import DonutChart from './DonutChart';
+import DonutChart from '../PageAdmin/services/Evenement/DonutChart';
 
 const AdminList = ({ admins }) => {
     const [selectedCategory, setSelectedCategory] = useState('Tous');
