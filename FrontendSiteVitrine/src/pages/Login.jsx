@@ -1,21 +1,64 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaChevronDown } from 'react-icons/fa';
 import 'animate.css';
 import illustration from '../assets/Connecter.png';
 import logoImage from '../assets/2logo.png';
+import axios from 'axios';
+import Cookies from 'js-cookie';
 
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [rememberMe, setRememberMe] = useState(false);
     const [role, setRole] = useState('Utilisateur');
-
     const navigate = useNavigate();
 
-    const handleSubmit = (e) => {
+    useEffect(() => {
+        // Check if user is already logged in
+        const authData = Cookies.get('authData');
+        if (authData) {
+            // Redirect to appropriate dashboard if already logged in
+            const roleUser = authData.split('/')[2]; // Extract role from stored authData
+            if (roleUser === 'SUPERADMIN') {
+                navigate('/superadmin');
+            } else if (roleUser === 'ADMIN') {
+                navigate('/admin');
+            } else {
+                navigate('/user-dashboard'); // Adjust if needed
+            }
+        }
+    }, [navigate]);
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(`Role: ${role}, Email: ${email}, Password: ${password}`);
+        try {
+            const data = { email, password };
+            const response = await axios.post('http://localhost:8080/auth/login', data);
+
+            const token = response.data.token;
+            const expiresIn = response.data.expiresIn / 1000; // Convert milliseconds to seconds
+            const userRole = response.data.roleUser; // Get user role
+            const userId = response.data.userId; // Get user ID
+
+            // Concatenate userId, token, and role with a slash (/)
+            const concatenatedValue = `${userId}/${token}/${userRole}`;
+
+            // Save concatenated token in cookies
+            Cookies.set('authData', concatenatedValue, { expires: expiresIn / (60 * 60 * 24) }); // Convert to days
+
+            // Redirect based on role
+            if (userRole === 'SUPERADMIN') {
+                navigate('/superadmin/adminmanagement',{ state: { userId } });
+            } else if (userRole === 'ADMIN') {
+                navigate('/admin', { state: { userId } });
+            } else {
+                navigate('/user-dashboard', { state: { userId } }); // Adjust this route as needed
+            }
+
+        } catch (error) {
+            console.error('Login failed:', error);
+        }
     };
 
     return (
@@ -63,26 +106,6 @@ const Login = () => {
                                 onChange={(e) => setPassword(e.target.value)}
                                 required
                             />
-                        </div>
-                        <div className="mb-4 relative">
-                            <label htmlFor="role" className="block text-sm font-medium text-gray-700">
-                                Sélectionnez votre rôle
-                            </label>
-                            <div className="relative">
-                                <select
-                                    id="role"
-                                    value={role}
-                                    onChange={(e) => setRole(e.target.value)}
-                                    className="block w-full mt-1 pl-4 pr-10 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:border-blue-500 focus:ring-blue-500 text-gray-700 transition duration-300 ease-in-out appearance-none"
-                                >
-                                    <option value="Utilisateur">Utilisateur</option>
-                                    <option value="Admin">Admin</option>
-                                    <option value="SuperAdmin">SuperAdmin</option>
-                                </select>
-                                <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                                    <FaChevronDown className="text-gray-400" />
-                                </div>
-                            </div>
                         </div>
                         <div className="mb-4 flex items-center">
                             <input
