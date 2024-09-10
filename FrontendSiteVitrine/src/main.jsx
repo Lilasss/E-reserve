@@ -10,9 +10,9 @@ import AdminPage from './pages/PageSuperAdmin/Adminpage.jsx'
 import Dashboard from './pages/PageSuperAdmin/Dashboard.jsx'
 import AdminManagement from './pages/PageSuperAdmin/AdminManagement.jsx'
 import Adminpages from './pages/PageAdmin/services/Adminpages.jsx'
-import AdDashboard from './pages/PageAdmin/services/AdDashboard.jsx'
-import Evenement from './pages/PageAdmin/services/Evenement.jsx'
-import CreateEvent from './pages/PageAdmin/services/CreateEvent.jsx'
+import AdDashboard from './pages/PageAdmin/services/Evenement/AdDashboard.jsx'
+import Evenement from './pages/PageAdmin/services/Evenement/Evenement.jsx'
+import CreateEvent from './pages/PageAdmin/services/Evenement/CreateEvent.jsx'
 import BarNav from './pages/PageUser/SiteVitrineUser/BarNav.jsx'
 import VenteEvent from './pages/PageAdmin/views/VenteEvent.jsx'
 import Event from './pages/PageUser/SiteVitrineUser/Evenement/Event.jsx'
@@ -23,6 +23,10 @@ import Transport from './pages/PageUser/SiteVitrineUser/Transport/Transport.jsx'
 import TicketInfo from './pages/PageUser/SiteVitrineUser/Evenement/TicketInfo.jsx'
 import TransportDetails from './pages/PageUser/SiteVitrineUser/Transport/TransportDetails.jsx'
 import TransportReserve from './pages/PageUser/SiteVitrineUser/Transport/TransportReserve.jsx'
+import PageTrans from './pages/PageAdmin/services/Transport/PageTrans.jsx'
+import DashboardTrans from './pages/PageAdmin/services/Transport/DashboardTrans.jsx'
+import CreateTrans from './pages/PageAdmin/services/Transport/CreateTrans.jsx'
+import VenteTrans from './pages/PageAdmin/services/Transport/VenteTrans.jsx'
 
 
 const router = createBrowserRouter([
@@ -72,6 +76,7 @@ const router = createBrowserRouter([
 
     ],
   },
+  ////////////////////////////////////////EVENT 
 
   {
     path: "admin",
@@ -100,6 +105,33 @@ const router = createBrowserRouter([
 
   },
 
+  ///////////////////////////////////////TRANSPORT 
+
+  {
+    path: "pagetrans",
+    element: <PageTrans />,
+    children: [
+      {
+        path: "dashboardtrans",
+        element: <DashboardTrans />,
+      },
+
+      {
+        path: "createtrans",
+        element: <CreateTrans />,
+      },
+
+      {
+        path: "ventetrans",
+        element: <VenteTrans />,
+      },
+
+
+    ],
+
+  },
+
+  ///
   {
     path: "events",
     element: <Event />
@@ -144,6 +176,7 @@ const router = createBrowserRouter([
     element: <TransportReserve />
 
   },
+
 
 
 

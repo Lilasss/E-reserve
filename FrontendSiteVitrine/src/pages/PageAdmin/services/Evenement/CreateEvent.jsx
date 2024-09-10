@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import Select from 'react-select';
 import DatePicker from 'react-datepicker';
-import { CSSTransition, TransitionGroup } from 'react-transition-group';
+import { useNavigate } from 'react-router-dom';
 import 'react-datepicker/dist/react-datepicker.css';
-import '../views/CSS/CreateEvent.css';
+import '../../views/CSS/CreateEvent.css';
 
 const categories = [
     { value: 'spectacle_concerts', label: 'Spectacles & Concerts' },
@@ -15,20 +15,20 @@ const categories = [
 
 const CreateEvent = () => {
     const [step, setStep] = useState(1);
-    const [title, setTitle] = useState('');
-    const [category, setCategory] = useState(null);
-    const [startDate, setStartDate] = useState(null);
-    const [endDate, setEndDate] = useState(null);
-    const [location, setLocation] = useState('');
+    const [titre, setTitre] = useState('');
+    const [categorie_event, setCategorieEvent] = useState(null);
+    const [date, setDate] = useState(null);
+    const [lieu, setLieu] = useState('');
     const [description, setDescription] = useState('');
-    const [file, setFile] = useState(null);
-    const [filePreview, setFilePreview] = useState(null);
-    const [noReservation, setNoReservation] = useState(false);
+    const [image_path, setImagePath] = useState(null);
+    const [imagePreview, setImagePreview] = useState(null);
     const [vip, setVip] = useState(false);
     const [price, setPrice] = useState('');
     const [vipPrice, setVipPrice] = useState('');
     const [normalSeats, setNormalSeats] = useState('');
     const [vipSeats, setVipSeats] = useState('');
+
+    const navigate = useNavigate();
 
     const handleNextStep = () => {
         if (step < 4) {
@@ -39,16 +39,18 @@ const CreateEvent = () => {
     const handlePrevStep = () => {
         if (step > 1) {
             setStep(step - 1);
+        } else {
+            navigate('/admin/evenement');
         }
     };
 
-    const handleFileChange = (e) => {
+    const handleImageChange = (e) => {
         const selectedFile = e.target.files[0];
-        setFile(selectedFile);
+        setImagePath(selectedFile);
         if (selectedFile) {
             const reader = new FileReader();
             reader.onloadend = () => {
-                setFilePreview(reader.result);
+                setImagePreview(reader.result);
             };
             reader.readAsDataURL(selectedFile);
         }
@@ -59,7 +61,19 @@ const CreateEvent = () => {
         if (step < 4) {
             handleNextStep();
         } else {
-            console.log({ title, category, startDate, endDate, location, description, file, noReservation, vip, price, vipPrice, normalSeats, vipSeats });
+            console.log({
+                titre,
+                categorie_event,
+                date,
+                lieu,
+                description,
+                image_path,
+                vip,
+                price,
+                vipPrice,
+                normalSeats,
+                vipSeats
+            });
         }
     };
 
@@ -77,48 +91,40 @@ const CreateEvent = () => {
                                     <label>Titre</label>
                                     <input
                                         type="text"
-                                        value={title}
-                                        onChange={(e) => setTitle(e.target.value)}
+                                        value={titre}
+                                        onChange={(e) => setTitre(e.target.value)}
                                         placeholder="Titre de l'événement"
-                                        className="w-full p-2 pl-3 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-700 transition-all duration-300"
+                                        className="w-full p-2 pl-3 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-700"
                                     />
                                 </div>
                                 <div>
-                                    <label>Catégorie de l'évènements ok</label>
+                                    <label>Catégorie de l'événements</label>
                                     <Select
-                                        value={category}
-                                        onChange={setCategory}
+                                        value={categorie_event}
+                                        onChange={setCategorieEvent}
                                         options={categories}
                                         placeholder="Sélectionner une catégorie"
-                                        className="w-[350px] border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-700 transition-all duration-300"
+                                        className="w-[350px] border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-700"
                                     />
                                 </div>
                             </div>
                             <div className="grid grid-cols-2 gap-6">
                                 <div>
                                     <DatePicker
-                                        selected={startDate}
-                                        onChange={(date) => setStartDate(date)}
-                                        className="w-[300px] p-2 pl-3 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-700 transition-all duration-300"
+                                        selected={date}
+                                        onChange={(date) => setDate(date)}
+                                        className="w-[300px] p-2 pl-3 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-700"
                                         placeholderText="Sélectionner la date de début"
-                                    />
-                                </div>
-                                <div>
-                                    <DatePicker
-                                        selected={endDate}
-                                        onChange={(date) => setEndDate(date)}
-                                        className="w-[300px] p-2 pl-3 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-700 transition-all duration-300"
-                                        placeholderText="Sélectionner la date de fin"
                                     />
                                 </div>
                             </div>
                             <div>
                                 <input
                                     type="text"
-                                    value={location}
-                                    onChange={(e) => setLocation(e.target.value)}
+                                    value={lieu}
+                                    onChange={(e) => setLieu(e.target.value)}
                                     placeholder="Lieu de l'événement"
-                                    className="w-[450px] p-2 pl-3 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-700 transition-all duration-300"
+                                    className="w-[450px] p-2 pl-3 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-700"
                                 />
                             </div>
                         </div>
@@ -132,23 +138,22 @@ const CreateEvent = () => {
                                     value={description}
                                     onChange={(e) => setDescription(e.target.value)}
                                     placeholder="Ajouter une description"
-                                    className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-700 transition-all duration-300"
+                                    className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-700"
                                 />
                             </div>
                             <div>
                                 <input
                                     type="file"
-                                    onChange={handleFileChange}
-                                    className="w-[450px] p-2 border text-sm rounded-md focus:outline-none focus:ring-1 focus:ring-gray-700 transition-all duration-300"
+                                    onChange={handleImageChange}
+                                    className="w-[450px] p-2 border text-sm rounded-md focus:outline-none focus:ring-1 focus:ring-gray-700"
                                 />
-                                {filePreview && (
+                                {imagePreview && (
                                     <img
-                                        src={filePreview}
+                                        src={imagePreview}
                                         alt="Preview"
                                         className="mt-4 w-[300px] h-auto rounded-md"
                                     />
                                 )}
-
                             </div>
                         </div>
                     )}
@@ -174,7 +179,7 @@ const CreateEvent = () => {
                                                 value={price}
                                                 onChange={(e) => setPrice(e.target.value)}
                                                 placeholder="Définir le prix normal"
-                                                className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-700 transition-all duration-300"
+                                                className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-700"
                                             />
                                         </div>
                                         <div>
@@ -184,7 +189,7 @@ const CreateEvent = () => {
                                                 value={vipPrice}
                                                 onChange={(e) => setVipPrice(e.target.value)}
                                                 placeholder="Définir le prix VIP"
-                                                className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-700 transition-all duration-300"
+                                                className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-700"
                                             />
                                         </div>
                                     </>
@@ -196,75 +201,54 @@ const CreateEvent = () => {
                                             value={price}
                                             onChange={(e) => setPrice(e.target.value)}
                                             placeholder="Définir le prix"
-                                            className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-700 transition-all duration-300"
+                                            className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-700"
                                         />
                                     </div>
                                 )}
-                                <div className="grid grid-cols-2 gap-6">
+                                {vip && (
                                     <div>
-                                        <label className="block text-sm font-medium mb-2">Nombre de places normales</label>
+                                        <label className="block text-sm font-medium mb-2">Nombre de places VIP</label>
                                         <input
                                             type="number"
-                                            value={normalSeats}
-                                            onChange={(e) => setNormalSeats(e.target.value)}
-                                            placeholder="Places normales"
-                                            className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-700 transition-all duration-300"
+                                            value={vipSeats}
+                                            onChange={(e) => setVipSeats(e.target.value)}
+                                            placeholder="Places VIP"
+                                            className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-700"
                                         />
                                     </div>
-
-                                    <TransitionGroup>
-                                        {vip && (
-                                            <CSSTransition
-                                                key="vipSeats"
-                                                timeout={300}
-                                                classNames="fade"
-                                            >
-                                                <div>
-                                                    <label className="block text-sm font-medium mb-2">Nombre de places VIP</label>
-                                                    <input
-                                                        type="number"
-                                                        value={vipSeats}
-                                                        onChange={(e) => setVipSeats(e.target.value)}
-                                                        placeholder="Places VIP"
-                                                        className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-700 transition-all duration-300"
-                                                    />
-                                                </div>
-                                            </CSSTransition>
-                                        )}
-                                    </TransitionGroup>
+                                )}
+                                <div>
+                                    <label className="block text-sm font-medium mb-2">Nombre de places normales</label>
+                                    <input
+                                        type="number"
+                                        value={normalSeats}
+                                        onChange={(e) => setNormalSeats(e.target.value)}
+                                        placeholder="Places normales"
+                                        className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-700"
+                                    />
                                 </div>
                             </div>
                         </div>
                     )}
 
-                    {step === 4 && (
-                        <div>
-                            <p className="text-lg font-semibold">
-                                Vérif
-                            </p>
-                        </div>
-                    )}
-
-                    <div className="flex justify-between mt-8">
-                        {step > 1 && (
-                            <button
-                                type="button"
-                                onClick={handlePrevStep}
-                                className="bg-gray-500 text-white px-4 py-2 rounded-lg shadow-lg hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500 transition-all duration-300"
-                            >
-                                Précédent
-                            </button>
-                        )}
+                    <div className="flex justify-between">
+                        <button
+                            type="button"
+                            onClick={handlePrevStep}
+                            className={`px-4 py-2 rounded-md ${step === 1 ? 'bg-gray-300 cursor-not-allowed' : 'bg-gray-700 text-white hover:bg-gray-900'
+                                }`}
+                        >
+                            Précédent
+                        </button>
                         <button
                             type="submit"
-                            className="bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 transition-all duration-300"
+                            className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-900"
                         >
-                            {step < 4 ? 'Passer à l\'étape suivante' : 'Soumettre'}
+                            {step === 4 ? 'Soumettre' : 'Suivant'}
                         </button>
                     </div>
                 </form>
             </div>
-
             <div className="w-1/5 p-4 bg-gray-100 h-screen flex flex-col justify-center items-center">
                 {[1, 2, 3, 4].map((stepNumber) => (
                     <div key={stepNumber} className="flex flex-col items-center">

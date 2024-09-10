@@ -4,7 +4,7 @@ import { AiOutlineCheckCircle } from 'react-icons/ai';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './CSS/Super.css';
-import AdminList from '../PageAdmin/services/AdminList';
+import AdminList from './AdminList';
 
 function AdminManagement() {
     const [activeTab, setActiveTab] = useState('admin');
