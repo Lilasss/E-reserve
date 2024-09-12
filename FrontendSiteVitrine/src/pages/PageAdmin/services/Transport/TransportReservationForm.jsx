@@ -1,188 +1,132 @@
-import React, { useState } from "react";
+import React from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-const TransportReservationForm = () => {
-  const [formData, setFormData] = useState({
-    categorie: "",
-    date_depart: new Date(), // Initialiser avec la date actuelle
-    heure_depart: "10:00",
-    image_path: "",
-    lieu_arriver: "",
-    lieu_depart: "",
-    name: "",
-    nombre_place: 1,
-    prix: "",
-  });
-
+const TransportReservationForm = ({ formData, setFormData, nextStep }) => {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleDateChange = (date) => {
-    setFormData({ ...formData, date_depart: date });
-  };
+  const handleDateChange = (date) =>
+    setFormData((prev) => ({ ...prev, date_depart: date }));
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Form Data: ", formData);
+    nextStep(); 
   };
 
   return (
-    <div className="bg-gray-100 p-8 rounded-lg shadow-lg max-w-4xl mx-auto mt-10">
-      <h2 className="text-3xl font-bold text-center text-gray-800 mb-6">
-        Réservation de Transport
-      </h2>
+    <div className="max-w-4xl mx-auto mt-10">
       <form onSubmit={handleSubmit} className="grid grid-cols-2 gap-6">
-        {/* Catégorie */}
         <div>
-          <label className="block text-lg font-medium text-gray-700 mb-2">
-            Catégorie
-          </label>
-          <input
-            type="text"
+          <label>Catégorie</label>
+          <select
             name="categorie"
             value={formData.categorie}
             onChange={handleInputChange}
-            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-indigo-500"
-            placeholder="Entrez la catégorie"
-            required
-          />
+            className="w-full p-3 border border-gray-300 rounded-lg appearance-none focus:outline-none"
+          >
+            <option value="">Sélectionnez une catégorie</option>
+            <option value="Taxi">Taxi-brousse</option>
+            <option value="Train">Train</option>
+          </select>
         </div>
 
-        {/* Date de départ (Datepicker) */}
-        <div>
-          <label className="block text-lg font-medium text-gray-700 mb-2">
-            Date de départ
-          </label>
-          <DatePicker
-            selected={formData.date_depart}
-            onChange={handleDateChange}
-            dateFormat="dd/MM/yyyy"
-            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-indigo-500"
-            required
-          />
+        <div className="flex space-x-4">
+          <div>
+            <label>Date de départ</label>
+            <DatePicker
+              selected={formData.date_depart}
+              onChange={handleDateChange}
+              dateFormat="dd/MM/yyyy"
+              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none"
+            />
+          </div>
+          <div>
+            <label>Heure de départ</label>
+            <input
+              type="time"
+              name="heure_depart"
+              value={formData.heure_depart}
+              onChange={handleInputChange}
+              className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none"
+            />
+          </div>
         </div>
 
-        {/* Heure de départ (input[type="time"]) */}
         <div>
-          <label className="block text-lg font-medium text-gray-700 mb-2">
-            Heure de départ
-          </label>
-          <input
-            type="time"
-            name="heure_depart"
-            value={formData.heure_depart}
-            onChange={handleInputChange}
-            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-indigo-500"
-            required
-          />
-        </div>
-
-        {/* Lieu de départ */}
-        <div>
-          <label className="block text-lg font-medium text-gray-700 mb-2">
-            Lieu de départ
-          </label>
+          <label>Lieu de départ</label>
           <input
             type="text"
             name="lieu_depart"
             value={formData.lieu_depart}
             onChange={handleInputChange}
-            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-indigo-500"
-            placeholder="Entrez le lieu de départ"
-            required
+            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none"
           />
         </div>
 
-        {/* Lieu d'arrivée */}
         <div>
-          <label className="block text-lg font-medium text-gray-700 mb-2">
-            Lieu d'arrivée
-          </label>
+          <label>Lieu d'arrivée</label>
           <input
             type="text"
             name="lieu_arriver"
             value={formData.lieu_arriver}
             onChange={handleInputChange}
-            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-indigo-500"
-            placeholder="Entrez le lieu d'arrivée"
-            required
+            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none"
           />
         </div>
 
-        {/* Nom */}
         <div>
-          <label className="block text-lg font-medium text-gray-700 mb-2">
-            Nom
-          </label>
+          <label>Nom</label>
           <input
             type="text"
             name="name"
             value={formData.name}
             onChange={handleInputChange}
-            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-indigo-500"
-            placeholder="Entrez votre nom"
-            required
+            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none"
           />
         </div>
 
-        {/* Nombre de places */}
         <div>
-          <label className="block text-lg font-medium text-gray-700 mb-2">
-            Nombre de places
-          </label>
+          <label>Nombre de places</label>
           <input
             type="number"
             name="nombre_place"
             value={formData.nombre_place}
             onChange={handleInputChange}
-            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-indigo-500"
+            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none"
             min="1"
-            required
           />
         </div>
 
-        {/* Prix */}
         <div>
-          <label className="block text-lg font-medium text-gray-700 mb-2">
-            Prix
-          </label>
+          <label>Prix</label>
           <input
             type="number"
             name="prix"
             value={formData.prix}
             onChange={handleInputChange}
-            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-indigo-500"
-            placeholder="Entrez le prix"
-            required
+            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none"
           />
         </div>
 
-        {/* Image path */}
         <div className="col-span-2">
-          <label className="block text-lg font-medium text-gray-700 mb-2">
-            Image du transport
-          </label>
+          <label>Insérer une image</label>
           <input
             type="file"
             name="image_path"
             onChange={handleInputChange}
-            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-indigo-500"
+            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none"
           />
         </div>
 
-        {/* Submit Button */}
-        <div className="col-span-2 text-center">
+        <div className="col-span-2 text-center w-32">
           <button
             type="submit"
-            className="w-full bg-indigo-600 text-white font-semibold p-3 rounded-lg hover:bg-indigo-700 transition duration-300"
+            className="w-full bg-green-500 text-white font-semibold p-3 rounded-lg hover:bg-green-600"
           >
-            Réserver
+            Suivant
           </button>
         </div>
       </form>

@@ -18,7 +18,7 @@ function Sidebar() {
                     className={`flex items-center p-2 text-gray-300 ${location.pathname === "/superadmin/dashboard" ? "bg-gray-700 text-white" : "hover:bg-gray-700 hover:text-white"} rounded-lg transition-colors`}
                 >
                     <HomeIcon className="h-6 w-6" />
-                    <span className="ml-3 hidden md:inline">Tableau de bord</span>
+                    <span className="ml-3 hidden sm:inline">Tableau de bord</span>
                 </Link>
 
                 <Link
@@ -26,7 +26,7 @@ function Sidebar() {
                     className={`flex items-center p-2 text-gray-300 ${location.pathname === "/superadmin/adminmanagement" ? "bg-gray-700 text-white" : "hover:bg-gray-700 hover:text-white"} rounded-lg transition-colors`}
                 >
                     <ClipboardDocumentListIcon className="h-6 w-6" />
-                    <span className="ml-3 hidden md:inline">Gestion d'Admin</span>
+                    <span className="ml-3 hidden sm:inline">Gestion d'Admin</span>
                 </Link>
 
             </nav>

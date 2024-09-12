@@ -100,17 +100,9 @@ const router = createBrowserRouter([
       {
         path: "venteevent",
         element: <VenteEvent />,
-      }
-    ],
+      },
+      ///////////////////////////////////////TRANSPORT 
 
-  },
-
-  ///////////////////////////////////////TRANSPORT 
-
-  {
-    path: "pagetrans",
-    element: <PageTrans />,
-    children: [
       {
         path: "dashboardtrans",
         element: <DashboardTrans />,
@@ -126,11 +118,9 @@ const router = createBrowserRouter([
         element: <VenteTrans />,
       },
 
-
     ],
 
   },
-
   ///
   {
     path: "events",
