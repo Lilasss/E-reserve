@@ -46,12 +46,11 @@ const SeatSelection = ({ formData, prevStep }) => {
                             </div>
                         ))}
                     </div>
-
                     <div className="grid grid-cols-4 gap-4">
                         {seats.slice(2).map((seat, index) => (
                             <div
                                 key={index}
-                                onClick={() => handleSeatClick(index + 2)} // Décalage nécessaire
+                                onClick={() => handleSeatClick(index + 2)}
                                 className={`w-12 h-12 border-2 border-green-500 rounded-lg flex items-center justify-center cursor-pointer 
                                     ${seat.isSelected ? "bg-green-500 text-white" : "text-green-500"}`}
                             >

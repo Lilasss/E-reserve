@@ -72,14 +72,14 @@ function SidebarAdmin() {
                         <Link
                             to="/admin/venteevent"
                             className={`flex items-center p-2 text-gray-300 ml-5 ${location.pathname.startsWith("/admin/venteevent")
-                                ? "bg-gray-700 text-white" : "hover:text-white"} rounded-lg transition-colors`}
+                                ? "text-white" : "hover:text-white"} rounded-lg transition-colors`}
                         >
                             <span className="ml-4 hidden sm:inline my-2">Événements</span>
                         </Link>
                         <Link
                             to="/admin/ventetrans"
                             className={`flex items-center p-2 text-gray-300 ml-5 ${location.pathname.startsWith("/admin/ventetrans")
-                                ? "bg-gray-700 text-white" : "hover:text-white"} rounded-lg transition-colors`}
+                                ? "text-white" : "hover:text-white"} rounded-lg transition-colors`}
                         >
                             <span className="ml-4 hidden sm:inline">Transports</span>
                         </Link>
