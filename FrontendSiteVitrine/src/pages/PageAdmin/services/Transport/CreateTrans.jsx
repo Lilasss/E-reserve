@@ -16,17 +16,14 @@ const CreateTrans = () => {
     prix: "",
   });
 
-  // Fonction pour aller à l'étape suivante
   const nextStep = () => {
     setStep(step + 1);
   };
 
-  // Fonction pour revenir à l'étape précédente
   const prevStep = () => {
     setStep(step - 1);
   };
 
-  // Rendu conditionnel selon l'étape
   return (
     <div>
       {step === 1 && (
