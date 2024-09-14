@@ -27,6 +27,9 @@ import PageTrans from './pages/PageAdmin/services/Transport/PageTrans.jsx'
 import DashboardTrans from './pages/PageAdmin/services/Transport/DashboardTrans.jsx'
 import CreateTrans from './pages/PageAdmin/services/Transport/CreateTrans.jsx'
 import VenteTrans from './pages/PageAdmin/services/Transport/VenteTrans.jsx'
+import Commande from './pages/PageAdmin/services/Evenement/CommandeEvent.jsx'
+import CommandeTrans from './pages/PageAdmin/services/Transport/CommandeTrans.jsx'
+import CommandeEvent from './pages/PageAdmin/services/Evenement/CommandeEvent.jsx'
 
 
 const router = createBrowserRouter([
@@ -116,6 +119,16 @@ const router = createBrowserRouter([
       {
         path: "ventetrans",
         element: <VenteTrans />,
+      },
+
+      {
+        path: "commandetrans",
+        element: <CommandeTrans />,
+      },
+
+      {
+        path: "commandeevent",
+        element: <CommandeEvent />,
       },
 
     ],

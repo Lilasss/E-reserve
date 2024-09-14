@@ -9,13 +9,13 @@ Chart.register(BarElement, DoughnutController, CategoryScale, LinearScale, Title
 const mockData = {
   events: [
     {
-      name: 'Concert de Jazz',
+      name: 'Bodo',
       date: '2024-09-20',
       totalTicketsSold: 150,
       ticketsAvailable: 50,
       ticketTypes: [
-        { type: 'VIP', sold: 50, available: 10, price: 100 },
-        { type: 'Standard', sold: 100, available: 40, price: 50 },
+        { type: 'VIP', sold: 50, available: 10, price: 20000 },
+        { type: 'Standard', sold: 100, available: 40, price: 5000 },
       ],
     },
     {
@@ -24,8 +24,8 @@ const mockData = {
       totalTicketsSold: 200,
       ticketsAvailable: 100,
       ticketTypes: [
-        { type: 'VIP', sold: 70, available: 30, price: 150 },
-        { type: 'Standard', sold: 130, available: 70, price: 75 },
+        { type: 'VIP', sold: 70, available: 30, price: 30000 },
+        { type: 'Standard', sold: 130, available: 70, price: 15000 },
       ],
     },
   ],
@@ -45,41 +45,41 @@ const VenteEvent = () => {
 
   const salesChartData = filteredEvent
     ? {
-        labels: ['Billets vendus', 'Billets disponibles'],
-        datasets: [
-          {
-            label: 'Nombre de billets',
-            data: [filteredEvent.totalTicketsSold, filteredEvent.ticketsAvailable],
-            backgroundColor: ['rgba(75, 192, 192, 0.6)', 'rgba(255, 99, 132, 0.6)'],
-            borderColor: ['rgba(75, 192, 192, 1)', 'rgba(255, 99, 132, 1)'],
-            borderWidth: 1,
-          },
-        ],
-      }
+      labels: ['Billets vendus', 'Billets disponibles'],
+      datasets: [
+        {
+          label: 'Nombre de billets',
+          data: [filteredEvent.totalTicketsSold, filteredEvent.ticketsAvailable],
+          backgroundColor: ['rgba(75, 192, 192, 0.6)', 'rgba(255, 99, 132, 0.6)'],
+          borderColor: ['rgba(75, 192, 192, 1)', 'rgba(255, 99, 132, 1)'],
+          borderWidth: 1,
+        },
+      ],
+    }
     : { labels: [], datasets: [] };
 
   const ticketTypeDoughnutCharts = filteredEvent
     ? filteredEvent.ticketTypes.map((ticketType) => ({
-        data: {
-          labels: ['Billets vendus', 'Billets disponibles'],
-          datasets: [
-            {
-              label: `${ticketType.type}`,
-              data: [ticketType.sold, ticketType.available],
-              backgroundColor: ['rgba(54, 162, 235, 0.6)', 'rgba(255, 206, 86, 0.6)'],
-              borderColor: ['rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)'],
-              borderWidth: 1,
-            },
-          ],
-        },
-      }))
+      data: {
+        labels: ['Billets vendus', 'Billets disponibles'],
+        datasets: [
+          {
+            label: `${ticketType.type}`,
+            data: [ticketType.sold, ticketType.available],
+            backgroundColor: ['rgba(54, 162, 235, 0.6)', 'rgba(255, 206, 86, 0.6)'],
+            borderColor: ['rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)'],
+            borderWidth: 1,
+          },
+        ],
+      },
+    }))
     : [];
 
   const ticketTypeTotals = filteredEvent
     ? filteredEvent.ticketTypes.map((ticketType) => ({
-        type: ticketType.type,
-        total: ticketType.sold * ticketType.price,
-      }))
+      type: ticketType.type,
+      total: ticketType.sold * ticketType.price,
+    }))
     : [];
 
   const totalSales = ticketTypeTotals.reduce((acc, ticketType) => acc + ticketType.total, 0);
@@ -159,7 +159,7 @@ const VenteEvent = () => {
           </div>
         </>
       ) : (
-        <p className="mt-6 text-center text-gray-500">Veuillez sélectionner un événement et une date pour afficher les données des ventes</p>
+        <p className="mt-6 text-center text-gray-500">Veuillez sélectionner un événement</p>
       )}
     </>
   );
