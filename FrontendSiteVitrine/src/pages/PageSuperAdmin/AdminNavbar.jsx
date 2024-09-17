@@ -27,7 +27,7 @@ const AdminNavbar = () => {
     };
 
     const handleConfirmLogout = () => {
-        navigate('/user');
+        navigate('/events');
         setIsLogoutDialogOpen(false);
     };
 
