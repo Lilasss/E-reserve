@@ -53,9 +53,7 @@ function TransportTabs() {
     const [sortedTrainData, setSortedTrainData] = useState(trainData);
     const priceSortRef = useRef(null);
 
-    const togglePriceSort = () => {
-        setPriceSortOpen(!priceSortOpen);
-    };
+    const togglePriceSort = () => setPriceSortOpen(!priceSortOpen);
 
     const selectSortOption = (option) => {
         setSortOption(option);
@@ -82,15 +80,13 @@ function TransportTabs() {
 
     useEffect(() => {
         document.addEventListener('mousedown', handleClickOutside);
-        return () => {
-            document.removeEventListener('mousedown', handleClickOutside);
-        };
+        return () => document.removeEventListener('mousedown', handleClickOutside);
     }, []);
+
     const navigate = useNavigate();
 
-    const handleReserveClick = () => {
-        navigate('/transportreserve');
-    };
+    const handleReserveClick = () => navigate('/transportreserve');
+
     return (
         <div className="w-full max-w-5xl mx-auto p-6 text-base" style={{ fontFamily: 'Poppins, sans-serif' }}>
             <div className="flex justify-around border-b border-gray-300 relative">
@@ -150,8 +146,6 @@ function TransportTabs() {
                     Réserver
                 </button>
             </div>
-
-
             <div className="mt-4">
                 {activeTab === 'Taxi-brousse' && (
                     <div>

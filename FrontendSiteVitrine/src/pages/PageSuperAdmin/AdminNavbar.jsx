@@ -60,7 +60,7 @@ const AdminNavbar = () => {
                         />
                         <ul
                             ref={menuRef}
-                            className={`absolute right-0 mt-2 w-48 bg-gray-800 text-gray-100 shadow-2xl rounded-md transition-all duration-300 ease-in-out ${isMenuOpen ? 'opacity-100 translate-y-1 scale-100' : 'opacity-0 translate-y-2 scale-95'}`}
+                            className={`absolute right-0 mt-2 w-48 bg-gray-800 text-gray-100 shadow-2xl rounded-md ${isMenuOpen ? 'block' : 'hidden'}`}
                         >
                             <li className="hover:bg-gray-700 transition rounded-t-md">
                                 <a className="block px-4 py-2">Profil</a>
