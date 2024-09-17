@@ -20,7 +20,7 @@ function Transport() {
                         Réservez des billets de train, taxi-brousse
                     </h1>
                 </div>
-                <div className="mt-"><Reserve /></div>
+                <div className="-mt-3"><Reserve /></div>
             </div>
             <TransportTabs />
 

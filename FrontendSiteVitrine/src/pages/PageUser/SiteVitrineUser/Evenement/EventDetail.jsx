@@ -11,7 +11,7 @@ const eventsData = {
         image: flyerImage,
         type: 'Cultures',
         lieu: 'Antananarivo',
-        date: '2024-09-25T18:00:00',
+        date: '2024-10-25T18:00:00',
         description: "Cet événement met en lumière les cultures locales à travers des performances artistiques et des expositions.",
         tickets: [
             { name: 'Normal', price: 30000 },
@@ -23,7 +23,7 @@ const eventsData = {
         image: educationImage,
         type: 'Éducation',
         lieu: 'Toamasina',
-        date: '2024-09-12T09:00:00',
+        date: '2024-10-12T09:00:00',
         description: "Une conférence rassemblant des experts du monde entier pour discuter des avancées en éducation.",
         tickets: [
             { name: 'Normal', price: 25000 },

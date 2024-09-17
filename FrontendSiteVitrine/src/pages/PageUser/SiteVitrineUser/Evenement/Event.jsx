@@ -56,7 +56,7 @@ function Event() {
           <h1 className="text-3xl font-bold text-white text-center mb-8" style={{ fontFamily: 'Poppins, sans-serif' }}>
             Réserver des billets d'événements
           </h1>
-          <div className="flex flex-col lg:flex-row items-center lg:justify-center space-y-4 lg:space-y-0 lg:space-x-4">
+          <div className=" flex flex-col lg:flex-row items-center lg:justify-center space-y-4 lg:space-y-0 lg:space-x-4">
             <div className="w-full lg:w-80">
               <div className="relative">
                 <input

@@ -1,16 +1,13 @@
 import React, { useState } from 'react';
+import Select from 'react-select';
 import DatePicker from 'react-datepicker';
 import { useNavigate } from 'react-router-dom';
 import 'react-datepicker/dist/react-datepicker.css';
 import '../../views/CSS/CreateEvent.css';
-import Map from './Map';
-import axios from 'axios';
 
 const categories = [
-    { value: 'spectacles', label: 'Spectacles' },
-    { value: 'concerts', label: 'Concerts' },
-    { value: 'foires', label: 'Foires' },
-    { value: 'seminaires', label: 'Séminaires' },
+    { value: 'spectacle_concerts', label: 'Spectacles & Concerts' },
+    { value: 'foires_seminaires', label: 'Foires & Séminaires' },
     { value: 'sports', label: 'Sports' },
     { value: 'loisirs', label: 'Loisirs' },
     { value: 'culture', label: 'Culture' }
@@ -30,7 +27,6 @@ const CreateEvent = () => {
     const [vipPrice, setVipPrice] = useState('');
     const [normalSeats, setNormalSeats] = useState('');
     const [vipSeats, setVipSeats] = useState('');
-    const [position, setPosition] = useState([0, 0]); // Initialisation avec une position vide
 
     const navigate = useNavigate();
 
@@ -57,19 +53,6 @@ const CreateEvent = () => {
                 setImagePreview(reader.result);
             };
             reader.readAsDataURL(selectedFile);
-        }
-    };
-    //Géocoder l'emplacement saisi
-    const handleLieuChange = async (e) => {
-        setLieu(e.target.value);
-        try {
-            const response = await axios.get(`https://nominatim.openstreetmap.org/search?format=json&q=${e.target.value}`);
-            if (response.data && response.data.length > 0) {
-                const { lat, lon } = response.data[0];
-                setPosition([parseFloat(lat), parseFloat(lon)]);
-            }
-        } catch (error) {
-            console.error('Error fetching location:', error);
         }
     };
 
@@ -116,45 +99,35 @@ const CreateEvent = () => {
                                 </div>
                                 <div>
                                     <label>Catégorie de l'événements</label>
-                                    <select
-                                        value={categorie_event ? categorie_event.value : ''}
-                                        onChange={(e) =>
-                                            setCategorieEvent({ value: e.target.value, label: e.target.options[e.target.selectedIndex].text })
-                                        }
-                                        className="appearance-none w-[350px] p-2 pl-3 border text-gray-600 border-gray-300 rounded-lg focus:outline-none"
-                                    >
-                                        <option value="" disabled hidden>Sélectionner une catégorie</option>
-                                        {categories.map((category) => (
-                                            <option key={category.value} value={category.value}>
-                                                {category.label}
-                                            </option>
-                                        ))}
-                                    </select>
+                                    <Select
+                                        value={categorie_event}
+                                        onChange={setCategorieEvent}
+                                        options={categories}
+                                        placeholder="Sélectionner une catégorie"
+                                        className="w-[350px] border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-700"
+                                    />
                                 </div>
                             </div>
                             <div className="grid grid-cols-2 gap-6">
                                 <div>
-                                    <input
-                                        type="text"
-                                        value={lieu}
-                                        onChange={handleLieuChange}
-                                        placeholder="Lieu de l'événement"
-                                        className="w-[450px] p-2 pl-3 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-700"
-                                    />
-                                </div><div>
                                     <DatePicker
                                         selected={date}
                                         onChange={(date) => setDate(date)}
                                         className="w-[300px] p-2 pl-3 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-700"
-                                        placeholderText="Sélectionner la date"
+                                        placeholderText="Sélectionner la date de début"
                                     />
                                 </div>
-
                             </div>
-
-                            <div className="mt-20">
-                                <Map position={position} setPosition={setPosition} className="mt-96 w-full h-[400px] border rounded-md" />
-                            </div>                        </div>
+                            <div>
+                                <input
+                                    type="text"
+                                    value={lieu}
+                                    onChange={(e) => setLieu(e.target.value)}
+                                    placeholder="Lieu de l'événement"
+                                    className="w-[450px] p-2 pl-3 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-700"
+                                />
+                            </div>
+                        </div>
                     )}
 
                     {step === 2 && (
@@ -299,4 +272,5 @@ const CreateEvent = () => {
         </div>
     );
 };
+
 export default CreateEvent;
