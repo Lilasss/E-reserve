@@ -1,3 +1,4 @@
+
 import React from 'react';
 import Sidebar from '../PageAdmin/views/Sidebar';
 import AdminNavbar from './AdminNavbar';
@@ -23,3 +24,4 @@ const AdminPage = () => {
 };
 
 export default AdminPage;
+

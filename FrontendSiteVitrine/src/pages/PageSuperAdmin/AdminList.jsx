@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import DonutChart from '../PageAdmin/services/Evenement/DonutChart';
 
@@ -65,3 +66,4 @@ const AdminList = ({ admins }) => {
 };
 
 export default AdminList;
+

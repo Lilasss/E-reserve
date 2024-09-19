@@ -13,7 +13,17 @@ const TransportReservationForm = ({ formData, setFormData, nextStep }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    nextStep(); 
+    nextStep();
+  };
+
+  // Générer les options avec des multiples de 4 + 2
+  const generateSeatOptions = () => {
+    let options = [];
+    for (let i = 1; i <= 10; i++) { // Limite jusqu'à 42 places (modifiable)
+      const seatNumber = 4 * i + 2; // Formule pour obtenir les valeurs 4n + 2
+      options.push(seatNumber);
+    }
+    return options;
   };
 
   return (
@@ -90,14 +100,19 @@ const TransportReservationForm = ({ formData, setFormData, nextStep }) => {
 
         <div>
           <label>Nombre de places</label>
-          <input
-            type="number"
+          <select
             name="nombre_place"
             value={formData.nombre_place}
             onChange={handleInputChange}
-            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none"
-            min="1"
-          />
+            className="w-full p-3 border border-gray-300 rounded-lg appearance-none focus:outline-none"
+          >
+            <option value="">Sélectionnez un nombre de places</option>
+            {generateSeatOptions().map((option, index) => (
+              <option key={index} value={option}>
+                {option}
+              </option>
+            ))}
+          </select>
         </div>
 
         <div>

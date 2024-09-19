@@ -1,3 +1,4 @@
+
 import React from 'react'
 import SidebarAdmin from '../views/SidebarAdmin'
 import { Outlet } from 'react-router-dom'
@@ -21,5 +22,6 @@ function Adminpages() {
 
     )
 }
+
 
 export default Adminpages
