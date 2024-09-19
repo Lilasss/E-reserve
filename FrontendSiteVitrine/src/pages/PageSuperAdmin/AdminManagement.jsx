@@ -11,18 +11,13 @@ function AdminManagement() {
     const [adminData, setAdminData] = useState({
         companyName: '',
         email: '',
-        role: '',
+        password: '',
     });
     const [contractDeadline, setContractDeadline] = useState('');
     const [showSuccessModal, setShowSuccessModal] = useState(false);
 
-    const roleOptions = [
-        { value: 'evenement', label: 'Événement' },
-        { value: 'transport', label: 'Transport' },
-    ];
-
     const isAdminFormComplete = () =>
-        adminData.companyName && adminData.email && adminData.role;
+        adminData.companyName && adminData.email && adminData.password;
 
     const handleAdminChange = (e) => {
         setAdminData({
@@ -123,61 +118,17 @@ function AdminManagement() {
                             </div>
 
                             <div className="mb-6">
-                                <label className="block text-gray-700 text-sm font-medium mb-2" htmlFor="role">
-                                    Rôle
+                                <label className="block text-gray-700 text-sm font-medium mb-2" htmlFor="password">
+                                    Mot de passe
                                 </label>
-                                <Select
-                                    id="role"
-                                    options={roleOptions}
-                                    value={roleOptions.find(option => option.value === adminData.role)}
-                                    onChange={(selectedOption) =>
-                                        setAdminData({ ...adminData, role: selectedOption.value })
-                                    }
-                                    placeholder="Sélectionner un rôle"
-                                    className="react-select-container w-full"
-                                    classNamePrefix="react-select"
-                                    styles={{
-                                        control: (base) => ({
-                                            ...base,
-                                            borderColor: 'rgba(209, 213, 219, 1)',
-                                            borderRadius: '0.5rem',
-                                            padding: '0.5rem',
-                                            boxShadow: 'none',
-                                            '&:hover': {
-                                                borderColor: 'rgba(75, 85, 99, 1)',
-                                            },
-                                        }),
-                                        menu: (base) => ({
-                                            ...base,
-                                            borderRadius: '0.5rem',
-                                            marginTop: '0.25rem',
-                                        }),
-                                        option: (base, state) => ({
-                                            ...base,
-                                            backgroundColor: state.isFocused ? 'rgba(75, 85, 99, 0.1)' : 'white',
-                                            '&:active': {
-                                                backgroundColor: 'rgba(75, 85, 99, 0.2)',
-                                            },
-                                        }),
-                                        singleValue: (base) => ({
-                                            ...base,
-                                            color: 'rgba(55, 65, 81, 1)',
-                                        }),
-                                        placeholder: (base) => ({
-                                            ...base,
-                                            color: 'rgba(107, 114, 128, 1)',
-                                        }),
-                                        indicatorSeparator: () => ({
-                                            display: 'none',
-                                        }),
-                                        dropdownIndicator: (base) => ({
-                                            ...base,
-                                            color: 'rgba(107, 114, 128, 1)',
-                                            '&:hover': {
-                                                color: 'rgba(55, 65, 81, 1)',
-                                            },
-                                        }),
-                                    }}
+                                <input
+                                    type="password"
+                                    id="password"
+                                    className="w-full px-4 py-3 border border-gray-300 rounded-lg 
+                                    focus:outline-none focus:ring-1 focus:ring-gray-700 transition-all duration-300"
+                                    placeholder="Mot de passe"
+                                    value={adminData.password}
+                                    onChange={handleAdminChange}
                                     required
                                 />
                             </div>

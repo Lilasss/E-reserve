@@ -30,7 +30,7 @@ const CreateEvent = () => {
     const [vipPrice, setVipPrice] = useState('');
     const [normalSeats, setNormalSeats] = useState('');
     const [vipSeats, setVipSeats] = useState('');
-    const [position, setPosition] = useState([0, 0]); // Initialisation avec une position vide
+    const [position, setPosition] = useState([0, 0]);
 
     const navigate = useNavigate();
 
@@ -59,7 +59,7 @@ const CreateEvent = () => {
             reader.readAsDataURL(selectedFile);
         }
     };
-    //Géocoder l'emplacement saisi
+
     const handleLieuChange = async (e) => {
         setLieu(e.target.value);
         try {
@@ -102,59 +102,62 @@ const CreateEvent = () => {
                 </h1>
                 <form onSubmit={handleSubmit} className="space-y-6">
                     {step === 1 && (
-                        <div className="space-y-6">
-                            <div className="grid grid-cols-2 gap-6">
-                                <div>
-                                    <label>Titre</label>
-                                    <input
-                                        type="text"
-                                        value={titre}
-                                        onChange={(e) => setTitre(e.target.value)}
-                                        placeholder="Titre de l'événement"
-                                        className="w-full p-2 pl-3 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-700"
-                                    />
+                        <>
+                            <div className="space-y-6">
+                                <div className="grid grid-cols-2 gap-6">
+                                    <div>
+                                        <label>Titre</label>
+                                        <input
+                                            type="text"
+                                            value={titre}
+                                            onChange={(e) => setTitre(e.target.value)}
+                                            placeholder="Titre de l'événement"
+                                            className="w-full p-2 pl-3 border border-gray-300 rounded-md focus:outline-none"
+                                        />
+                                    </div>
+                                    <div>
+                                        <label>Catégorie de l'événements</label>
+                                        <select
+                                            value={categorie_event ? categorie_event.value : ''}
+                                            onChange={(e) =>
+                                                setCategorieEvent({ value: e.target.value, label: e.target.options[e.target.selectedIndex].text })
+                                            }
+                                            className="appearance-none w-[350px] p-2 pl-3 border text-gray-600 border-gray-300 rounded-lg focus:outline-none"
+                                        >
+                                            <option value="" disabled hidden>Sélectionner une catégorie</option>
+                                            {categories.map((category) => (
+                                                <option key={category.value} value={category.value}>
+                                                    {category.label}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </div>
                                 </div>
-                                <div>
-                                    <label>Catégorie de l'événements</label>
-                                    <select
-                                        value={categorie_event ? categorie_event.value : ''}
-                                        onChange={(e) =>
-                                            setCategorieEvent({ value: e.target.value, label: e.target.options[e.target.selectedIndex].text })
-                                        }
-                                        className="appearance-none w-[350px] p-2 pl-3 border text-gray-600 border-gray-300 rounded-lg focus:outline-none"
-                                    >
-                                        <option value="" disabled hidden>Sélectionner une catégorie</option>
-                                        {categories.map((category) => (
-                                            <option key={category.value} value={category.value}>
-                                                {category.label}
-                                            </option>
-                                        ))}
-                                    </select>
+                                <div className="grid grid-cols-2 gap-6">
+                                    <div>
+                                        <input
+                                            type="text"
+                                            value={lieu}
+                                            onChange={handleLieuChange}
+                                            placeholder="Lieu de l'événement"
+                                            className="w-[450px] p-2 pl-3 border border-gray-300 rounded-md focus:outline-none"
+                                        />
+                                    </div>
+                                    <div>
+                                        <DatePicker
+                                            selected={date}
+                                            onChange={(date) => setDate(date)}
+                                            className="w-[300px] p-2 pl-3 border border-gray-300 rounded-md focus:outline-none"
+                                            placeholderText="Sélectionner la date"
+                                        />
+                                    </div>
                                 </div>
                             </div>
-                            <div className="grid grid-cols-2 gap-6">
-                                <div>
-                                    <input
-                                        type="text"
-                                        value={lieu}
-                                        onChange={handleLieuChange}
-                                        placeholder="Lieu de l'événement"
-                                        className="w-[450px] p-2 pl-3 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-700"
-                                    />
-                                </div><div>
-                                    <DatePicker
-                                        selected={date}
-                                        onChange={(date) => setDate(date)}
-                                        className="w-[300px] p-2 pl-3 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-700"
-                                        placeholderText="Sélectionner la date"
-                                    />
-                                </div>
 
+                            <div className="mt-6">
+                                <Map position={position} setPosition={setPosition} className=" w-full h-[400px] border rounded-md" />
                             </div>
-
-                            <div className="mt-20">
-                                <Map position={position} setPosition={setPosition} className="mt-96 w-full h-[400px] border rounded-md" />
-                            </div>                        </div>
+                        </>
                     )}
 
                     {step === 2 && (
@@ -165,14 +168,14 @@ const CreateEvent = () => {
                                     value={description}
                                     onChange={(e) => setDescription(e.target.value)}
                                     placeholder="Ajouter une description"
-                                    className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-700"
+                                    className="w-full p-3 border border-gray-300 rounded-md focus:outline-none"
                                 />
                             </div>
                             <div>
                                 <input
                                     type="file"
                                     onChange={handleImageChange}
-                                    className="w-[450px] p-2 border text-sm rounded-md focus:outline-none focus:ring-1 focus:ring-gray-700"
+                                    className="w-[450px] p-2 border text-sm rounded-md focus:outline-none"
                                 />
                                 {imagePreview && (
                                     <img
@@ -206,7 +209,7 @@ const CreateEvent = () => {
                                                 value={price}
                                                 onChange={(e) => setPrice(e.target.value)}
                                                 placeholder="Définir le prix normal"
-                                                className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-700"
+                                                className="w-full p-2 border border-gray-300 rounded-md focus:outline-none"
                                             />
                                         </div>
                                         <div>
@@ -216,7 +219,7 @@ const CreateEvent = () => {
                                                 value={vipPrice}
                                                 onChange={(e) => setVipPrice(e.target.value)}
                                                 placeholder="Définir le prix VIP"
-                                                className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-700"
+                                                className="w-full p-2 border border-gray-300 rounded-md focus:outline-none"
                                             />
                                         </div>
                                     </>
@@ -228,7 +231,7 @@ const CreateEvent = () => {
                                             value={price}
                                             onChange={(e) => setPrice(e.target.value)}
                                             placeholder="Définir le prix"
-                                            className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-700"
+                                            className="w-full p-2 border border-gray-300 rounded-md focus:outline-none"
                                         />
                                     </div>
                                 )}
@@ -239,8 +242,8 @@ const CreateEvent = () => {
                                             type="number"
                                             value={vipSeats}
                                             onChange={(e) => setVipSeats(e.target.value)}
-                                            placeholder="Places VIP"
-                                            className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-700"
+                                            placeholder="Nombre de places VIP"
+                                            className="w-full p-2 border border-gray-300 rounded-md focus:outline-none"
                                         />
                                     </div>
                                 )}
@@ -250,34 +253,32 @@ const CreateEvent = () => {
                                         type="number"
                                         value={normalSeats}
                                         onChange={(e) => setNormalSeats(e.target.value)}
-                                        placeholder="Places normales"
-                                        className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-700"
+                                        placeholder="Nombre de places normales"
+                                        className="w-full p-2 border border-gray-300 rounded-md focus:outline-none"
                                     />
                                 </div>
                             </div>
                         </div>
                     )}
-
-                    <div className="flex justify-between">
+                    <div className="flex justify-between mt-8">
                         <button
                             type="button"
                             onClick={handlePrevStep}
-                            className={`px-4 py-2 rounded-md ${step === 1 ? 'bg-gray-300 cursor-not-allowed' : 'bg-gray-700 text-white hover:bg-gray-900'
-                                }`}
+                            className="px-4 py-2 border border-gray-300 rounded-md text-gray-600"
                         >
-                            Précédent
+                            {step === 1 ? 'Annuler' : 'Retour'}
                         </button>
                         <button
                             type="submit"
                             className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-900"
                         >
-                            {step === 4 ? 'Soumettre' : 'Suivant'}
+                            {step === 3 ? 'Soumettre' : 'Suivant'}
                         </button>
                     </div>
                 </form>
             </div>
             <div className="w-1/5 p-4 bg-gray-100 h-screen flex flex-col justify-center items-center">
-                {[1, 2, 3, 4].map((stepNumber) => (
+                {[1, 2, 3].map((stepNumber) => (
                     <div key={stepNumber} className="flex flex-col items-center">
                         <div
                             className={`mb-4 flex items-center justify-center h-12 w-12 rounded-full text-lg font-semibold cursor-pointer transition-colors duration-300 ${step === stepNumber
@@ -290,7 +291,7 @@ const CreateEvent = () => {
                         >
                             {stepNumber}
                         </div>
-                        {stepNumber < 4 && (
+                        {stepNumber < 3 && (
                             <div className="h-8 border-l-2 border-gray-300"></div>
                         )}
                     </div>
@@ -299,4 +300,5 @@ const CreateEvent = () => {
         </div>
     );
 };
+
 export default CreateEvent;

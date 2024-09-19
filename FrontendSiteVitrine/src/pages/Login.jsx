@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FaChevronDown } from 'react-icons/fa';
 import 'animate.css';
 import illustration from '../assets/Connecter.png';
 import logoImage from '../assets/2logo.png';
@@ -11,24 +10,34 @@ const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [rememberMe, setRememberMe] = useState(false);
-    const [role, setRole] = useState('Utilisateur');
     const navigate = useNavigate();
 
     useEffect(() => {
         // Check if user is already logged in
         const authData = Cookies.get('authData');
         if (authData) {
-            // Redirect to appropriate dashboard if already logged in
             const roleUser = authData.split('/')[2]; // Extract role from stored authData
-            if (roleUser === 'SUPERADMIN') {
-                navigate('/superadmin');
-            } else if (roleUser === 'ADMIN') {
-                navigate('/admin');
-            } else {
-                navigate('/user-dashboard'); // Adjust if needed
-            }
+            redirectToDashboard(roleUser);
         }
     }, [navigate]);
+
+    const redirectToDashboard = (roleUser) => {
+        if (roleUser === 'SUPERADMIN') {
+            navigate('/superadmin');
+        } else if (roleUser === 'ADMIN') {
+            navigate('/admin/admindashboard');
+        } else {
+            navigate('/');
+        }
+    };
+
+    const handleGoogleLogin = async () => {
+        try {
+            window.location.href = 'http://localhost:8080/oauth2/authorization/google';
+        } catch (error) {
+            console.error('Error initiating Google login:', error);
+        }
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -38,24 +47,13 @@ const Login = () => {
 
             const token = response.data.token;
             const expiresIn = response.data.expiresIn / 1000; // Convert milliseconds to seconds
-            const userRole = response.data.roleUser; // Get user role
-            const userId = response.data.userId; // Get user ID
+            const userRole = response.data.roleUser;
+            const userId = response.data.userId;
 
-            // Concatenate userId, token, and role with a slash (/)
             const concatenatedValue = `${userId}/${token}/${userRole}`;
-
-            // Save concatenated token in cookies
             Cookies.set('authData', concatenatedValue, { expires: expiresIn / (60 * 60 * 24) }); // Convert to days
 
-            // Redirect based on role
-            if (userRole === 'SUPERADMIN') {
-                navigate('/superadmin/adminmanagement',{ state: { userId } });
-            } else if (userRole === 'ADMIN') {
-                navigate('/admin', { state: { userId } });
-            } else {
-                navigate('/user-dashboard', { state: { userId } }); // Adjust this route as needed
-            }
-
+            redirectToDashboard(userRole);
         } catch (error) {
             console.error('Login failed:', error);
         }
@@ -128,7 +126,7 @@ const Login = () => {
                     </form>
 
                     <div className="mt-6 flex justify-center">
-                        <button className="flex items-center justify-center w-full bg-white border border-gray-300 rounded-md py-2 text-gray-700 shadow-sm hover:bg-gray-100 transition duration-300 ease-in-out">
+                        <button onClick={handleGoogleLogin} className="flex items-center justify-center w-full bg-white border border-gray-300 rounded-md py-2 text-gray-700 shadow-sm hover:bg-gray-100 transition duration-300 ease-in-out">
                             <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" className="w-5 h-5 mr-2" />
                             Se connecter avec Google
                         </button>

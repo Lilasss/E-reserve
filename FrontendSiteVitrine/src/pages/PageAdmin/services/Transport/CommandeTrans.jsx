@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 const initialOrders = [
     { id: 2, client: 'Hantasoa@gmail.com', date: '2024-09-03', montant: 50000, type: 'Taxi', depart: 'Antananarivo', arrivee: 'Toamasina', places: 2 },
-    { id: 3, client: 'Boby@gmail.com', date: '2024-09-03', montant: 50000, type: 'Train', depart: 'Antananarivo', arrivee: 'Toamasina', places: 3 },
+    // { id: 3, client: 'Boby@gmail.com', date: '2024-09-03', montant: 50000, type: 'Train', depart: 'Antananarivo', arrivee: 'Toamasina', places: 3 },
     { id: 4, client: 'Marolahy@gmail.com', date: '2024-09-07', montant: 40000, type: 'Train', depart: 'Antananarivo', arrivee: 'Fianarantsoa', places: 1 },
 ];
 
@@ -128,7 +128,6 @@ const CommandeTrans = () => {
                     </tbody>
                 </table>
             </div>
-
             {selectedOrder && (
                 <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
                     <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full relative">
