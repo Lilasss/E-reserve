@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import 'animate.css';
@@ -25,7 +26,7 @@ const Login = () => {
         if (roleUser === 'SUPERADMIN') {
             navigate('/superadmin');
         } else if (roleUser === 'ADMIN') {
-            navigate('/admin');
+            navigate('/admin/admindashboard');
         } else {
             navigate('/');
         }
@@ -138,3 +139,4 @@ const Login = () => {
 };
 
 export default Login;
+

@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 const items = [
     { title: 'ÉVÉNEMENT', icon: faCalendarAlt, id: 'events' },
-    { title: 'CHAMBRE', icon: faBed, id: 'chambre' },
+    // { title: 'CHAMBRE', icon: faBed, id: 'chambre' },
     { title: 'TRANSPORT', icon: faCar, id: 'transports' },
 ];
 
