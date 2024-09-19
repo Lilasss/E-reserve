@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import 'animate.css';
-import illustration from '../assets/Connecter.png';
-import logoImage from '../assets/2logo.png';
 import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import logoImage from '../assets/2logo.png';
+import illustration from '../assets/Connecter.png';
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -22,7 +22,7 @@ const Login = () => {
 
     const redirectToDashboard = (roleUser) => {
         if (roleUser === 'SUPERADMIN') {
-            navigate('/superadmin');
+            navigate('/superadmin/dashboard');
         } else if (roleUser === 'ADMIN') {
             navigate('/admin/admindashboard');
         } else {

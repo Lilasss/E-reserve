@@ -1,8 +1,7 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
-import Cookies from 'js-cookie'; // Ensure you are using Cookies if needed, but not used in this example
 
-const PrivateRouteAdmin = ({ children, user, serviceId }) => {
+const PrivateRouteAdmin = ({ children, user, serviceid }) => {
     const authData = sessionStorage.getItem('authData'); // Get the auth data from sessionStorage
 
     // Check if authData exists and if the user role is ADMIN
@@ -10,8 +9,14 @@ const PrivateRouteAdmin = ({ children, user, serviceId }) => {
         return <Navigate to="/login" />;
     }
 
-    // Pass user and serviceId as props to children components
-    return React.cloneElement(children, { user, serviceId });
+    // Pass `user` and `serviceId` only to the React children, not to DOM elements
+    return (
+        <div>
+            {React.Children.map(children, child =>
+                React.cloneElement(child, { user, serviceid })
+            )}
+        </div>
+    );
 };
 
 export default PrivateRouteAdmin;
