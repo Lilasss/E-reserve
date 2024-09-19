@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import DonutChart from '../PageAdmin/services/Evenement/DonutChart';
 
 const AdminList = ({ admins }) => {
-    const [searchTerm, setSearchTerm] = useState(''); 
+    const [searchTerm, setSearchTerm] = useState('');
 
     const handleSearchChange = (e) => {
         setSearchTerm(e.target.value);
