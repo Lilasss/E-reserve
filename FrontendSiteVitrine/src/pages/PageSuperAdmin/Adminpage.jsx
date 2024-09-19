@@ -7,18 +7,18 @@ import PrivateRouteSuperAdmin from '../../services/PrivateRouteSuperAdmin';
 const AdminPage = () => {
     return (
         <PrivateRouteSuperAdmin>
- <div className="flex h-screen bg-gray-100" style={{ fontFamily: 'Poppins, sans-serif' }}>
-            <AdminNavbar />
-            <div className="flex flex-col w-full ml-64">
-                <Sidebar />
-                <main className="flex-1 p-6 mt-16 overflow-auto">
-                    <Outlet />
+            <div className="flex h-screen bg-gray-100" style={{ fontFamily: 'Poppins, sans-serif' }}>
+                <AdminNavbar />
+                <div className="flex flex-col w-full ml-64">
+                    <Sidebar />
+                    <main className="flex-1 p-6 mt-16 overflow-auto">
+                        <Outlet />
 
-                </main>
+                    </main>
+                </div>
             </div>
-        </div>
-        </PrivateRouteSuperAdmin>
-       
+         </PrivateRouteSuperAdmin>
+
     );
 };
 

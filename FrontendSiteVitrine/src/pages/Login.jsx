@@ -25,7 +25,7 @@ const Login = () => {
         if (roleUser === 'SUPERADMIN') {
             navigate('/superadmin');
         } else if (roleUser === 'ADMIN') {
-            navigate('/admin');
+            navigate('/admin/admindashboard');
         } else {
             navigate('/');
         }
