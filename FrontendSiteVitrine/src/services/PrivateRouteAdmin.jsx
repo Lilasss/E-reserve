@@ -1,17 +1,17 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
-import Cookies from 'js-cookie';
+import Cookies from 'js-cookie'; // Ensure you are using Cookies if needed, but not used in this example
 
-const PrivateRouteAdmin = ({ children }) => {
-    const authData = Cookies.get('authData'); // Check if the token exists
+const PrivateRouteAdmin = ({ children, user, serviceId }) => {
+    const authData = sessionStorage.getItem('authData'); // Get the auth data from sessionStorage
 
-    // If no token, redirect to login
-    if (!authData && authData.split("/")[-1] == "ADMIN") {
+    // Check if authData exists and if the user role is ADMIN
+    if (!authData || authData.split('/').pop() !== 'ADMIN') {
         return <Navigate to="/login" />;
     }
 
-    // If token exists, allow access to the route
-    return children;
+    // Pass user and serviceId as props to children components
+    return React.cloneElement(children, { user, serviceId });
 };
 
 export default PrivateRouteAdmin;

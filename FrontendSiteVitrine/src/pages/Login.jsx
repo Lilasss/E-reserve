@@ -1,11 +1,9 @@
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import 'animate.css';
 import illustration from '../assets/Connecter.png';
 import logoImage from '../assets/2logo.png';
 import axios from 'axios';
-import Cookies from 'js-cookie';
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -15,7 +13,7 @@ const Login = () => {
 
     useEffect(() => {
         // Check if user is already logged in
-        const authData = Cookies.get('authData');
+        const authData = sessionStorage.getItem('authData');
         if (authData) {
             const roleUser = authData.split('/')[2]; // Extract role from stored authData
             redirectToDashboard(roleUser);
@@ -46,13 +44,12 @@ const Login = () => {
             const data = { email, password };
             const response = await axios.post('http://localhost:8080/auth/login', data);
 
-            const token = response.data.token;
-            const expiresIn = response.data.expiresIn / 1000; // Convert milliseconds to seconds
+            const token = response.data.token;// Convert milliseconds to seconds
             const userRole = response.data.roleUser;
             const userId = response.data.userId;
 
             const concatenatedValue = `${userId}/${token}/${userRole}`;
-            Cookies.set('authData', concatenatedValue, { expires: expiresIn / (60 * 60 * 24) }); // Convert to days
+            sessionStorage.setItem('authData', concatenatedValue); 
 
             redirectToDashboard(userRole);
         } catch (error) {
@@ -139,4 +136,3 @@ const Login = () => {
 };
 
 export default Login;
-
