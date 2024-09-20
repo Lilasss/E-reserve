@@ -7,20 +7,20 @@ ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, BarEleme
 const adminData = [
   {
     id: 1,
-    name: 'Admin 1',
-    email: 'admin1@example.com',
+    name: 'Admin',
+    email: 'adminService2202@gmail.com',
     monthlyReservations: [5, 10, 8, 15, 12, 20, 18, 25, 22, 30, 25, 28],
   },
   {
     id: 2,
     name: 'Admin 2',
-    email: 'admin2@example.com',
+    email: 'admin2@gmail.com',
     monthlyReservations: [2, 4, 3, 8, 7, 10, 9, 13, 11, 14, 12, 16],
   },
   {
     id: 3,
     name: 'Admin 3',
-    email: 'admin3@example.com',
+    email: 'admin3@gmail.com',
     monthlyReservations: [1, 3, 4, 7, 6, 9, 8, 11, 10, 15, 14, 18],
   },
 ];
