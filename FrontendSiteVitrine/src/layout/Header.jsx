@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import backgroundImage from '../../src/pages/PageUser/assets/six.jpeg';
 import logoImage from '../assets/1logo.png';
 import './Header.css';
-import ContactFormModal from '../components/ContactFormModal ';
+import ContactFormModal from '../components/ContactFormModal';
 
 const Header = () => {
     const navigate = useNavigate();

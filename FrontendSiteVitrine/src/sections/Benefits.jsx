@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTools, faLaptopCode, faBolt, faLock } from '@fortawesome/free-solid-svg-icons';
-import ContactFormModal from '../components/ContactFormModal ';
+import ContactFormModal from '../components/ContactFormModal';
 import '../components/ContactFormModal.css';
 const benefits = [
     {
