@@ -191,11 +191,7 @@ function EventDetail() {
             <Stepper activeStep={1} />
 
             <div className="container mx-auto my-16 px-0 text-white">
-                <div className="flex flex-col lg:flex-row mt-8 gap-8" style={{ fontFamily: 'Poppins, sans-serif' }}>
-                    <div className="bg-white p-6 shadow-lg w-full lg:w-2/3">
-                        <h2 className="text-lg text-black mb-4">PLAN DE SITE</h2>
-                        <p className="text-gray-600 text-xs text-center">Plan de salle non disponible</p>
-                    </div>
+                <div className="flex justify-center lg:flex-row gap-8" style={{ fontFamily: 'Poppins, sans-serif' }}>
                     <div className="bg-white p-6 shadow-lg w-full lg:w-1/2">
                         <h2 className="text-lg text-black mb-4">TYPE DE BILLETS</h2>
                         {event.tickets.map((ticket, index) => (
