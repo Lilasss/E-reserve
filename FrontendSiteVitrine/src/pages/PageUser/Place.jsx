@@ -1,7 +1,7 @@
 import React from 'react';
-import { FaUser } from 'react-icons/fa';
+import { FaUserCircle } from 'react-icons/fa';
 
-const Legend = () => {
+const Place = () => {
     return (
         <div className="bg-white p-4 rounded-md shadow-md w-full max-w-4xl mx-auto">
             <div className="flex flex-wrap items-center justify-between space-y-4 sm:space-y-0">
@@ -21,7 +21,7 @@ const Legend = () => {
                 </div>
 
                 <div className="flex items-center space-x-2">
-                    <FaUser className="text-green-500" size={20} />
+                    <FaUserCircle className="text-green-500" size={20} />
                     <span className="text-gray-600">Chauffeur</span>
                 </div>
             </div>
@@ -29,4 +29,4 @@ const Legend = () => {
     );
 };
 
-export default Legend;
+export default Place;

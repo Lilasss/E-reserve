@@ -1,7 +1,12 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { FaTrain, FaBus, FaSort } from 'react-icons/fa';
+import React, { useState, useEffect } from 'react';
+import { FaTrain, FaBus } from 'react-icons/fa';
 import TransportDetails from './TransportDetails';
 import { useNavigate } from 'react-router-dom';
+
+import cotisseImage from '../../assets/transport/cotisse.jpeg';
+import soatransImage from '../../assets/transport/soatrans.jpg';
+import garabeImage from '../../assets/transport/garabe.jpeg';
+import gareImage from '../../assets/transport/gara.jpeg';
 
 const taxiBrousseData = [
     {
@@ -12,6 +17,7 @@ const taxiBrousseData = [
         lieu_arriver: { nom: 'Fianarantsoa' },
         nombre_place: 15,
         prix: 50000,
+        image_path: cotisseImage,
     },
     {
         name: 'Soatrans',
@@ -21,6 +27,7 @@ const taxiBrousseData = [
         lieu_arriver: { nom: 'Antananarivo' },
         nombre_place: 15,
         prix: 20000,
+        image_path: soatransImage,
     },
 ];
 
@@ -33,6 +40,7 @@ const trainData = [
         lieu_arriver: { nom: 'Toamasina' },
         nombre_place: 56,
         prix: 13000,
+        image_path: garabeImage,
     },
     {
         name: 'Gare',
@@ -42,50 +50,35 @@ const trainData = [
         lieu_arriver: { nom: 'Manakara' },
         nombre_place: 56,
         prix: 12000,
+        image_path: gareImage,
     },
 ];
 
-function TransportTabs() {
+const filterResults = (data, { departure, arrival, date }) => {
+    return data.filter(item => {
+        const matchesDeparture = departure ? item.lieu_depart.nom === departure : true;
+        const matchesArrival = arrival ? item.lieu_arriver.nom === arrival : true;
+        const matchesDate = date ? new Date(item.date_depart).toDateString() === new Date(date).toDateString() : true;
+        return matchesDeparture && matchesArrival && matchesDate;
+    });
+};
+
+function TransportTabs({ searchParams }) {
     const [activeTab, setActiveTab] = useState('Taxi-brousse');
-    const [priceSortOpen, setPriceSortOpen] = useState(false);
-    const [sortOption, setSortOption] = useState('');
-    const [sortedTaxiBrousseData, setSortedTaxiBrousseData] = useState(taxiBrousseData);
-    const [sortedTrainData, setSortedTrainData] = useState(trainData);
-    const priceSortRef = useRef(null);
-
-    const togglePriceSort = () => setPriceSortOpen(!priceSortOpen);
-
-    const selectSortOption = (option) => {
-        setSortOption(option);
-        setPriceSortOpen(false);
-        sortData(option);
-    };
-
-    const sortData = (option) => {
-        const sortedTaxiBrousse = [...taxiBrousseData].sort((a, b) => option === 'Moins cher' ? a.prix - b.prix : b.prix - a.prix);
-        const sortedTrains = [...trainData].sort((a, b) => option === 'Moins cher' ? a.prix - b.prix : b.prix - a.prix);
-
-        if (activeTab === 'Taxi-brousse') {
-            setSortedTaxiBrousseData(sortedTaxiBrousse);
-        } else {
-            setSortedTrainData(sortedTrains);
-        }
-    };
-
-    const handleClickOutside = (event) => {
-        if (priceSortRef.current && !priceSortRef.current.contains(event.target)) {
-            setPriceSortOpen(false);
-        }
-    };
-
-    useEffect(() => {
-        document.addEventListener('mousedown', handleClickOutside);
-        return () => document.removeEventListener('mousedown', handleClickOutside);
-    }, []);
-
+    const [filteredTaxiBrousseData, setFilteredTaxiBrousseData] = useState(taxiBrousseData);
+    const [filteredTrainData, setFilteredTrainData] = useState(trainData);
     const navigate = useNavigate();
 
-    const handleReserveClick = () => navigate('/transportreserve');
+    useEffect(() => {
+        if (searchParams) {
+            setFilteredTaxiBrousseData(filterResults(taxiBrousseData, searchParams));
+            setFilteredTrainData(filterResults(trainData, searchParams));
+        }
+    }, [searchParams]);
+
+    const handleTransportClick = (transportData) => {
+        navigate('/transportreserve', { state: { transportData } });
+    };
 
     return (
         <div className="w-full max-w-5xl mx-auto p-6 text-base" style={{ fontFamily: 'Poppins, sans-serif' }}>
@@ -110,54 +103,18 @@ function TransportTabs() {
                 </button>
             </div>
 
-            <div className="flex mt-6 space-x-4 relative">
-                <button className="flex items-center py-2 px-4 bg-white text-[#425486] rounded-full shadow-sm border border-gray-200 hover:border-[#425486] transition-all duration-300">
-                    Horaire
-                    <FaSort className="ml-2" size={16} />
-                </button>
-                <div className="relative" ref={priceSortRef}>
-                    <button
-                        onClick={togglePriceSort}
-                        className="flex items-center py-2 px-4 bg-white text-[#425486] rounded-full shadow-sm border border-gray-200 hover:border-[#425486] transition-all duration-300"
-                    >
-                        Prix
-                        <FaSort className="ml-2" size={16} />
-                    </button>
-
-                    {priceSortOpen && (
-                        <div className="absolute left-0 mt-2 w-48 bg-white border border-gray-300 rounded shadow-lg">
-                            <button
-                                onClick={() => selectSortOption('Moins cher')}
-                                className="block w-full text-left px-4 py-2 hover:bg-gray-100"
-                            >Moins cher
-                            </button>
-                            <button
-                                onClick={() => selectSortOption('Plus cher')}
-                                className="block w-full text-left px-4 py-2 hover:bg-gray-100"
-                            >Plus cher
-                            </button>
-                        </div>
-                    )}
-                </div>
-                <button
-                    className="bg-[#0A5DA6] text-white font-semibold py-3 px-6 rounded-lg hover:bg-[#1f405d] transition duration-300 mx-auto lg:mx-0"
-                    onClick={handleReserveClick}
-                >
-                    Réserver
-                </button>
-            </div>
             <div className="mt-4">
                 {activeTab === 'Taxi-brousse' && (
                     <div>
-                        {sortedTaxiBrousseData.map((item, index) => (
-                            <TransportDetails key={index} {...item} />
+                        {filteredTaxiBrousseData.map((item, index) => (
+                            <TransportDetails key={index} {...item} onClick={() => handleTransportClick(item)} />
                         ))}
                     </div>
                 )}
                 {activeTab === 'Trains' && (
                     <div>
-                        {sortedTrainData.map((item, index) => (
-                            <TransportDetails key={index} {...item} />
+                        {filteredTrainData.map((item, index) => (
+                            <TransportDetails key={index} {...item} onClick={() => handleTransportClick(item)} />
                         ))}
                     </div>
                 )}
