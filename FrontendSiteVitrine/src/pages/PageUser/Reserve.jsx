@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
 import DatePicker from 'react-datepicker';
 
-const Reserve = () => {
+const Reserve = ({ onSearch }) => {
   const [departure, setDeparture] = useState('');
   const [arrival, setArrival] = useState('');
   const [date, setDate] = useState(null);
@@ -10,9 +10,15 @@ const Reserve = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    onSearch({ departure, arrival, date, passengers });
   };
 
   const locations = [
+    { value: 'Antananarivo', label: 'Antananarivo', },
+    { value: 'Antsirabe', label: 'Antsirabe' },
+    { value: 'Manakara', label: 'Manakara' },
+    { value: 'Fianarantsoa', label: 'Fianarantsoa' },
+    { value: 'Toamasina', label: 'Toamasina' },
   ];
 
   return (

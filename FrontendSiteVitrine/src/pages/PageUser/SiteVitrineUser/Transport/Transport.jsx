@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import BarNav from '../BarNav';
 import Reserve from '../../Reserve';
@@ -10,6 +10,12 @@ import TicketStepsImage from '../../assets/show.jpg';
 
 function Transport() {
     const navigate = useNavigate();
+    const [searchParams, setSearchParams] = useState(null);
+
+    const handleSearch = (params) => {
+        setSearchParams(params);
+    };
+
     return (
         <>
             <BarNav />
@@ -20,9 +26,14 @@ function Transport() {
                         Réservez des billets de train, taxi-brousse
                     </h1>
                 </div>
-                <div className="-mt-3"><Reserve /></div>
+                <div className="-mt-3">
+                    {/* Pass the handleSearch function to Reserve */}
+                    <Reserve onSearch={handleSearch} />
+                </div>
             </div>
-            <TransportTabs />
+
+            {/* Pass searchParams to TransportTabs */}
+            <TransportTabs searchParams={searchParams} />
 
             <div className="mt-10">
                 <TicketSteps />
@@ -42,7 +53,6 @@ function Transport() {
                                 E-reserve est une plateforme 100% en ligne de gestion de services de transport. Elle permet l'administration
                                 et la supervision en temps réel de la réservation à la gestion des trajets.
                             </p>
-
                         </div>
                     </div>
                 </div>
