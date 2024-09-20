@@ -38,8 +38,8 @@ const Step1 = ({ handleNext }) => {
                     <div className="w-full md:w-1/2 p-6">
                         <SeatSelections formData={formData} quantity={quantity} onQuantityChange={handleQuantityChange} className="h-auto" />
                     </div>
-                    <div className="p-6 w-full md:w-1/2 bg-gray-50 border border-gray-300 rounded-lg shadow-md flex flex-col space-y-4">
-                        <h2 className="text-xl font-extrabold text-gray-900 mb-6 border-b-2 border-gray-200 pb-2">Détails du Trajet</h2>
+                    <div className="p-6 w-full md:w-1/2 space-y-4">
+                        <h2 className="text-xl font-extrabold text-gray-900 mb-6 border-b-2 mt-6 border-gray-200 pb-2">Détails du Trajet</h2>
                         <p className="text-gray-900 text-base mb-2 font-semibold">
                             {lieu_depart.nom} <span className="text-3xl mx-2 text-blue-500">→</span> {lieu_arriver.nom}
                         </p>
