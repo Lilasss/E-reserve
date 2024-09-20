@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom';
 
 const items = [
     { title: 'ÉVÉNEMENT', icon: faCalendarAlt, id: 'events' },
-    // { title: 'CHAMBRE', icon: faBed, id: 'chambre' },
     { title: 'TRANSPORT', icon: faCar, id: 'transports' },
 ];
 
@@ -24,7 +23,7 @@ const StaticDisplay = () => {
                     {items.map((item, index) => (
                         <div
                             key={index}
-                            className="flex-shrink-0 w-1/3 flex flex-col items-center justify-center p-6 transition-transform duration-300 transform hover:scale-105 cursor-pointer"
+                            className="flex-shrink-0 w-1/2 flex flex-col items-center justify-center p-6 transition-transform duration-300 transform hover:scale-105 cursor-pointer"
                             onClick={() => handleClick(item.id)}
                         >
                             <div

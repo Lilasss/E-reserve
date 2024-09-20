@@ -3,6 +3,7 @@
         opacity: 0;
         transform: translateY(20px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -14,6 +15,7 @@
         opacity: 0;
         transform: translateX(-20px);
     }
+
     to {
         opacity: 1;
         transform: translateX(0);
@@ -26,4 +28,16 @@
 
 .animate-slideIn {
     animation: slideIn 1s ease-out;
+}
+
+.perspective-1000 {
+    perspective: 1000px;
+}
+
+.transform-gpu {
+    transform-style: preserve-3d;
+}
+
+.bg-cover {
+    will-change: transform;
 }

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FaArrowDown } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
-import backgroundImage from '../assets/1reserve.jpeg';
+import backgroundImage from '../../src/pages/PageUser/assets/six.jpeg';
 import logoImage from '../assets/1logo.png';
 import './Header.css';
 import ContactFormModal from '../components/ContactFormModal ';
@@ -76,14 +76,16 @@ const Header = () => {
                     </nav>
                 </div>
             </header>
-
-            <div className="relative h-96 bg-cover bg-center" style={{ backgroundImage: `url(${backgroundImage})` }}>
+            {/* style={{ backgroundImage: `url(${backgroundImage})` }}  */}
+            <div className="relative h-96 bg-cover bg-center bg-[#0A5DA6] overflow-hidden" style={{ backgroundImage: `url(${backgroundImage})` }}>
                 <div className="absolute inset-0 bg-black opacity-50"></div>
-                <div className="relative z-10 flex flex-col items-center justify-center h-full text-center">
-                    <br /><br />
-                    <h2 className="text-4xl text-white font-bold">Bienvenue à E-Reserve</h2>
-                    <p className="text-white mt-4 animate-slideIn">La plateforme de gestion de réservations pour tous vos besoins.</p>
-
+                <div className="absolute inset-0 transform-gpu perspective-1000">
+                    <div className="bg-cover bg-center transition-transform duration-300 ease-in-out" style={{ backgroundImage: `url(${backgroundImage})`, transform: 'translateZ(-1px) scale(2)' }}></div>
+                </div>
+                <div className="relative z-10 flex flex-col items-center justify-center h-full text-center" style={{ fontFamily: 'Poppins, sans-serif' }}>
+                    <br /><br /><br /><br />
+                    <h2 className="text-3xl text-[#9fbed9] font-bold animate-fadeIn">Bienvenue à E-Reserve</h2>
+                    <p className="text-white text-base mt-4 animate-slideIn">La plateforme de gestion de réservations pour tous vos besoins.</p>
                     <a
                         onClick={openModal}
                         className="mt-6 text-white bg-green-500 py-2 px-4 rounded-full flex items-center space-x-2 cursor-pointer hover:bg-green-600 transition"
@@ -93,6 +95,7 @@ const Header = () => {
                     </a>
                 </div>
             </div>
+
 
             {modalOpen && <ContactFormModal onClose={closeModal} />}
         </>
