@@ -1,7 +1,7 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
 
-const PrivateRouteAdmin = ({ children, user, serviceid }) => {
+const PrivateRouteAdmin = ({ children, user, service }) => {
     const authData = sessionStorage.getItem('authData'); // Get the auth data from sessionStorage
 
     // Check if authData exists and if the user role is ADMIN
@@ -13,7 +13,7 @@ const PrivateRouteAdmin = ({ children, user, serviceid }) => {
     return (
         <div>
             {React.Children.map(children, child =>
-                React.cloneElement(child, { user, serviceid })
+                React.cloneElement(child, { user, service })
             )}
         </div>
     );

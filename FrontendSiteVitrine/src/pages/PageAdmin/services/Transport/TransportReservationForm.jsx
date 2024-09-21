@@ -1,110 +1,145 @@
-import React from "react";
+import axios from "axios";
+import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-const TransportReservationForm = ({ formData, setFormData, nextStep }) => {
+const TransportReservationForm = ({ formData, setFormData }) => {
+  const [errors, setErrors] = useState({});
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleDateChange = (date) =>
-    setFormData((prev) => ({ ...prev, date_depart: date }));
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    nextStep();
+  const handleDateChange = (date) => {
+    if (date) {
+      const formattedDate = date.toISOString().split('T')[0]; // Format YYYY-MM-DD
+      setFormData((prev) => ({ ...prev, dateDepart: formattedDate }));
+    } else {
+      setFormData((prev) => ({ ...prev, dateDepart: '' })); // Reset if no date selected
+    }
   };
 
-  // Générer les options avec des multiples de 4 + 2
-  const generateSeatOptions = () => {
-    let options = [];
-    for (let i = 1; i <= 10; i++) { // Limite jusqu'à 42 places (modifiable)
-      const seatNumber = 4 * i + 2; // Formule pour obtenir les valeurs 4n + 2
-      options.push(seatNumber);
+  const validateForm = () => {
+    const errors = {};
+    if (!formData.categorie) errors.categorie = "La catégorie est requise.";
+    if (!formData.dateDepart) errors.dateDepart = "La date de départ est requise.";
+    if (!formData.heureDepart) errors.heureDepart = "L'heure de départ est requise.";
+    if (!formData.lieuDepart) errors.lieuDepart = "Le lieu de départ est requis.";
+    if (!formData.lieuArriver) errors.lieuArriver = "Le lieu d'arrivée est requis.";
+    if (!formData.name) errors.name = "Le nom est requis.";
+    if (!formData.nombrePlace) errors.nombrePlace = "Le nombre de places est requis.";
+    if (!formData.prix) errors.prix = "Le prix est requis.";
+    return errors;
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const validationErrors = validateForm();
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
     }
-    return options;
+    try {
+      console.log(formData); 
+      await axios.post(`http://localhost:8080/api/admin/transport/add`, formData);
+      // Traite la réponse si nécessaire
+      
+    } catch (error) {
+      console.error("Erreur lors de l'envoi des données:", error);
+      // Afficher un message d'erreur ou une notification ici
+    }
+  };
+
+  const generateSeatOptions = () => {
+    return Array.from({ length: 10 }, (_, i) => 4 * (i + 1) + 2);
   };
 
   return (
     <div className="max-w-4xl mx-auto mt-10">
       <form onSubmit={handleSubmit} className="grid grid-cols-2 gap-6">
         <div>
-          <label>Catégorie</label>
+          <label className="block mb-1">Catégorie</label>
           <select
             name="categorie"
             value={formData.categorie}
             onChange={handleInputChange}
-            className="w-full p-3 border border-gray-300 rounded-lg appearance-none focus:outline-none"
+            className={`w-full p-3 border border-gray-300 rounded-lg appearance-none focus:outline-none ${errors.categorie ? 'border-red-500' : ''}`}
           >
             <option value="">Sélectionnez une catégorie</option>
-            <option value="Taxi">Taxi-brousse</option>
-            <option value="Train">Train</option>
+            <option value="TAXI_BROUSSE">Taxi-brousse</option>
+            <option value="TRAIN">Train</option>
           </select>
+          {errors.categorie && <p className="text-red-500 text-sm">{errors.categorie}</p>}
         </div>
 
         <div className="flex space-x-4">
           <div>
-            <label>Date de départ</label>
+            <label className="block mb-1">Date de départ</label>
             <DatePicker
-              selected={formData.date_depart}
+              selected={formData.dateDepart ? new Date(formData.dateDepart) : null}
               onChange={handleDateChange}
-              dateFormat="dd/MM/yyyy"
-              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none"
+              dateFormat="yyyy-MM-dd"
+              className={`w-full p-3 border border-gray-300 rounded-lg focus:outline-none ${errors.dateDepart ? 'border-red-500' : ''}`}
             />
+            {errors.dateDepart && <p className="text-red-500 text-sm">{errors.dateDepart}</p>}
           </div>
           <div>
-            <label>Heure de départ</label>
+            <label className="block mb-1">Heure de départ</label>
             <input
               type="time"
-              name="heure_depart"
-              value={formData.heure_depart}
+              name="heureDepart"
+              value={formData.heureDepart}
               onChange={handleInputChange}
-              className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none"
+              className={`w-full p-2 border border-gray-300 rounded-lg focus:outline-none ${errors.heure_depart ? 'border-red-500' : ''}`}
             />
+            {errors.heureDepart && <p className="text-red-500 text-sm">{errors.heure_depart}</p>}
           </div>
         </div>
 
         <div>
-          <label>Lieu de départ</label>
+          <label className="block mb-1">Lieu de départ</label>
           <input
             type="text"
-            name="lieu_depart"
-            value={formData.lieu_depart}
+            name="lieuDepart"
+            value={formData.lieuDepart}
             onChange={handleInputChange}
-            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none"
+            className={`w-full p-3 border border-gray-300 rounded-lg focus:outline-none ${errors.lieu_depart ? 'border-red-500' : ''}`}
           />
+          {errors.lieuDepart && <p className="text-red-500 text-sm">{errors.lieu_depart}</p>}
         </div>
 
         <div>
-          <label>Lieu d'arrivée</label>
+          <label className="block mb-1">Lieu d'arrivée</label>
           <input
             type="text"
-            name="lieu_arriver"
-            value={formData.lieu_arriver}
+            name="lieuArriver"
+            value={formData.lieuArriver}
             onChange={handleInputChange}
-            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none"
+            className={`w-full p-3 border border-gray-300 rounded-lg focus:outline-none ${errors.lieuArriver ? 'border-red-500' : ''}`}
           />
+          {errors.lieuArriver && <p className="text-red-500 text-sm">{errors.lieuArriver}</p>}
         </div>
 
         <div>
-          <label>Nom</label>
+          <label className="block mb-1">Nom</label>
           <input
             type="text"
             name="name"
             value={formData.name}
             onChange={handleInputChange}
-            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none"
+            className={`w-full p-3 border border-gray-300 rounded-lg focus:outline-none ${errors.name ? 'border-red-500' : ''}`}
           />
+          {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
         </div>
 
         <div>
-          <label>Nombre de places</label>
+          <label className="block mb-1">Nombre de places</label>
           <select
-            name="nombre_place"
-            value={formData.nombre_place}
+            name="nombrePlace"
+            value={formData.nombrePlace}
             onChange={handleInputChange}
-            className="w-full p-3 border border-gray-300 rounded-lg appearance-none focus:outline-none"
+            className={`w-full p-3 border border-gray-300 rounded-lg appearance-none focus:outline-none ${errors.nombrePlace ? 'border-red-500' : ''}`}
           >
             <option value="">Sélectionnez un nombre de places</option>
             {generateSeatOptions().map((option, index) => (
@@ -113,27 +148,19 @@ const TransportReservationForm = ({ formData, setFormData, nextStep }) => {
               </option>
             ))}
           </select>
+          {errors.nombrePlace && <p className="text-red-500 text-sm">{errors.nombrePlace}</p>}
         </div>
 
         <div>
-          <label>Prix</label>
+          <label className="block mb-1">Prix</label>
           <input
             type="number"
             name="prix"
             value={formData.prix}
             onChange={handleInputChange}
-            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none"
+            className={`w-full p-3 border border-gray-300 rounded-lg focus:outline-none ${errors.prix ? 'border-red-500' : ''}`}
           />
-        </div>
-
-        <div className="col-span-2">
-          <label>Insérer une image</label>
-          <input
-            type="file"
-            name="image_path"
-            onChange={handleInputChange}
-            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none"
-          />
+          {errors.prix && <p className="text-red-500 text-sm">{errors.prix}</p>}
         </div>
 
         <div className="col-span-2 text-center w-32">
@@ -141,7 +168,7 @@ const TransportReservationForm = ({ formData, setFormData, nextStep }) => {
             type="submit"
             className="w-full bg-green-500 text-white font-semibold p-3 rounded-lg hover:bg-green-600"
           >
-            Suivant
+            Valider
           </button>
         </div>
       </form>
