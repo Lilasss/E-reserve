@@ -1,37 +1,51 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import TransportReservationForm from './TransportReservationForm';
-import SeatSelection from './SeatSelection';
+// Uncomment this if you want to use seat selection
+// import SeatSelection from './SeatSelection';
 
 const CreateTrans = () => {
-  const [step, setStep] = useState(1); // État pour gérer l'étape
+  const [service, setService] = useState(null);
   const [formData, setFormData] = useState({
     categorie: "",
-    date_depart: new Date(),
-    heure_depart: "08:00",
-    image_path: "",
-    lieu_arriver: "",
-    lieu_depart: "",
+    dateDepart: "",
+    heureDepart: "",
+    lieuArriver: "",
+    lieuDepart: "",
     name: "",
-    nombre_place: 1,
+    nombrePlace: 0,
     prix: "",
+    serviceId: null // Initialize with null
   });
 
-  const nextStep = () => {
-    setStep(step + 1);
-  };
+  // Fetch the service from sessionStorage
+  useEffect(() => {
+    const storedService = sessionStorage.getItem('service');
+    if (storedService) { // Corrected from storedServiceId to storedService
+      const serviceData = JSON.parse(storedService); // Parse the stored service
+      setService(serviceData);
+      setFormData(prevFormData => ({
+        ...prevFormData,
+        serviceId: serviceData // Update formData with fetched service ID
+      }));
+      console.log('Service:', serviceData); // Log the service data to the console
+    }
+  }, []); // Run only once when the component mounts
 
-  const prevStep = () => {
-    setStep(step - 1);
-  };
+  // Update the formData when the service is fetched from sessionStorage
+  useEffect(() => {
+    if (service) {
+      setFormData(prevFormData => ({
+        ...prevFormData,
+        serviceId: service // Update the formData with the fetched service ID
+      }));
+    }
+  }, [service]); // Trigger this effect whenever `service` changes
 
   return (
     <div>
-      {step === 1 && (
-        <TransportReservationForm formData={formData} setFormData={setFormData} nextStep={nextStep} />
-      )}
-      {step === 2 && (
-        <SeatSelection formData={formData} prevStep={prevStep} />
-      )}
+      <TransportReservationForm formData={formData} setFormData={setFormData} />
+      {/* Uncomment this if you want to use seat selection */}
+      {/* <SeatSelection formData={formData} prevStep={prevStep} /> */}
     </div>
   );
 };
