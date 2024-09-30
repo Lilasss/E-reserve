@@ -19,8 +19,8 @@ const faqData = [
     ),
   },
   {
-    question: "Puis-je modifier ma réservation ?",
-    answer: "Oui, vous pouvez modifier votre réservation à tout moment avant la date de l'événement.",
+    question: "Comment puis-je réserver ?",
+    answer: "Tu n'as juste cliquer sur les services proposées",
   },
   {
     question: "Comment mes données sont-elles sécurisées ?",

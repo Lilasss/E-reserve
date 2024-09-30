@@ -1,8 +1,8 @@
 import React from 'react';
-import { Line, Pie } from 'react-chartjs-2';
-import { Chart as ChartJS, CategoryScale, LinearScale, LineElement, PointElement, Title, Tooltip, Legend, ArcElement } from 'chart.js';
+import { Bar, Pie } from 'react-chartjs-2';
+import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement } from 'chart.js';
 
-ChartJS.register(CategoryScale, LinearScale, LineElement, PointElement, Title, Tooltip, Legend, ArcElement);
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement);
 
 const Dashboard = () => {
   // Fonction pour générer les labels des mois jusqu'au mois actuel
@@ -12,10 +12,10 @@ const Dashboard = () => {
     return months.slice(0, currentMonth + 1);
   };
 
-  // Fonction pour générer les données des réservations
+  // Fonction pour générer les données des réservations avec des chiffres plus petits
   const generateReservationData = () => {
     const currentMonth = new Date().getMonth();
-    const data = [50, 70, 90, 60, 80, 100, 120, 110, 95, 85, 130, 140]; // Données fictives
+    const data = [12, 6, 27, 12, 15, 6, 8, 10, 15, 20, 18, 27]; // Données fictives ajustées
     return data.slice(0, currentMonth + 1); // Prendre les données jusqu'au mois actuel
   };
 
@@ -25,10 +25,11 @@ const Dashboard = () => {
       {
         label: 'Réservations Mensuelles',
         data: generateReservationData(),
-        borderColor: '#007bff',
-        backgroundColor: 'rgba(0, 123, 255, 0.2)',
-        hoverBorderColor: '#0056b3',
-        hoverBorderWidth: 2,
+        backgroundColor: 'rgba(75, 192, 192, 0.6)', // Couleur du bar
+        borderColor: '#4bc0c0',
+        borderWidth: 1,
+        hoverBackgroundColor: 'rgba(75, 192, 192, 0.8)',
+        hoverBorderColor: '#3b9e9e',
       },
     ],
   };
@@ -38,11 +39,8 @@ const Dashboard = () => {
     datasets: [
       {
         label: 'Répartition des Revenus',
-        data: [5000, 3000],
-        backgroundColor: [
-          '#6c757d',
-          '#17a2b8', 
-        ],
+        data: [4000, 2500], // Données fictives ajustées
+        backgroundColor: ['#6c757d', '#17a2b8'],
         hoverBackgroundColor: ['#5a6268', '#138496'],
         borderColor: '#fff',
         borderWidth: 1,
@@ -50,20 +48,36 @@ const Dashboard = () => {
     ],
   };
 
+  const totalTransportUsers = 8; 
+  const totalEventUsers = 5; 
+
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 -mt-4">
+          <div className="bg-gradient-to-r from-blue-50 to-blue-100 border border-blue-500 shadow-lg rounded-xl my-5 p-6 flex items-center">
+            <div className="text-center w-full">
+              <h2 className="text-xl font-bold mb-4 text-blue-600">Utilisateurs transport</h2>
+              <p className="text-2xl font-semibold text-gray-800">{totalTransportUsers}</p>
+            </div>
+          </div>
+
+          <div className="bg-gradient-to-r from-purple-50 to-purple-100 border border-purple-600 shadow-lg rounded-xl my-5  p-6 flex items-center">
+            <div className="text-center w-full">
+              <h2 className="text-xl font-bold mb-4 text-purple-600">Utilisateurs événement</h2>
+              <p className="text-2xl font-semibold text-gray-800">{totalEventUsers}</p>
+            </div>
+          </div>
+        </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="bg-white p-4 rounded-lg shadow-md">
-          <Line
+          <Bar
             data={reservationData}
             options={{
               responsive: true,
               plugins: {
                 title: { display: true, text: 'Réservations Mensuelles', font: { size: 18, weight: 'bold' } },
               },
-              animation: {
-                duration: 1500,
-              },
+              animation: { duration: 1500 },
             }}
           />
         </div>
@@ -78,12 +92,10 @@ const Dashboard = () => {
                 plugins: {
                   title: { display: true, text: 'Répartition des Revenus', font: { size: 18, weight: 'bold' } },
                 },
-                animation: {
-                  animateScale: true,
-                  duration: 2000,
-                },
+                animation: { animateScale: true, duration: 2000 },
               }}
-              height={400} width={400}
+              height={400}
+              width={400}
             />
           </div>
         </div>
@@ -99,17 +111,15 @@ const Dashboard = () => {
               <th className="border-b p-2 text-left text-gray-600">Départ</th>
               <th className="border-b p-2 text-left text-gray-600">Arrivée</th>
               <th className="border-b p-2 text-left text-gray-600">Date</th>
-              <th className="border-b p-2 text-left text-gray-600">Statut</th>
             </tr>
           </thead>
           <tbody>
             <tr className="hover:bg-gray-100">
-              <td className="border-b p-2">1</td>
-              <td className="border-b p-2">Maria@gmail.com</td>
+              <td className="border-b p-2">20</td>
+              <td className="border-b p-2">razafindramboahantasoa@gmail.com</td>
               <td className="border-b p-2">Antananarivo</td>
               <td className="border-b p-2">Toamasina</td>
-              <td className="border-b p-2">2024-09-15</td>
-              <td className="border-b p-2">Confirmée</td>
+              <td className="border-b p-2">2024-09-23</td>
             </tr>
           </tbody>
         </table>

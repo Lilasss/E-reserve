@@ -99,7 +99,7 @@ const CreateEvent = () => {
         <div className="flex">
             <div className="w-4/5 p-6">
                 <h1 className="text-2xl font-semibold mb-4">
-                    {step === 1 ? 'Créer un Événement' : step === 3 ? 'Création de Billet' : 'Détails'}
+                    {step === 1 ? 'Créer un Événement' : step === 3 ? 'Création de Billet' : 'Détails du billet'}
                 </h1>
                 <form onSubmit={handleSubmit} className="space-y-6">
                     {step === 1 && (

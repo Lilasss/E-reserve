@@ -1,26 +1,32 @@
-
 import React, { useState } from 'react';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 const initialOrders = [
-    { id: 2, client: 'Hantasoa@gmail.com', date: '2024-09-03', montant: 50000, type: 'Taxi', depart: 'Antananarivo', arrivee: 'Toamasina', places: 2 },
-    // { id: 3, client: 'Boby@gmail.com', date: '2024-09-03', montant: 50000, type: 'Train', depart: 'Antananarivo', arrivee: 'Toamasina', places: 3 },
-    { id: 4, client: 'Marolahy@gmail.com', date: '2024-09-07', montant: 40000, type: 'Train', depart: 'Antananarivo', arrivee: 'Fianarantsoa', places: 1 },
+    { id: 2, client: 'Hantasoa@gmail.com', date: '2024-09-03', dateVoyage: '2024-09-10', montant: 50000, type: 'Taxi', depart: 'Antananarivo', arrivee: 'Toamasina', places: 2 },
+    { id: 3, client: 'Boby@gmail.com', date: '2024-09-04', dateVoyage: '2024-09-12', montant: 60000, type: 'Train', depart: 'Antananarivo', arrivee: 'Toliara', places: 3 },
+    { id: 4, client: 'Marolahy@gmail.com', date: '2024-09-07', dateVoyage: '2024-09-15', montant: 40000, type: 'Train', depart: 'Antananarivo', arrivee: 'Fianarantsoa', places: 1 },
+    { id: 5, client: 'Ravelojaona@gmail.com', date: '2024-09-08', dateVoyage: '2024-09-20', montant: 70000, type: 'Taxi', depart: 'Fianarantsoa', arrivee: 'Antananarivo', places: 2 },
+    { id: 6, client: 'Ranja@gmail.com', date: '2024-09-10', dateVoyage: '2024-09-25', montant: 45000, type: 'Taxi', depart: 'Toamasina', arrivee: 'Antananarivo', places: 1 },
+    { id: 7, client: 'Nirina@gmail.com', date: '2024-09-11', dateVoyage: '2024-09-30', montant: 80000, type: 'Train', depart: 'Mahajanga', arrivee: 'Antananarivo', places: 3 },
+    { id: 8, client: 'Vola@gmail.com', date: '2024-09-12', dateVoyage: '2024-10-01', montant: 65000, type: 'Taxi', depart: 'Antananarivo', arrivee: 'Mahajanga', places: 2 },
+    { id: 9, client: 'Fetra@gmail.com', date: '2024-09-15', dateVoyage: '2024-10-05', montant: 72000, type: 'Train', depart: 'Antananarivo', arrivee: 'Toliara', places: 4 },
 ];
 
 const CommandeTrans = () => {
-    const [searchType, setSearchType] = useState('');
     const [searchClient, setSearchClient] = useState('');
     const [searchDepart, setSearchDepart] = useState('');
     const [searchArrivee, setSearchArrivee] = useState('');
+    const [searchDateVoyage, setSearchDateVoyage] = useState(null);
     const [sortKey, setSortKey] = useState('id');
     const [sortDirection, setSortDirection] = useState('asc');
     const [selectedOrder, setSelectedOrder] = useState(null);
 
     const filteredOrders = initialOrders.filter(order =>
-        order.type.toLowerCase().includes(searchType.toLowerCase()) &&
         order.client.toLowerCase().includes(searchClient.toLowerCase()) &&
         order.depart.toLowerCase().includes(searchDepart.toLowerCase()) &&
-        order.arrivee.toLowerCase().includes(searchArrivee.toLowerCase())
+        order.arrivee.toLowerCase().includes(searchArrivee.toLowerCase()) &&
+        (searchDateVoyage ? order.dateVoyage === searchDateVoyage.toISOString().split('T')[0] : true)
     );
 
     const sortedOrders = [...filteredOrders].sort((a, b) => {
@@ -55,13 +61,6 @@ const CommandeTrans = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                     <input
                         type="text"
-                        placeholder="Type de transport"
-                        value={searchType}
-                        onChange={(e) => setSearchType(e.target.value)}
-                        className="p-3 border border-gray-300 rounded-lg w-full focus:outline-none focus:ring-1 focus:ring-gray-400"
-                    />
-                    <input
-                        type="text"
                         placeholder="Client"
                         value={searchClient}
                         onChange={(e) => setSearchClient(e.target.value)}
@@ -80,6 +79,12 @@ const CommandeTrans = () => {
                         value={searchArrivee}
                         onChange={(e) => setSearchArrivee(e.target.value)}
                         className="p-3 border border-gray-300 rounded-lg w-full focus:outline-none focus:ring-1 focus:ring-gray-400"
+                    />
+                    <DatePicker
+                        selected={searchDateVoyage}
+                        onChange={(date) => setSearchDateVoyage(date)}
+                        className="p-3 border border-gray-300 rounded-lg w-full focus:outline-none focus:ring-1 focus:ring-gray-400"
+                        placeholderText="Date"
                     />
                 </div>
             </div>
@@ -115,7 +120,7 @@ const CommandeTrans = () => {
                             >
                                 <td className="border-b p-4">{order.id}</td>
                                 <td className="border-b p-4">{order.client}</td>
-                                <td className="border-b p-4">{order.date}</td>
+                                <td className="border-b p-4">{order.dateVoyage}</td>
                                 <td className="border-b p-4">{order.montant.toLocaleString()} Ar</td>
                                 <td className="border-b p-4">
                                     <span className={`px-2 py-1 rounded-full text-sm ${order.type === 'Taxi' ? 'bg-yellow-100 text-yellow-700' : 'bg-green-100 text-green-700'}`}>
@@ -137,12 +142,14 @@ const CommandeTrans = () => {
                         </button>
                         <h2 className="text-lg font-semibold mb-4 text-green-600">Détails de la Commande</h2>
                         <div className="space-y-4">
-                            <p><span className='font-semibold text-gray-700'>Client :</span> {selectedOrder.client}</p>
-                            <p><span className='font-semibold text-gray-700'>Date :</span> {selectedOrder.date}</p>
-                            <p><span className='font-semibold text-gray-700'>Montant :</span> {selectedOrder.montant.toLocaleString()} Ar</p>
-                            <p><span className='font-semibold text-gray-700'>Type de Transport :</span> {selectedOrder.type}</p>
-                            <p><span className='font-semibold text-gray-700'>Trajet :</span> {selectedOrder.depart} - {selectedOrder.arrivee}</p>
-                            <p><span className='font-semibold text-gray-700'>Nombre de Places :</span> {selectedOrder.places}</p>
+                            <p><strong>Client :</strong> {selectedOrder.client}</p>
+                            <p><strong>Date de commande :</strong> {selectedOrder.date}</p>
+                            <p><strong>Date :</strong> {selectedOrder.dateVoyage}</p>
+                            <p><strong>Montant :</strong> {selectedOrder.montant.toLocaleString()} Ar</p>
+                            <p><strong>Type :</strong> {selectedOrder.type}</p>
+                            <p><strong>Départ :</strong> {selectedOrder.depart}</p>
+                            <p><strong>Arrivée :</strong> {selectedOrder.arrivee}</p>
+                            <p><strong>Places :</strong> {selectedOrder.places}</p>
                         </div>
                     </div>
                 </div>

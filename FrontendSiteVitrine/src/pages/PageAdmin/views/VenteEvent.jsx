@@ -28,6 +28,45 @@ const mockData = {
         { type: 'Standard', sold: 130, available: 70, price: 15000 },
       ],
     },
+    {
+      name: 'KODO',
+      date: '2024-10-25',
+      totalTicketsSold: 240,
+      ticketsAvailable: 200,
+      ticketTypes: [
+        { type: 'VIP', sold: 100, available: 50, price: 40000 },
+        { type: 'Standard', sold: 200, available: 150, price: 25000 },
+      ],
+    },
+    {
+      name: 'Education',
+      date: '2024-12-15',
+      totalTicketsSold: 120,
+      ticketsAvailable: 80,
+      ticketTypes: [
+        { type: 'VIP', sold: 40, available: 20, price: 35000 },
+        { type: 'Standard', sold: 80, available: 60, price: 15000 },
+      ],
+    },
+    {
+      name: 'BasketBall',
+      date: '2024-11-05',
+      totalTicketsSold: 200,
+      ticketsAvailable: 20,
+      ticketTypes: [
+        { type: 'VIP', sold: 100, available: 50, price: 40000 },
+        { type: 'Standard', sold: 200, available: 150, price: 25000 },
+      ],
+    },
+    {
+      name: 'Carnaval',
+      date: '2024-12-15',
+      totalTicketsSold: 120,
+      ticketsAvailable: 80,
+      ticketTypes: [
+        { type: 'VIP', sold: 40, available: 20, price: 35000 },
+      ],
+    },
   ],
 };
 
@@ -50,8 +89,8 @@ const VenteEvent = () => {
         {
           label: 'Nombre de billets',
           data: [filteredEvent.totalTicketsSold, filteredEvent.ticketsAvailable],
-          backgroundColor: ['rgba(75, 192, 192, 0.6)', 'rgba(255, 99, 132, 0.6)'],
-          borderColor: ['rgba(75, 192, 192, 1)', 'rgba(255, 99, 132, 1)'],
+          backgroundColor: ['rgba(54, 162, 235, 0.6)', 'rgba(255, 206, 86, 0.6)'],
+          borderColor: ['rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)'],
           borderWidth: 1,
         },
       ],

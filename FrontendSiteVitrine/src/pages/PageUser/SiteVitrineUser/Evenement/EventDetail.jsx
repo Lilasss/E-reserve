@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { FaMapMarkerAlt, FaCalendarAlt, FaClock } from 'react-icons/fa';
 import flyerImage from '../../assets/flyer.jpeg';
 import educationImage from '../../assets/Education.jpeg';
+import carnavalImage from '../../assets/Culture.jpeg';
 import BarNav from '../BarNav';
 import Stepper from './Step';
 const eventsData = {
@@ -11,7 +12,7 @@ const eventsData = {
         image: flyerImage,
         type: 'Cultures',
         lieu: 'Antananarivo',
-        date: '2024-10-25T18:00:00',
+        date: '2024-09-30T18:00:00',
         description: "Cet événement met en lumière les cultures locales à travers des performances artistiques et des expositions.",
         tickets: [
             { name: 'Normal', price: 30000 },
@@ -31,6 +32,22 @@ const eventsData = {
 
         ]
     },
+
+    3: {
+        name: 'Carnaval',
+        image: carnavalImage,
+        type: 'Spectacles',
+        lieu: 'Toamasina',
+        date: '2024-09-25T09:00:00',
+        description: "Carnaval , évènement organisé par ...",
+        tickets: [
+            { name: 'Normal', price: 20000 },
+            { name: 'VIP', price: 25000 },
+
+        ]
+    }
+
+
 };
 
 function TicketOptions({ ticket, quantity, setQuantity }) {
