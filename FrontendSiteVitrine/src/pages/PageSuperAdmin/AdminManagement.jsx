@@ -55,8 +55,10 @@ function AdminManagement() {
     };
 
     const admins = [
-        { id: 1, name: 'Arat', email: 'arat2@gmail.com', contractEndDate: '2024-12-31' },
-        { id: 2, name: 'SOPA kal', email: 'sopakal.@gmail.com', contractEndDate: '2025-01-15' },
+        { id: 1, name: 'Admin', email: 'adminService2202@gmail.com', contractEndDate: '2024-09-30' },
+        { id: 2, name: 'Admin 2', email: 'admin2@gmail.com', contractEndDate: '2024-10-15' },
+        { id: 3, name: 'Admin 2', email: 'admin3@gmail.com', contractEndDate: '2024-11-15' },
+
     ];
 
     return (

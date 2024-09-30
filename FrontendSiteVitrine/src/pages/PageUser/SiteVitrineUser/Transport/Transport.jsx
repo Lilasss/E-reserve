@@ -16,6 +16,10 @@ function Transport() {
         setSearchParams(params);
     };
 
+    const handleCreateEventClick = () => {
+        navigate('/home');
+    };
+
     return (
         <>
             <BarNav />
@@ -53,6 +57,12 @@ function Transport() {
                                 E-reserve est une plateforme 100% en ligne de gestion de services de transport. Elle permet l'administration
                                 et la supervision en temps réel de la réservation à la gestion des trajets.
                             </p>
+                            <button
+                                className="bg-[#0A5DA6] text-white font-semibold py-3 px-6 rounded-lg hover:bg-[#1f405d] transition duration-300 mx-auto lg:mx-0"
+                                onClick={handleCreateEventClick}
+                            >
+                                Créer un service de transport
+                            </button>
                         </div>
                     </div>
                 </div>

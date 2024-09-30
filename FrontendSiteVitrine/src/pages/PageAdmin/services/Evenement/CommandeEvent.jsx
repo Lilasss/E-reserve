@@ -1,15 +1,20 @@
 import React, { useState } from 'react';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 const initialEvents = [
-  { id: 1, client: 'Rasoa@gmail.com', date: '2024-09-10', montant: 150000, nom: 'Jazz', lieu: 'Antananarivo', places: 4 },
-  { id: 2, client: 'Mirindra@gmail.com', date: '2024-09-15', montant: 200000, nom: 'Bodo', lieu: 'Toamasina', places: 2 },
-  { id: 3, client: 'Gabe@gmail.com', date: '2024-09-20', montant: 180000, nom: 'Reko', lieu: 'Antananarivo', places: 6 },
+  { id: 1, client: 'Rasoa@gmail.com', commandeDate: '2024-09-01', date: '2024-09-10', montant: 150000, nom: 'Jazz', lieu: 'Antananarivo', places: 4 },
+  { id: 2, client: 'Mirindra@gmail.com', commandeDate: '2024-09-05', date: '2024-09-15', montant: 200000, nom: 'Bodo', lieu: 'Toamasina', places: 2 },
+  { id: 3, client: 'Gabe@gmail.com', commandeDate: '2024-09-08', date: '2024-09-20', montant: 180000, nom: 'Reko', lieu: 'Antananarivo', places: 6 },
+  { id: 4, client: 'Lala@gmail.com', commandeDate: '2024-09-10', date: '2024-09-25', montant: 250000, nom: 'Saka', lieu: 'Mahajanga', places: 3 },
+  { id: 5, client: 'Noro@gmail.com', commandeDate: '2024-09-12', date: '2024-09-30', montant: 300000, nom: 'Sary', lieu: 'Toliara', places: 5 },
 ];
 
 const CommandeEvent = () => {
   const [searchNom, setSearchNom] = useState('');
   const [searchClient, setSearchClient] = useState('');
   const [searchLieu, setSearchLieu] = useState('');
+  const [searchDate, setSearchDate] = useState(null);
   const [sortKey, setSortKey] = useState('id');
   const [sortDirection, setSortDirection] = useState('asc');
   const [selectedEvent, setSelectedEvent] = useState(null);
@@ -17,7 +22,8 @@ const CommandeEvent = () => {
   const filteredEvents = initialEvents.filter(event =>
     event.nom.toLowerCase().includes(searchNom.toLowerCase()) &&
     event.client.toLowerCase().includes(searchClient.toLowerCase()) &&
-    event.lieu.toLowerCase().includes(searchLieu.toLowerCase())
+    event.lieu.toLowerCase().includes(searchLieu.toLowerCase()) &&
+    (searchDate ? event.date === searchDate.toISOString().split('T')[0] : true) // Filtrage par date
   );
 
   const sortedEvents = [...filteredEvents].sort((a, b) => {
@@ -49,7 +55,7 @@ const CommandeEvent = () => {
     <>
       <h1 className="text-xl font-bold mb-6 text-blue-800">Liste des commandes - Événements</h1>
       <div className="mb-6 bg-white p-6 rounded-lg shadow-md">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           <input
             type="text"
             placeholder="Nom de l'événement"
@@ -69,6 +75,13 @@ const CommandeEvent = () => {
             placeholder="Lieu"
             value={searchLieu}
             onChange={(e) => setSearchLieu(e.target.value)}
+            className="p-3 border border-gray-300 rounded-lg w-full focus:outline-none focus:ring-1 focus:ring-gray-400"
+          />
+          <DatePicker
+            selected={searchDate}
+            onChange={(date) => setSearchDate(date)}
+            dateFormat="yyyy-MM-dd"
+            placeholderText="Sélectionner une date"
             className="p-3 border border-gray-300 rounded-lg w-full focus:outline-none focus:ring-1 focus:ring-gray-400"
           />
         </div>
@@ -121,10 +134,10 @@ const CommandeEvent = () => {
             <button onClick={closeDetails} className="absolute top-2 right-2 text-gray-500 hover:text-gray-700 focus:outline-none">
               ✖
             </button>
-            <h2 className="text-lg font-semibold mb-4 text-green-600">Détails de l'Événement</h2>
+            <h2 className="text-lg font-semibold mb-4 text-green-600">Détails de la Commande</h2>
             <div className="space-y-4">
               <p><span className='font-semibold text-gray-700'>Client :</span> {selectedEvent.client}</p>
-              <p><span className='font-semibold text-gray-700'>Date de l'événement :</span> {selectedEvent.date}</p>
+              <p><span className='font-semibold text-gray-700'>Date de la commande :</span> {selectedEvent.commandeDate}</p>
               <p><span className='font-semibold text-gray-700'>Montant :</span> {selectedEvent.montant.toLocaleString()} Ar</p>
               <p><span className='font-semibold text-gray-700'>Nom de l'événement :</span> {selectedEvent.nom}</p>
               <p><span className='font-semibold text-gray-700'>Lieu :</span> {selectedEvent.lieu}</p>

@@ -38,7 +38,6 @@ const Evenement = () => {
                         <th className="py-3 px-4 text-left">Photo</th>
                         <th className="py-3 px-4 text-left">Évènement</th>
                         <th className="py-3 px-4 text-left">Billets</th>
-                        <th className="py-3 px-4 text-left">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
