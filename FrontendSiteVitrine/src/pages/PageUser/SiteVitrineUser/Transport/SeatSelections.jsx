@@ -10,6 +10,7 @@ const SeatSelections = ({ nombrePlace, onSeatSelect }) => {
 
     // Retrieve selected transport ID from sessionStorage
     const selectedTransport = JSON.parse(sessionStorage.getItem("selectedTransport"));
+ 
     const transportId = selectedTransport?.id;
 
     // Fetch reserved seats from the backend API when the component mounts
@@ -20,6 +21,7 @@ const SeatSelections = ({ nombrePlace, onSeatSelect }) => {
                 // Remove duplicates and filter valid seat numbers
                 const uniqueReservedSeats = Array.from(new Set(response.data)).filter(seat => seat > 0 && seat <= nombrePlace);
                 setReservedSeats(uniqueReservedSeats);
+                console.log(selectedTransport)
             } catch (error) {
                 console.error("Erreur lors de la récupération des sièges réservés :", error);
             }
