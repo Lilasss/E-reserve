@@ -1,4 +1,7 @@
+// src/pages/PageUser/SiteVitrineUser/Evenement/Event.jsx
+
 import React, { useState, useEffect } from 'react';
+import axios from 'axios'; // Import Axios
 import images from '../../assets/six.jpeg';
 import { FaCalendarAlt, FaBus, FaSearch, FaChevronDown, FaArrowUp } from 'react-icons/fa';
 import Footer from '../../../../layout/Footer';
@@ -12,6 +15,7 @@ import TicketSteps from '../../../../sections/SiteVitrine1/TicketSteps';
 import TicketStepsImage from '../../assets/show.jpg';
 import { Link, useNavigate } from 'react-router-dom';
 
+// Définition des événements
 const events = [
   { id: 1, image: dodoImage },
   { id: 2, image: image4 },
@@ -23,6 +27,7 @@ const events = [
 
 function Event() {
   const [showScroll, setShowScroll] = useState(false);
+  const [data, setData] = useState(null); // Initialisation à null
   const navigate = useNavigate();
 
   const checkScrollTop = () => {
@@ -42,21 +47,45 @@ function Event() {
   };
 
   useEffect(() => {
+    const fetchData = async () => {
+      try { 
+        const res = await axios.get('http://localhost:8080/auth/success', {
+          withCredentials: true, // Inclure les cookies dans la requête
+        });
+
+        if (res.status === 200) { // Vérifie le statut de la réponse
+          console.log(res);
+          setData(res.data); // Mise à jour de l'état avec les données utilisateur
+          
+          // Stocker les données dans le sessionStorage
+          sessionStorage.setItem('userData', JSON.stringify(res.data));
+        } else {
+          console.log(`Erreur : code de statut ${res.status}`);
+        }
+      } catch (error) {
+        console.error('Erreur lors de la récupération des données :', error); // Gestion améliorée des erreurs
+      }
+    };
+
+    fetchData(); // Appel de la fonction fetchData au montage du composant
+
     window.addEventListener('scroll', checkScrollTop);
-    return () => window.removeEventListener('scroll', checkScrollTop);
-  }, [showScroll]);
+    return () => {
+      window.removeEventListener('scroll', checkScrollTop);
+    };
+  }, []); // Exécuter une seule fois au montage
 
   return (
     <>
       <BarNav />
       <div className="relative bg-[#0A5DA6] pt-0" style={{ fontFamily: 'Poppins, sans-serif' }}>
         <img src={images} alt="Background" className="absolute inset-0 w-full h-full object-cover opacity-30" />
-        
+
         <div className="container mx-auto py-10">
           <h1 className="text-3xl font-bold text-white text-center mb-8" style={{ fontFamily: 'Poppins, sans-serif' }}>
             Réserver des billets d'événements
           </h1>
-          <div className=" flex flex-col lg:flex-row items-center lg:justify-center space-y-4 lg:space-y-0 lg:space-x-4">
+          <div className="flex flex-col lg:flex-row items-center lg:justify-center space-y-4 lg:space-y-0 lg:space-x-4">
             <div className="w-full lg:w-80">
               <div className="relative">
                 <input
@@ -67,7 +96,7 @@ function Event() {
                 <FaSearch className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500" />
               </div>
             </div>
-            <div className="w-full lg:w-80" >
+            <div className="w-full lg:w-80">
               <div className="relative">
                 <select className="w-full px-4 py-2 rounded-lg border border-gray-300 bg-white focus:outline-none focus:border-blue-500 shadow-md placeholder-gray-500 text-gray-500 appearance-none">
                   <option value="">Sélectionner un mois</option>
@@ -137,6 +166,13 @@ function Event() {
       <Footer />
     </>
   );
+}
+
+// Fonction pour récupérer un cookie par son nom
+function getCookie(name) {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop().split(';').shift();
 }
 
 export default Event;

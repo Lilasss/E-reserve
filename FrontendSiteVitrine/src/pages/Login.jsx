@@ -9,51 +9,65 @@ const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [rememberMe, setRememberMe] = useState(false);
+    const [error, setError] = useState('');
     const navigate = useNavigate();
 
     useEffect(() => {
-        // Check if user is already logged in
-        const authData = sessionStorage.getItem('authData');
+        // Vérifier si l'utilisateur est déjà connecté (sessionStorage ou localStorage)
+        const authData = sessionStorage.getItem('authData') || localStorage.getItem('authData');
         if (authData) {
-            const roleUser = authData.split('/')[2]; // Extract role from stored authData
+            const roleUser = authData.split('/')[2]; // Extraire le rôle à partir de authData
             redirectToDashboard(roleUser);
         }
     }, [navigate]);
 
-    const redirectToDashboard = (roleUser) => {
-        if (roleUser === 'SUPERADMIN') {
+    const redirectToDashboard = (roleUser, redirectUrl) => {
+        // Redirection en fonction du rôle de l'utilisateur ou de l'URL de redirection
+        if (redirectUrl) {
+            navigate(redirectUrl);
+        } else if (roleUser === 'SUPERADMIN') {
             navigate('/superadmin/dashboard');
         } else if (roleUser === 'ADMIN') {
             navigate('/admin/admindashboard');
-        } else {
-            navigate('/');
-        }
+        } 
     };
 
-    const handleGoogleLogin = async () => {
-        try {
-            window.location.href = 'http://localhost:8080/oauth2/authorization/google';
-        } catch (error) {
-            console.error('Error initiating Google login:', error);
-        }
+    const handleGoogleLogin = () => {
+        // Redirection vers l'endpoint de connexion OAuth Google
+        window.location.href = 'http://localhost:8080/oauth2/authorization/google';
     };
+
+
+  
+
+   
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setError(''); // Réinitialiser l'erreur à chaque soumission
         try {
             const data = { email, password };
             const response = await axios.post('http://localhost:8080/auth/login', data);
 
-            const token = response.data.token;// Convert milliseconds to seconds
-            const userRole = response.data.roleUser;
-            const userId = response.data.userId;
+            const token = response.data.token; // Token JWT
+            const userRole = response.data.roleUser; // Rôle utilisateur
+            const userId = response.data.userId; // ID utilisateur
+            const redirectUrl = response.data.redirectUrl; // URL de redirection
 
             const concatenatedValue = `${userId}/${token}/${userRole}`;
-            sessionStorage.setItem('authData', concatenatedValue); 
 
-            redirectToDashboard(userRole);
+            // Stocker dans sessionStorage ou localStorage selon rememberMe
+            if (rememberMe) {
+                localStorage.setItem('authData', concatenatedValue);
+            } else {
+                sessionStorage.setItem('authData', concatenatedValue);
+            }
+
+            // Rediriger après le stockage des données
+            redirectToDashboard(userRole, redirectUrl);
         } catch (error) {
-            console.error('Login failed:', error);
+            console.error('Échec de la connexion :', error);
+            setError('Email ou mot de passe invalide. Veuillez réessayer.'); // Améliorer le message d'erreur
         }
     };
 
@@ -70,15 +84,12 @@ const Login = () => {
                 <div className="w-full">
                     <div className="text-center mb-6">
                         <img src={logoImage} alt="E-Reserve" className="w-32 h-auto mx-auto" />
-                        <h2 className="text-3xl font-bold text-blue-800 mt-4">
-                            Connectez-Vous
-                        </h2>
+                        <h2 className="text-3xl font-bold text-blue-800 mt-4">Connectez-Vous</h2>
                     </div>
+                    {error && <p className="text-red-600 text-center mb-4">{error}</p>}
                     <form onSubmit={handleSubmit}>
                         <div className="mb-4">
-                            <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                                Email
-                            </label>
+                            <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
                             <input
                                 type="email"
                                 id="email"
@@ -90,9 +101,7 @@ const Login = () => {
                             />
                         </div>
                         <div className="mb-6">
-                            <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-                                Mot de passe
-                            </label>
+                            <label htmlFor="password" className="block text-sm font-medium text-gray-700">Mot de passe</label>
                             <input
                                 type="password"
                                 id="password"
@@ -111,9 +120,7 @@ const Login = () => {
                                 onChange={(e) => setRememberMe(e.target.checked)}
                                 className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                             />
-                            <label htmlFor="rememberMe" className="ml-2 block text-sm text-gray-900">
-                                Se souvenir de moi
-                            </label>
+                            <label htmlFor="rememberMe" className="ml-2 block text-sm text-gray-900">Se souvenir de moi</label>
                         </div>
                         <button
                             type="submit"

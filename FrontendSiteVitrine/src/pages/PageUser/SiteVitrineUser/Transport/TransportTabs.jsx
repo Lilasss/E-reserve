@@ -2,82 +2,53 @@ import React, { useState, useEffect } from 'react';
 import { FaTrain, FaBus } from 'react-icons/fa';
 import TransportDetails from './TransportDetails';
 import { useNavigate } from 'react-router-dom';
-
-import cotisseImage from '../../assets/transport/cotisse.jpeg';
-import soatransImage from '../../assets/transport/soatrans.jpg';
-import garabeImage from '../../assets/transport/garabe.jpeg';
-import gareImage from '../../assets/transport/gara.jpeg';
-
-const taxiBrousseData = [
-    {
-        name: 'Cotisse',
-        date_depart: '2024-09-28',
-        heure_depart: '08:00',
-        lieu_depart: { nom: 'Antananarivo' },
-        lieu_arriver: { nom: 'Fianarantsoa' },
-        nombre_place: 15,
-        prix: 50000,
-        image_path: cotisseImage,
-    },
-    {
-        name: 'Soatrans',
-        date_depart: '2024-09-30',
-        heure_depart: '08:00',
-        lieu_depart: { nom: 'Antsirabe' },
-        lieu_arriver: { nom: 'Antananarivo' },
-        nombre_place: 15,
-        prix: 20000,
-        image_path: soatransImage,
-    },
-];
-
-const trainData = [
-    {
-        name: 'Garabe',
-        date_depart: '2024-09-20',
-        heure_depart: '14:00',
-        lieu_depart: { nom: 'Antananarivo' },
-        lieu_arriver: { nom: 'Toamasina' },
-        nombre_place: 56,
-        prix: 13000,
-        image_path: garabeImage,
-    },
-    {
-        name: 'Gare',
-        date_depart: '2024-09-24',
-        heure_depart: '14:00',
-        lieu_depart: { nom: 'Fianarantsoa' },
-        lieu_arriver: { nom: 'Manakara' },
-        nombre_place: 56,
-        prix: 12000,
-        image_path: gareImage,
-    },
-];
+import axios from 'axios';
 
 const filterResults = (data, { departure, arrival, date }) => {
     return data.filter(item => {
-        const matchesDeparture = departure ? item.lieu_depart.nom === departure : true;
-        const matchesArrival = arrival ? item.lieu_arriver.nom === arrival : true;
-        const matchesDate = date ? new Date(item.date_depart).toDateString() === new Date(date).toDateString() : true;
+        const matchesDeparture = departure ? item.lieuDepart === departure : true;
+        const matchesArrival = arrival ? item.lieuArriver === arrival : true;
+        const matchesDate = date ? new Date(item.dateDepart).toDateString() === new Date(date).toDateString() : true;
         return matchesDeparture && matchesArrival && matchesDate;
     });
 };
 
 function TransportTabs({ searchParams }) {
     const [activeTab, setActiveTab] = useState('Taxi-brousse');
-    const [filteredTaxiBrousseData, setFilteredTaxiBrousseData] = useState(taxiBrousseData);
-    const [filteredTrainData, setFilteredTrainData] = useState(trainData);
+    const [filteredTaxiBrousseData, setFilteredTaxiBrousseData] = useState([]);
+    const [filteredTrainData, setFilteredTrainData] = useState([]);
+    const [data, setData] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (searchParams) {
-            setFilteredTaxiBrousseData(filterResults(taxiBrousseData, searchParams));
-            setFilteredTrainData(filterResults(trainData, searchParams));
-        }
-    }, [searchParams]);
+        const fetchdata = async () => {
+            try {
+                const result = await axios.get("http://localhost:8080/api/admin/transport");
+                setData(result.data);
 
-    const handleTransportClick = (transportData) => {
-        navigate('/transportreserve', { state: { transportData } });
+                // Filtrer les données initialement en fonction des catégories
+                const taxiBrousseData = result.data.filter(item => item.categorie === "TAXI_BROUSSE");
+                const trainData = result.data.filter(item => item.categorie === "TRAIN");
+
+                setFilteredTaxiBrousseData(taxiBrousseData);
+                setFilteredTrainData(trainData);
+            } catch (error) {
+                console.error("Erreur lors du chargement des données", error);
+            }
+        };
+
+        fetchdata();
+
+        if (searchParams) {
+            setFilteredTaxiBrousseData(filterResults(data.filter(item => item.categorie === "TAXI_BROUSSE"), searchParams));
+            setFilteredTrainData(filterResults(data.filter(item => item.categorie === "TRAIN"), searchParams));
+        }
+    }, [searchParams, data]);
+
+    const handleTransportClick = (item) => {
+        // Ajouter l'élément dans le sessionStorage
+        sessionStorage.setItem('selectedTransport', JSON.stringify(item));
+        navigate('/transportreserve', { state: { transportData: item } });
     };
 
     return (

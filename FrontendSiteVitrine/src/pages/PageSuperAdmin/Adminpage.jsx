@@ -7,7 +7,7 @@ import PrivateRouteSuperAdmin from '../../services/PrivateRouteSuperAdmin';
 
 const AdminPage = () => {
     return (
-        <PrivateRouteSuperAdmin>
+        // <PrivateRouteSuperAdmin>
             <div className="flex h-screen bg-gray-100" style={{ fontFamily: 'Poppins, sans-serif' }}>
                 <AdminNavbar />
                 <div className="flex flex-col w-full ml-64">
@@ -18,7 +18,7 @@ const AdminPage = () => {
                     </main>
                 </div>
             </div>
-         </PrivateRouteSuperAdmin>
+        //  </PrivateRouteSuperAdmin>
 
     );
 };
