@@ -57,11 +57,8 @@ const Login = () => {
             const concatenatedValue = `${userId}/${token}/${userRole}`;
 
             // Stocker dans sessionStorage ou localStorage selon rememberMe
-            if (rememberMe) {
-                localStorage.setItem('authData', concatenatedValue);
-            } else {
-                sessionStorage.setItem('authData', concatenatedValue);
-            }
+           sessionStorage.setItem('authData', concatenatedValue);
+            
 
             // Rediriger après le stockage des données
             redirectToDashboard(userRole, redirectUrl);
