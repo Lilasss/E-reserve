@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import logoImage from '../../../assets/1logo.png';
 import { FaCalendarAlt, FaBus } from 'react-icons/fa';
@@ -7,6 +7,15 @@ import '../../../layout/Header.css';
 const BarNav = () => {
     const navigate = useNavigate();
     const location = useLocation();
+    const [user, setUser] = useState(null); // État pour stocker les données de l'utilisateur
+
+    useEffect(() => {
+        // Récupérer les données d'utilisateur depuis le sessionStorage
+        const userData = sessionStorage.getItem('userData');
+        if (userData) {
+            setUser(JSON.parse(userData)); // Parser les données JSON et les stocker dans l'état
+        }
+    }, []); // Exécuté une seule fois après le premier rendu
 
     useEffect(() => {
         const queryParams = new URLSearchParams(location.search);
@@ -53,12 +62,18 @@ const BarNav = () => {
                                 </span>
                             </li>
                             <li>
-                                <span
-                                    onClick={() => navigate('/login')}
-                                    className="bg-yellow-400 text-blue-800 font-semibold py-3 px-8 rounded-full hover:bg-blue-800 hover:text-white transition duration-300 cursor-pointer"
-                                >
-                                    Se connecter
-                                </span>
+                                {user ? (
+                                    <span className="text-white font-semibold py-3 px-8 rounded-full cursor-pointer">
+                                        {user.fullName}
+                                    </span>
+                                ) : (
+                                    <span
+                                        onClick={() => navigate('/login')}
+                                        className="bg-yellow-400 text-blue-800 font-semibold py-3 px-8 rounded-full hover:bg-blue-800 hover:text-white transition duration-300 cursor-pointer"
+                                    >
+                                        Se connecter
+                                    </span>
+                                )}
                             </li>
                         </ul>
                     </nav>

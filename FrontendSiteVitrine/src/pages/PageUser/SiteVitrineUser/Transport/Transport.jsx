@@ -35,10 +35,8 @@ function Transport() {
                     <Reserve onSearch={handleSearch} />
                 </div>
             </div>
-
             {/* Pass searchParams to TransportTabs */}
             <TransportTabs searchParams={searchParams} />
-
             <div className="mt-10">
                 <TicketSteps />
             </div>

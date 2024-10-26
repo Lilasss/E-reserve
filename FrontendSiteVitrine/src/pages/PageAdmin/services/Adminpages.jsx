@@ -74,7 +74,7 @@ function Adminpages() {
                     </main>
                 </div>
             </div>
-        </PrivateRouteAdmin>
+    </PrivateRouteAdmin>
     );
 }
 
