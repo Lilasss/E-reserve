@@ -14,6 +14,7 @@ import image4 from '../../assets/Education.jpeg';
 import TicketSteps from '../../../../sections/SiteVitrine1/TicketSteps';
 import TicketStepsImage from '../../assets/show.jpg';
 import { Link, useNavigate } from 'react-router-dom';
+import TicketTransport from '../../../PageAdmin/views/TicketTransport';
 
 // Définition des événements
 const events = [
@@ -48,7 +49,7 @@ function Event() {
 
   useEffect(() => {
     const fetchData = async () => {
-      try { 
+      try {
         const res = await axios.get('http://localhost:8080/auth/success', {
           withCredentials: true, // Inclure les cookies dans la requête
         });
@@ -56,7 +57,7 @@ function Event() {
         if (res.status === 200) { // Vérifie le statut de la réponse
           console.log(res);
           setData(res.data); // Mise à jour de l'état avec les données utilisateur
-          
+
           // Stocker les données dans le sessionStorage
           sessionStorage.setItem('userData', JSON.stringify(res.data));
         } else {
@@ -78,6 +79,8 @@ function Event() {
   return (
     <>
       <BarNav />
+
+
       <div className="relative bg-[#0A5DA6] pt-0" style={{ fontFamily: 'Poppins, sans-serif' }}>
         <img src={images} alt="Background" className="absolute inset-0 w-full h-full object-cover opacity-30" />
 
@@ -115,7 +118,7 @@ function Event() {
           </div>
         </div>
       </div>
-
+      <TicketTransport />
       <div className="container mx-auto my-16 px-48">
         <h2 className="text-center text-2xl font-bold mb-8" style={{ fontFamily: 'Poppins, sans-serif' }}>TOP ÉVÈNEMENTS</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">

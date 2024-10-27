@@ -57,10 +57,18 @@ const ContactFormModal = ({ onClose }) => {
             .then((response) => {
                 console.log('Email envoyé !', response.status, response.text);
                 toast.success('Email envoyé !');
+                // Vider le formulaire après l'envoi réussi
+                setFormData({
+                    name: '',
+                    email: '',
+                    subject: '',
+                    message: ''
+                });
+                setPhone('');
                 onClose();
             })
             .catch((error) => {
-                console.error('Error sending email:', error);
+                console.error('Erreur lors de l\'envoi de l\'email:', error);
                 toast.error('Erreur lors de l\'envoi de l\'email.');
             });
     };
@@ -166,4 +174,5 @@ const ContactFormModal = ({ onClose }) => {
         </>
     );
 };
-export default ContactFormModal
+
+export default ContactFormModal;
