@@ -2,9 +2,22 @@ import axios from "axios";
 import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const TransportReservationForm = ({ formData, setFormData }) => {
   const [errors, setErrors] = useState({});
+
+  const initialFormData = {
+    categorie: "",
+    dateDepart: "",
+    heureDepart: "",
+    lieuDepart: "",
+    lieuArriver: "",
+    name: "",
+    nombrePlace: "",
+    prix: "",
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -38,16 +51,20 @@ const TransportReservationForm = ({ formData, setFormData }) => {
     const validationErrors = validateForm();
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
+      toast.error("Veuillez remplir tous les formulaires !");
       return;
     }
     try {
-      console.log(formData); 
+      console.log(formData);
       await axios.post(`http://localhost:8080/api/admin/transport/add`, formData);
-      // Traite la réponse si nécessaire
+      toast.success("Transport ajouté avec succès !");
       
+      // Réinitialiser le formulaire après succès
+      setFormData(initialFormData);
+      setErrors({}); // Réinitialiser les erreurs
     } catch (error) {
       console.error("Erreur lors de l'envoi des données:", error);
-      // Afficher un message d'erreur ou une notification ici
+      toast.error("Une erreur est survenue lors de l'enregistrement.");
     }
   };
 
@@ -91,9 +108,9 @@ const TransportReservationForm = ({ formData, setFormData }) => {
               name="heureDepart"
               value={formData.heureDepart}
               onChange={handleInputChange}
-              className={`w-full p-2 border border-gray-300 rounded-lg focus:outline-none ${errors.heure_depart ? 'border-red-500' : ''}`}
+              className={`w-full p-2 border border-gray-300 rounded-lg focus:outline-none ${errors.heureDepart ? 'border-red-500' : ''}`}
             />
-            {errors.heureDepart && <p className="text-red-500 text-sm">{errors.heure_depart}</p>}
+            {errors.heureDepart && <p className="text-red-500 text-sm">{errors.heureDepart}</p>}
           </div>
         </div>
 
@@ -104,9 +121,9 @@ const TransportReservationForm = ({ formData, setFormData }) => {
             name="lieuDepart"
             value={formData.lieuDepart}
             onChange={handleInputChange}
-            className={`w-full p-3 border border-gray-300 rounded-lg focus:outline-none ${errors.lieu_depart ? 'border-red-500' : ''}`}
+            className={`w-full p-3 border border-gray-300 rounded-lg focus:outline-none ${errors.lieuDepart ? 'border-red-500' : ''}`}
           />
-          {errors.lieuDepart && <p className="text-red-500 text-sm">{errors.lieu_depart}</p>}
+          {errors.lieuDepart && <p className="text-red-500 text-sm">{errors.lieuDepart}</p>}
         </div>
 
         <div>
@@ -172,6 +189,7 @@ const TransportReservationForm = ({ formData, setFormData }) => {
           </button>
         </div>
       </form>
+      <ToastContainer />
     </div>
   );
 };
