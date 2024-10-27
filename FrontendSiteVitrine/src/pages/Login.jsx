@@ -13,69 +13,55 @@ const Login = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        // Vérifier si l'utilisateur est déjà connecté (sessionStorage ou localStorage)
         const authData = sessionStorage.getItem('authData') || localStorage.getItem('authData');
         if (authData) {
-            const roleUser = authData.split('/')[2]; // Extraire le rôle à partir de authData
+            const roleUser = authData.split('/')[2];
             redirectToDashboard(roleUser);
         }
     }, [navigate]);
 
     const redirectToDashboard = (roleUser, redirectUrl) => {
-        // Redirection en fonction du rôle de l'utilisateur ou de l'URL de redirection
         if (redirectUrl) {
             navigate(redirectUrl);
         } else if (roleUser === 'SUPERADMIN') {
             navigate('/superadmin/dashboard');
         } else if (roleUser === 'ADMIN') {
             navigate('/admin/admindashboard');
-        } 
+        } else {
+            navigate('/transports');  // Redirection vers la page Transports
+        }
     };
 
     const handleGoogleLogin = () => {
-        // Redirection vers l'endpoint de connexion OAuth Google
         window.location.href = 'http://localhost:8080/oauth2/authorization/google';
     };
 
-
-  
-
-   
-
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setError(''); // Réinitialiser l'erreur à chaque soumission
+        setError('');
         try {
             const data = { email, password };
             const response = await axios.post('http://localhost:8080/auth/login', data);
 
-            const token = response.data.token; // Token JWT
-            const userRole = response.data.roleUser; // Rôle utilisateur
-            const userId = response.data.userId; // ID utilisateur
-            const redirectUrl = response.data.redirectUrl; // URL de redirection
+            const token = response.data.token;
+            const userRole = response.data.roleUser;
+            const userId = response.data.userId;
+            const redirectUrl = response.data.redirectUrl;
 
             const concatenatedValue = `${userId}/${token}/${userRole}`;
 
-            // Stocker dans sessionStorage ou localStorage selon rememberMe
-           sessionStorage.setItem('authData', concatenatedValue);
-            
-
-            // Rediriger après le stockage des données
+            sessionStorage.setItem('authData', concatenatedValue);
             redirectToDashboard(userRole, redirectUrl);
         } catch (error) {
             console.error('Échec de la connexion :', error);
-            setError('Email ou mot de passe invalide. Veuillez réessayer.'); // Améliorer le message d'erreur
+            setError('Email ou mot de passe invalide. Veuillez réessayer.');
         }
     };
 
     return (
         <div className="flex justify-center items-center min-h-screen bg-gray-100">
             <div className="hidden md:flex justify-center items-center" style={{ width: '500px', height: '500px', marginRight: '100px', marginTop: '90px' }}>
-                <img
-                    src={illustration}
-                    alt="Illustration"
-                    className="object-cover w-full h-full rounded-l-lg"
-                />
+                <img src={illustration} alt="Illustration" className="object-cover w-full h-full rounded-l-lg" />
             </div>
             <div className="flex justify-center items-center w-full md:w-auto bg-white border border-gray-300 rounded-lg shadow-lg p-8 animate__animated animate__fadeIn" style={{ width: '400px', height: 'auto' }}>
                 <div className="w-full">
@@ -126,7 +112,6 @@ const Login = () => {
                             Se Connecter
                         </button>
                     </form>
-
                     <div className="mt-6 flex justify-center">
                         <button onClick={handleGoogleLogin} className="flex items-center justify-center w-full bg-white border border-gray-300 rounded-md py-2 text-gray-700 shadow-sm hover:bg-gray-100 transition duration-300 ease-in-out">
                             <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" className="w-5 h-5 mr-2" />
