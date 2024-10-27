@@ -25,16 +25,16 @@ const Step2 = ({ handlePrev }) => {
     });
 
     useEffect(() => {
-        const fetchUserData = () => {
+        const fetchUserData = async () => {
             try {
                 const user = JSON.parse(sessionStorage.getItem('userData'));
                 console.log('Fetched user:', user); // Debugging line
 
-                if (user && user.fullName && user.email && user.telephone) {
+                if (user && user.fullName && user.email ) {
                     setUserData({
                         name: user.fullName,
                         email: user.email,
-                        phone: user.telephone
+             
                     });
                 } else {
                     console.warn('User data is incomplete, redirecting to login...');
@@ -93,6 +93,7 @@ const Step2 = ({ handlePrev }) => {
                     return;
                 }
 
+                // Step 1: Create the customer
                 const customerResponse = await axios.post('http://localhost:8080/api/customers/create', {
                     name: userData.name,
                     email: userData.email,
@@ -100,6 +101,7 @@ const Step2 = ({ handlePrev }) => {
                 });
 
                 if (customerResponse.data) {
+                    // Step 2: Create a payment session
                     const paymentResponse = await axios.post('http://localhost:8080/api/payments/create-checkout-session', {
                         customer: customerResponse.data.id,
                         place: reservationDetails.place,
@@ -107,11 +109,13 @@ const Step2 = ({ handlePrev }) => {
                     });
 
                     if (paymentResponse.data && paymentResponse.data.url) {
+                        // Step 3: Add sold seats to the reservation
                         await axios.post(
                             `http://localhost:8080/api/sold-seats/add?userId=${userIdConnected}&transportReservationId=${transportId}`,
                             reservationDetails.place
                         );
 
+                        // Step 4: Redirect to the payment session URL
                         window.location.href = paymentResponse.data.url;
                     } else {
                         console.error('Error creating payment session');
@@ -126,46 +130,73 @@ const Step2 = ({ handlePrev }) => {
     };
 
     return (
-        <div className="step2-form">
-            <div className="form-group">
-                <label htmlFor="name"><FaUser /> Name</label>
-                <input
-                    type="text"
-                    id="name"
-                    value={userData.name}
-                    onChange={(e) => setUserData({ ...userData, name: e.target.value })}
-                    className={errors.name ? 'error' : ''}
-                />
-                {errors.name && <p className="error-text">Name is required</p>}
+        <div>
+            <div className="flex justify-center space-x-2 mt-8">
+                <div className="flex-1 max-w-md shadow-md p-6">
+                    <h3 className="text-xl font-semibold text-center text-[#5F91CC] mb-6" style={{ fontFamily: 'Poppins, sans-serif' }}>
+                        Personal Information
+                    </h3>
+                    <div className="space-y-6">
+                        <div className="relative flex items-center">
+                            <FaUser className="text-blue-500 absolute left-3" />
+                            <input
+                                type="text"
+                                placeholder="Name"
+                                value={userData.name}
+                                onChange={(e) => setUserData({ ...userData, name: e.target.value })}
+                                className={`w-full pl-10 pr-4 py-3 border ${errors.name ? 'border-red-500' : 'border-gray-300'} rounded focus:outline-none focus:ring-1 focus:ring-gray-500`}
+                            />
+                            {errors.name && <p className="text-red-500 text-sm mt-1">Name is required</p>}
+                        </div>
+                        <div className="relative flex items-center">
+                            <FaEnvelope className="text-blue-500 absolute left-3" />
+                            <input
+                                type="email"
+                                placeholder="Email"
+                                value={userData.email}
+                                onChange={(e) => setUserData({ ...userData, email: e.target.value })}
+                                className={`w-full pl-10 pr-4 py-3 border ${errors.email ? 'border-red-500' : 'border-gray-300'} rounded focus:outline-none focus:ring-1 focus:ring-gray-500`}
+                            />
+                            {errors.email && <p className="text-red-500 text-sm mt-1">Email is required</p>}
+                        </div>
+                        <div className="relative flex items-center">
+                            <FaPhone className="text-blue-500 absolute left-3" />
+                            <input
+                                type="tel"
+                                placeholder="Phone"
+                                value={userData.phone}
+                                onChange={(e) => setUserData({ ...userData, phone: e.target.value })}
+                                className={`w-full pl-10 pr-4 py-3 border ${errors.phone ? 'border-red-500' : 'border-gray-300'} rounded focus:outline-none focus:ring-1 focus:ring-gray-500`}
+                            />
+                            {errors.phone && <p className="text-red-500 text-sm mt-1">Phone is required</p>}
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <div className="form-group">
-                <label htmlFor="email"><FaEnvelope /> Email</label>
-                <input
-                    type="email"
-                    id="email"
-                    value={userData.email}
-                    onChange={(e) => setUserData({ ...userData, email: e.target.value })}
-                    className={errors.email ? 'error' : ''}
-                />
-                {errors.email && <p className="error-text">Email is required</p>}
+            <div className="flex justify-center space-x-2 mt-8">
+                <div className="flex-1 max-w-md shadow-md p-6">
+                    <h3 className="text-xl font-semibold text-center text-[#5F91CC] mb-6" style={{ fontFamily: 'Poppins, sans-serif' }}>
+                        Reservation Details
+                    </h3>
+                    <p>Selected Seats: {reservationDetails.place.join(', ')}</p>
+                    <p>Total Price: {reservationDetails.price.toLocaleString()} Ar</p>
+                </div>
             </div>
 
-            <div className="form-group">
-                <label htmlFor="phone"><FaPhone /> Phone</label>
-                <input
-                    type="text"
-                    id="phone"
-                    value={userData.phone}
-                    onChange={(e) => setUserData({ ...userData, phone: e.target.value })}
-                    className={errors.phone ? 'error' : ''}
-                />
-                {errors.phone && <p className="error-text">Phone is required</p>}
-            </div>
-
-            <div className="buttons">
-                <button type="button" onClick={handlePrev}>Back</button>
-                <button type="button" onClick={handleNextStep}>Next</button>
+            <div className="flex justify-between mt-20">
+                <button
+                    onClick={handlePrev}
+                    className="bg-gray-500 text-white py-2 px-4 rounded-lg hover:bg-gray-600"
+                >
+                    Previous
+                </button>
+                <button
+                    onClick={handleNextStep}
+                    className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
+                >
+                    Next
+                </button>
             </div>
         </div>
     );
