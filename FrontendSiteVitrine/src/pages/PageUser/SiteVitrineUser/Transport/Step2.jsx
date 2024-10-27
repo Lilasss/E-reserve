@@ -2,17 +2,23 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { FaEnvelope, FaPhone, FaUser } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
+import QRCode from 'react-qr-code';
+import emailjs from 'emailjs-com';
 
 const Step2 = ({ handlePrev }) => {
     const navigate = useNavigate();
     const userIdConnected = JSON.parse(sessionStorage.getItem('userData'))?.id || null;
     const [userData, setUserData] = useState({
+        id: 0,
         name: '',
         email: '',
         phone: ''
     });
+    const [reserve, setReserve] = useState([]);
     const selectedTransport = JSON.parse(sessionStorage.getItem("selectedTransport"));
     const transportId = selectedTransport?.id;
+    const trajetTrans = [selectedTransport?.lieuDepart, selectedTransport?.lieuArriver];
+
     const [errors, setErrors] = useState({
         name: false,
         email: false,
@@ -20,6 +26,7 @@ const Step2 = ({ handlePrev }) => {
     });
 
     const [reservationDetails, setReservationDetails] = useState({
+        trajet: [],
         place: [],
         price: 0
     });
@@ -28,17 +35,15 @@ const Step2 = ({ handlePrev }) => {
         const fetchUserData = async () => {
             try {
                 const user = JSON.parse(sessionStorage.getItem('userData'));
-                console.log('Fetched user:', user); // Debugging line
-
-                if (user && user.fullName && user.email ) {
+                if (user && user.fullName && user.email) {
                     setUserData({
+                        id: user.id,
                         name: user.fullName,
                         email: user.email,
-             
+                        phone: ''
                     });
                 } else {
-                    console.warn('User data is incomplete, redirecting to login...');
-                    navigate('/login'); // Ensure this path matches your route
+                    navigate('/login');
                 }
             } catch (error) {
                 console.error('Error retrieving user data:', error);
@@ -49,8 +54,6 @@ const Step2 = ({ handlePrev }) => {
         const fetchReservationDetails = () => {
             try {
                 const reservation = JSON.parse(localStorage.getItem('reservationDetails'));
-                console.log('Fetched reservation details:', reservation); // Debugging line
-
                 if (reservation) {
                     setReservationDetails({
                         place: reservation.place || [],
@@ -68,22 +71,17 @@ const Step2 = ({ handlePrev }) => {
 
     const validateForm = () => {
         const newErrors = {
-            name: userData.name === '',
-            email: userData.email === '',
-            phone: userData.phone === ''
+            name: userData.name.trim() === '',
+            email: userData.email.trim() === '',
+            phone: userData.phone.trim() === ''
         };
         setErrors(newErrors);
-
         return !Object.values(newErrors).some(error => error);
     };
 
     const handleNextStep = async () => {
         if (validateForm()) {
             try {
-                console.log("User data:", userData);
-                console.log("Reservation details:", reservationDetails);
-                console.log("userIdConnected:", userIdConnected);
-
                 if (!userIdConnected) {
                     console.error("Error: userIdConnected is undefined.");
                     return;
@@ -109,13 +107,15 @@ const Step2 = ({ handlePrev }) => {
                     });
 
                     if (paymentResponse.data && paymentResponse.data.url) {
-                        // Step 3: Add sold seats to the reservation
-                        await axios.post(
+                        const res = await axios.post(
                             `http://localhost:8080/api/sold-seats/add?userId=${userIdConnected}&transportReservationId=${transportId}`,
                             reservationDetails.place
                         );
 
-                        // Step 4: Redirect to the payment session URL
+                        sessionStorage.setItem('soldSeatsData', JSON.stringify(res.data));
+                        setReserve(res.data);
+
+                        sendEmail(userData, reservationDetails); // Send email before redirecting
                         window.location.href = paymentResponse.data.url;
                     } else {
                         console.error('Error creating payment session');
@@ -128,6 +128,39 @@ const Step2 = ({ handlePrev }) => {
             }
         }
     };
+
+    const sendEmail = (userData, reservationDetails) => {
+        const templateParams = {
+            id_cli: userData.id,
+            from_name: "E-reserve",
+            to_name: userData.name,
+            departure: trajetTrans[0],
+            arrival: trajetTrans[1],
+            reply_to: userData.email,
+            phone: userData.phone,
+            seats: reservationDetails.place,
+            total_price: reservationDetails.price * reservationDetails.place.length
+        };
+
+        emailjs.send('service_wisl5hl', 'template_32pl2fb', templateParams, 'A2dsNKc1M9am1QxaD')
+            .then((response) => {
+                console.log('Email sent successfully:', response.status, response.text);
+            }, (err) => {
+                console.error('Failed to send email:', err);
+            });
+    };
+
+    const totalPlaces = reservationDetails.place.length;
+    const totalPrice = reservationDetails.price * totalPlaces;
+
+    const qrData = JSON.stringify({
+        name: userData.name,
+        email: userData.email,
+        phone: userData.phone,
+        seats: reservationDetails.place,
+        totalPlaces: totalPlaces,
+        totalPrice: `${totalPrice.toLocaleString()} Ar`
+    });
 
     return (
         <div>
@@ -179,24 +212,19 @@ const Step2 = ({ handlePrev }) => {
                     <h3 className="text-xl font-semibold text-center text-[#5F91CC] mb-6" style={{ fontFamily: 'Poppins, sans-serif' }}>
                         Reservation Details
                     </h3>
-                    <p>Selected Seats: {reservationDetails.place.join(', ')}</p>
-                    <p>Total Price: {reservationDetails.price.toLocaleString()} Ar</p>
+                    <p>
+                        Selected Seats: {reservationDetails.place.length > 0 
+                            ? reservationDetails.place.map(seat => `${seat}`).join(', ') 
+                            : 'No seats selected'}
+                    </p>
+                    <p>Total Price: {totalPrice.toLocaleString()} Ar</p>
+                    <QRCode value={qrData} />
                 </div>
             </div>
 
-            <div className="flex justify-between mt-20">
-                <button
-                    onClick={handlePrev}
-                    className="bg-gray-500 text-white py-2 px-4 rounded-lg hover:bg-gray-600"
-                >
-                    Previous
-                </button>
-                <button
-                    onClick={handleNextStep}
-                    className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
-                >
-                    Next
-                </button>
+            <div className="flex justify-between mt-8">
+                <button onClick={handlePrev} className="bg-blue-500 text-white px-4 py-2 rounded">Back</button>
+                <button onClick={handleNextStep} className="bg-blue-500 text-white px-4 py-2 rounded">Next & Send Email</button>
             </div>
         </div>
     );

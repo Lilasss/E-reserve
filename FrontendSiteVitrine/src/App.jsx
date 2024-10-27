@@ -6,7 +6,6 @@ import Home from './pages/Home';
 function App() {
   return (
     <>
-      {/* style={{ fontFamily: 'Poppins, sans-serif' }} */}
       <Home />
     </>
   );
