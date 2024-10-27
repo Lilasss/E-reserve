@@ -24,11 +24,16 @@ function TransportTabs({ searchParams }) {
         const fetchdata = async () => {
             try {
                 const result = await axios.get("http://localhost:8080/api/admin/transport");
-                setData(result.data);
+
+                // Filtrer les données pour exclure les transports passés
+                const today = new Date();
+                const filteredData = result.data.filter(item => new Date(item.dateDepart) >= today);
+
+                setData(filteredData);
 
                 // Filtrer les données initialement en fonction des catégories
-                const taxiBrousseData = result.data.filter(item => item.categorie === "TAXI_BROUSSE");
-                const trainData = result.data.filter(item => item.categorie === "TRAIN");
+                const taxiBrousseData = filteredData.filter(item => item.categorie === "TAXI_BROUSSE");
+                const trainData = filteredData.filter(item => item.categorie === "TRAIN");
 
                 setFilteredTaxiBrousseData(taxiBrousseData);
                 setFilteredTrainData(trainData);
@@ -46,7 +51,6 @@ function TransportTabs({ searchParams }) {
     }, [searchParams, data]);
 
     const handleTransportClick = (item) => {
-        // Ajouter l'élément dans le sessionStorage
         sessionStorage.setItem('selectedTransport', JSON.stringify(item));
         navigate('/transportreserve', { state: { transportData: item } });
     };

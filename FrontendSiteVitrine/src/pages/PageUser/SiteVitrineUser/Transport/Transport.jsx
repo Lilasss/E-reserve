@@ -1,4 +1,7 @@
-import React, { useState } from 'react';
+// src/pages/PageUser/SiteVitrineUser/Transport/Transport.jsx
+
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import BarNav from '../BarNav';
 import Reserve from '../../Reserve';
@@ -7,18 +10,58 @@ import TicketSteps from '../../../../sections/SiteVitrine1/TicketSteps';
 import Footer from '../../../../layout/Footer';
 import TransportTabs from './TransportTabs';
 import TicketStepsImage from '../../assets/show.jpg';
+import { FaArrowUp } from 'react-icons/fa';
 
 function Transport() {
-    const navigate = useNavigate();
+    const [showScroll, setShowScroll] = useState(false);
+    const [data, setData] = useState(null);
     const [searchParams, setSearchParams] = useState(null);
+    const navigate = useNavigate();
 
-    const handleSearch = (params) => {
-        setSearchParams(params);
+    const checkScrollTop = () => {
+        if (!showScroll && window.scrollY > 200) {
+            setShowScroll(true);
+        } else if (showScroll && window.scrollY <= 200) {
+            setShowScroll(false);
+        }
+    };
+
+    const scrollToTop = () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
     const handleCreateEventClick = () => {
         navigate('/home');
     };
+
+    const handleSearch = (params) => {
+        setSearchParams(params);
+    };
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const res = await axios.get('http://localhost:8080/auth/success', {
+                    withCredentials: true,
+                });
+
+                if (res.status === 200) {
+                    setData(res.data);
+                    sessionStorage.setItem('userData', JSON.stringify(res.data));
+                } else {
+                    console.log(`Erreur : code de statut ${res.status}`);
+                }
+            } catch (error) {
+                console.error('Erreur lors de la récupération des données :', error);
+            }
+        };
+
+        fetchData();
+        window.addEventListener('scroll', checkScrollTop);
+        return () => {
+            window.removeEventListener('scroll', checkScrollTop);
+        };
+    }, []);
 
     return (
         <>
@@ -31,11 +74,9 @@ function Transport() {
                     </h1>
                 </div>
                 <div className="-mt-3">
-                    {/* Pass the handleSearch function to Reserve */}
                     <Reserve onSearch={handleSearch} />
                 </div>
             </div>
-            {/* Pass searchParams to TransportTabs */}
             <TransportTabs searchParams={searchParams} />
             <div className="mt-10">
                 <TicketSteps />
@@ -65,6 +106,17 @@ function Transport() {
                     </div>
                 </div>
             </div>
+
+            {showScroll && (
+                <div className="fixed bottom-4 right-4 z-50">
+                    <button
+                        onClick={scrollToTop}
+                        className="bg-[#0A5DA6] text-white p-3 rounded-full shadow-lg hover:bg-blue-800 transition duration-300"
+                    >
+                        <FaArrowUp className="text-xl" />
+                    </button>
+                </div>
+            )}
 
             <div className="pt-12">
                 <Footer />
