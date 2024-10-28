@@ -18,6 +18,8 @@ const SeatSelections = ({ nombrePlace, onSeatSelect }) => {
         const fetchReservedSeats = async () => {
             try {
                 const response = await axios.get(`http://localhost:8080/api/sold-seats/reservation/${transportId}`);
+                console.log(transportId)
+                console.log("Données récupérées :", response.data);
                 // Remove duplicates and filter valid seat numbers
                 const uniqueReservedSeats = Array.from(new Set(response.data)).filter(seat => seat > 0 && seat <= nombrePlace);
                 setReservedSeats(uniqueReservedSeats);
@@ -95,7 +97,7 @@ const SeatSelections = ({ nombrePlace, onSeatSelect }) => {
                             onClick={() => handleSeatClick(index)}
                             className={`w-12 h-12 border-2 ${
                                 seat.isReserved ? 'bg-gray-300 text-white' :
-                                seat.isExcluded ? ' bg-white' : 
+                                seat.isExcluded ? 'border-gray-300 bg-gray-300' : 
                                 seat.isSelected ? 'bg-green-500 text-white' : 'border-green-500 text-green-500'
                             } rounded-lg flex items-center justify-center cursor-pointer`}
                         >
@@ -109,8 +111,8 @@ const SeatSelections = ({ nombrePlace, onSeatSelect }) => {
                             key={index + 2}
                             onClick={() => handleSeatClick(index + 2)}
                             className={`w-12 h-12 border-2 ${
-                                seat.isReserved ? 'bg-gray-300 text-white border-grey-400' :
-                                seat.isExcluded ? ' bg-white' : 
+                                seat.isReserved ? 'bg-gray-300 text-white border-red-400' :
+                                seat.isExcluded ? 'border-gray-300 bg-gray-300' : 
                                 seat.isSelected ? 'bg-green-500 text-white' : 'border-green-500 text-green-500'
                             } rounded-lg flex items-center justify-center cursor-pointer`}
                         >
@@ -124,7 +126,7 @@ const SeatSelections = ({ nombrePlace, onSeatSelect }) => {
                         Nombre de sièges sélectionnés : {getSelectedSeatsCount()}
                     </span>
                 </div>
-            </div> 
+            </div>
         </div>
     );
 };
