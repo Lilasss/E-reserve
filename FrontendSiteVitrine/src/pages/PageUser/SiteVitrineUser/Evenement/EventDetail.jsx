@@ -4,6 +4,7 @@ import { FaMapMarkerAlt, FaCalendarAlt, FaClock } from 'react-icons/fa';
 import flyerImage from '../../assets/flyer.jpeg';
 import educationImage from '../../assets/Education.jpeg';
 import carnavalImage from '../../assets/Culture.jpeg';
+
 import BarNav from '../BarNav';
 import Stepper from './Step';
 const eventsData = {
@@ -12,7 +13,7 @@ const eventsData = {
         image: flyerImage,
         type: 'Cultures',
         lieu: 'Antananarivo',
-        date: '2024-09-30T18:00:00',
+        date: '2024-11-30T18:00:00',
         description: "Cet événement met en lumière les cultures locales à travers des performances artistiques et des expositions.",
         tickets: [
             { name: 'Normal', price: 30000 },
@@ -24,7 +25,7 @@ const eventsData = {
         image: educationImage,
         type: 'Éducation',
         lieu: 'Toamasina',
-        date: '2024-10-12T09:00:00',
+        date: '2024-11-12T09:00:00',
         description: "Une conférence rassemblant des experts du monde entier pour discuter des avancées en éducation.",
         tickets: [
             { name: 'Normal', price: 25000 },
@@ -38,7 +39,46 @@ const eventsData = {
         image: carnavalImage,
         type: 'Spectacles',
         lieu: 'Toamasina',
-        date: '2024-09-25T09:00:00',
+        date: '2024-11-25T09:00:00',
+        description: "Carnaval , évènement organisé par ...",
+        tickets: [
+            { name: 'Normal', price: 20000 },
+            { name: 'VIP', price: 25000 },
+
+        ]
+    },
+    4: {
+        name: 'Carnaval',
+        image: carnavalImage,
+        type: 'Spectacles',
+        lieu: 'Toamasina',
+        date: '2024-11-25T09:00:00',
+        description: "Carnaval , évènement organisé par ...",
+        tickets: [
+            { name: 'Normal', price: 20000 },
+            { name: 'VIP', price: 25000 },
+
+        ]
+    },
+    5: {
+        name: 'Carnaval',
+        image: carnavalImage,
+        type: 'Spectacles',
+        lieu: 'Toamasina',
+        date: '2024-11-25T09:00:00',
+        description: "Carnaval , évènement organisé par ...",
+        tickets: [
+            { name: 'Normal', price: 20000 },
+            { name: 'VIP', price: 25000 },
+
+        ]
+    },
+    6: {
+        name: 'Carnaval',
+        image: carnavalImage,
+        type: 'Spectacles',
+        lieu: 'Toamasina',
+        date: '2024-11-25T09:00:00',
         description: "Carnaval , évènement organisé par ...",
         tickets: [
             { name: 'Normal', price: 20000 },
@@ -46,8 +86,6 @@ const eventsData = {
 
         ]
     }
-
-
 };
 
 function TicketOptions({ ticket, quantity, setQuantity }) {

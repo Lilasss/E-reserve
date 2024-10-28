@@ -118,7 +118,6 @@ function Event() {
           </div>
         </div>
       </div>
-      <TicketTransport />
       <div className="container mx-auto my-16 px-48">
         <h2 className="text-center text-2xl font-bold mb-8" style={{ fontFamily: 'Poppins, sans-serif' }}>TOP ÉVÈNEMENTS</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
